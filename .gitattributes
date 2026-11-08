@@ -1,0 +1,10 @@
+# Código y documentación: Git normaliza los fines de línea.
+* text=auto
+
+# Datos, salidas y log: se guardan byte a byte, SIN conversión de fines de línea.
+# Así el SHA-256 declarado en el README coincide con el archivo clonado o descargado
+# en cualquier sistema operativo (numeral 2.4.6, verificación de integridad).
+datos_crudos/** -text
+datos_procesados/** -text
+salidas/** -text
+log_ejecucion.txt -text

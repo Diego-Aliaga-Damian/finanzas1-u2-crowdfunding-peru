@@ -1,0 +1,15 @@
+# Entorno y cachés locales
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Variables de entorno reales (solo se versiona .env.example)
+.env
+
+# Temporales del guardado atómico
+*.tmp
+
+# Respuestas crudas de la búsqueda bibliográfica: contienen resúmenes con derechos
+# de autor de las editoriales; se regeneran con los scripts de herramientas/literatura/
+herramientas/literatura/crudos/
