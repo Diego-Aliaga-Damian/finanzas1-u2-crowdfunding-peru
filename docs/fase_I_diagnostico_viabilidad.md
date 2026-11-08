@@ -140,11 +140,11 @@ Vía 2: scraping (02_scraping_web.py)
 
 | ID | Decisión | Recomendación |
 |---|---|---|
-| D-1 | Confirmar con el docente la fecha de exposición de la U-II | Consultar ya (ver el borrador del anexo) |
+| D-1 | Confirmar con el docente la fecha de exposición de la U-II | **Resuelto (2026-11-07):** entrega fija el 2026-12-06 a las 23:59; la exposición puede cambiar |
 | D-2 | Aprobar el **Escenario B** y las vías: API = BCRPData + SMV-OData; scraping = SMV-SIMV | Aprobar |
-| D-3 | Consultar al docente si se aceptan variables sustitutas para "tasa ofrecida, plazo y sector" | Consultar antes de la Fase II |
-| D-4 | Periodo 2021-01 a 2026-09 frente a la regla de "estado del arte de 4 años" | Consultar junto con D-3 |
-| D-5 | Ventana bibliográfica: ¿2022-2026 o 2023-2026? ¿Las fuentes normativas y de datos cuentan dentro de las 20 referencias? | Consultar; mientras tanto, usar 2023-2026 (lo más seguro) |
+| D-3 | Consultar al docente si se aceptan variables sustitutas para "tasa ofrecida, plazo y sector" | **Resuelto:** el docente acepta las variables sustitutas |
+| D-4 | Periodo 2021-01 a 2026-09 frente a la regla de "estado del arte de 4 años" | **Resuelto:** el docente acepta el panel 2021-01 a 2026-09 |
+| D-5 | Ventana bibliográfica: ¿2022-2026 o 2023-2026? ¿Las fuentes normativas y de datos cuentan dentro de las 20 referencias? | **Resuelto:** 2023-2026; las normas y las fuentes de datos no cuentan en el estado del arte |
 
 ---
 

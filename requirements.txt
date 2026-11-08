@@ -1,5 +1,6 @@
 # Versiones exactas de las librerías usadas (numeral 2.4.2). Python 3.14.7.
 # Instalación: python -m pip install -r requirements.txt
+beautifulsoup4==4.15.0
 certifi==2026.10.23
 charset-normalizer==3.5.2
 colorama==0.4.6
@@ -14,5 +15,7 @@ pytest==9.2.0
 python-dateutil==4.0.0
 python-dotenv==1.2.4
 requests==2.34.2
+soupsieve==4.0.1
+typing_extensions==4.16.0
 tzdata==2026.6
 urllib3==2.8.0

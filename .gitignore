@@ -10,6 +10,9 @@ __pycache__/
 # Temporales del guardado atómico
 *.tmp
 
+# Resultados de las demostraciones en vivo (no forman parte de la base entregada)
+salidas/demo/
+
 # Respuestas crudas de la búsqueda bibliográfica: contienen resúmenes con derechos
 # de autor de las editoriales; se regeneran con los scripts de herramientas/literatura/
 herramientas/literatura/crudos/

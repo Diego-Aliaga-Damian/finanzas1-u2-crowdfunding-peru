@@ -8,6 +8,16 @@
 
 ---
 
+## Decisiones del docente (comunicadas por el estudiante el 2026-11-07)
+
+| Consulta | Respuesta |
+|---|---|
+| Fechas | **Entrega fija: 2026-12-06, 23:59.** La fecha de exposición no es segura (suele cambiar) |
+| Variables sustitutas de "tasa ofrecida, plazo y sector" | **Aceptadas** (sección 9) |
+| Panel mensual 2021-01 a 2026-09 para el mínimo de 60 periodos | **Aceptado** (secciones 10 y 11) |
+| Ventana del estado del arte | **2023-2026**; las normas y las fuentes de datos no cuentan en el estado del arte |
+| Plataformas retiradas del SIMV como incidencia, cubiertas con los EEFF de la SMV | **De acuerdo**, sin sustitución de fuente |
+
 ## 0. Hallazgos nuevos que condicionan el diseño (verificados el 2026-11-07)
 
 | Hallazgo | Evidencia | Consecuencia para el diseño |
@@ -97,7 +107,7 @@ Mientras tanto, el crédito tradicional a la pequeña y microempresa tiene costo
 
 No se cita ningún trabajo sin verificarlo. En la siguiente etapa se hará:
 
-1. **Ventana:** 2023-2026 (la más segura) **[confirmar: ¿2022-2026?]**.
+1. **Ventana:** 2023-2026 (**confirmada por el docente**; las normas y las fuentes de datos no cuentan en el estado del arte).
 2. **Líneas de búsqueda:** (a) préstamos P2P o *marketplace lending* frente a la banca (sustitución o complementariedad, selección de prestatarios); (b) crowdfunding y acceso al financiamiento de pymes; (c) fintech en América Latina y economías emergentes; (d) regulación del crowdfunding; (e) costos y precios del crédito fintech frente al bancario; (f) estudios sobre el Perú (SMV, BCRP, universidades).
 3. **Verificación:** DOI, autores, año y título con la API de Crossref u OpenAlex; cuartil en SJR (Scopus) e indexación en la Master Journal List (WoS). Se registra todo en una tabla de verificación.
 4. **Doble uso:** los 20 artículos Q1/Q2 exigidos en la Carpeta N.º 1 se elegirán dentro del mismo estado del arte, para que también sean referencias citadas.
@@ -167,7 +177,7 @@ El estudio es **descriptivo y comparativo**. Solo se formulan hipótesis donde l
 | Unidades auxiliares | Plataforma-trimestre (estados financieros); sistema-mes (tasas del BCRP) |
 | Población | Todas las sociedades administradoras con información en la SMV entre 2022 y 2026: **6** (3 vigentes y 3 retiradas). Crédito tradicional: bancos, CMAC y CRAC según los promedios del BCRP |
 | Muestra | **No hay muestreo:** censo de las plataformas con datos publicados |
-| Base procesada | Panel balanceado de 6 plataformas × 69 meses (2021-01 a 2026-09) = **414 filas**, con `estado_registro` para distinguir los meses sin actividad. **[Confirmar formato con el docente]** |
+| Base procesada | Panel balanceado de 6 plataformas × 69 meses (2021-01 a 2026-09) = **414 filas**, con `estado_registro` para distinguir los meses sin actividad. (**formato aceptado por el docente**, 2026-11-07) |
 
 ---
 
@@ -180,7 +190,7 @@ El estudio es **descriptivo y comparativo**. Solo se formulan hipótesis donde l
 | Ventana efectiva del FPF | jun-2022 a sep-2026 (~52 meses) | Primeros registros verificados del SIMV **[delimitar con el censo de la Fase III]** |
 | Corte regulatorio | nov-2025 / dic-2025 | Resolución SMV N.º 019-2025-SMV/01; se prueban ambos cortes como sensibilidad |
 
-**Riesgo explícito:** el FPF tiene menos de 60 meses de datos porque la actividad empezó a mediados de 2022. Se cumple el mínimo por la **dimensión temporal de la base** (69 periodos), no por la del FPF. Esto se documentará y se consultará.
+**Riesgo explícito:** el FPF tiene menos de 60 meses de datos porque la actividad empezó a mediados de 2022. Se cumple el mínimo por la **dimensión temporal de la base** (69 periodos), no por la del FPF. Se documenta en el artículo; **el docente aceptó este formato el 2026-11-07**.
 
 ---
 

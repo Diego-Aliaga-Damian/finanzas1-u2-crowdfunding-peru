@@ -1,0 +1,6 @@
+consulta: https://www.smv.gob.pe/robots.txt
+url_final: https://www.gob.pe/smv
+http: 200
+content-type: text/html; charset=utf-8
+redirecciones: [301]
+www.smv.gob.pe no publica un robots.txt propio (la ruta redirige a otra página); no hay reglas que prohíban la ruta /SIMV/. Se aplica política conservadora.

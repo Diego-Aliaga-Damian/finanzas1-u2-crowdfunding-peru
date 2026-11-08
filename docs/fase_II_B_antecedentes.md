@@ -20,7 +20,7 @@
 | Elegibilidad | Verificación en Crossref: **45/45** con DOI válido y título coincidente; Crossref corrige el año en varios casos | 45 |
 | Inclusión | **Núcleo: 20** (2023-2026, inglés, revista del núcleo) · **Reserva: 18** (2023-2026) · **5 de 2022** (fuera de la ventana estricta) · **2 de contexto peruano** | — |
 
-**Ventana adoptada para el núcleo:** 2023-2026, la interpretación más segura de "4 años" **[confirmar con el docente]**. Los artículos de 2022 solo se usarán si el docente acepta 2022-2026.
+**Ventana confirmada por el docente (2026-11-07): 2023-2026.** Las normas y las fuentes de datos no cuentan en el estado del arte. Los artículos de 2022 quedan fuera del estado del arte.
 
 ---
 
@@ -71,7 +71,7 @@ Abreviaturas de los objetivos: OE1 oferta · OE2 plataformas · OE3 acceso y ref
 
 **2023-2026:** Kräussl et al. (2024, *J. Banking & Finance*, 10.1016/j.jbankfin.2024.107124) · Kgoroeadira et al. (2023, *J. Int. Financial Markets, Inst. & Money*, 10.1016/j.intfin.2023.101882) · Tian et al. (2023, *China Economic Review*, 10.1016/j.chieco.2023.101944) · Kutzbach y Pogach (2024, *J. Financial Intermediation*, 10.1016/j.jfi.2024.101101) · Cornelli et al. (2024, *J. Financial Stability*, 10.1016/j.jfs.2024.101290) · Tran et al. (2026, *J. Financial Stability*, 10.1016/j.jfs.2026.101541) · Hau et al. (2024, *J. of Finance*, 10.1111/jofi.13384) · Ghosh et al. (2026, *J. of Finance*, 10.1111/jofi.70003) · Adbi y Natarajan (2023, *Strategic Entrepreneurship J.*, 10.1002/sej.1470) · Morello (2025, *Common Market Law Review*, 10.54648/cola2025039) · Tipaldi et al. (2026, *Int. Review of Financial Analysis*, 10.1016/j.irfa.2026.105101) · Wang et al. (2023, *Information Systems Research*, 10.1287/isre.2022.1154) · Li et al. (2024, *Applied Economics*, 10.1080/00036846.2023.2200230) · Luo et al. (2025, *British Accounting Review*, 10.1016/j.bar.2025.101583) · Van Tassel (2023, *Small Business Economics*, 10.1007/s11187-022-00622-9) · Halim (2024, *Research in Globalization*, 10.1016/j.resglo.2024.100238) · Griffiths et al. (2025, *Int. J. of Emerging Markets*, 10.1108/ijoem-04-2024-0678) · Al-Assaf et al. (2025, *Discover Sustainability*, 10.1007/s43621-025-01597-9).
 
-**2022 (solo si el docente acepta 2022-2026):** Bejar et al. (2022, *Latin American J. of Central Banking*, 10.1016/j.latcb.2022.100061, fintech y competencia bancaria en ALC) · Velazquez et al. (2022, *J. Risk and Financial Management*, 10.3390/jrfm15020062, fintech e inclusión en el **Perú**) · Kowalewski y Pisany (2022, *IRFA*, 10.1016/j.irfa.2022.102116) · Stefanelli et al. (2022, *J. Innovation & Knowledge*, 10.1016/j.jik.2022.100278) · Salas Quenta et al. (2022, *Quipukamayoc*, 10.15381/quipu.v30i63.24043, **Perú**).
+**2022 (fuera de la ventana confirmada; no se usan en el estado del arte):** Bejar et al. (2022, *Latin American J. of Central Banking*, 10.1016/j.latcb.2022.100061, fintech y competencia bancaria en ALC) · Velazquez et al. (2022, *J. Risk and Financial Management*, 10.3390/jrfm15020062, fintech e inclusión en el **Perú**) · Kowalewski y Pisany (2022, *IRFA*, 10.1016/j.irfa.2022.102116) · Stefanelli et al. (2022, *J. Innovation & Knowledge*, 10.1016/j.jik.2022.100278) · Salas Quenta et al. (2022, *Quipukamayoc*, 10.15381/quipu.v30i63.24043, **Perú**).
 
 ## 5. Contexto peruano (no entra en las 20; sí puede citarse)
 
@@ -86,24 +86,31 @@ Abreviaturas de los objetivos: OE1 oferta · OE2 plataformas · OE3 acceso y ref
 
 Scimago prohíbe en su robots.txt las descargas automatizadas (`Disallow: /*out=xls`) y bloquea a los agentes de IA, así que **la verificación es manual, en tu navegador**. Para cada revista: (1) en **scimagojr.com**, busca el ISSN y anota el **cuartil 2024** de la categoría más afín (Finance; Economics and Econometrics; Business and International Management); (2) en **mjl.clarivate.com**, busca el ISSN y anota la colección WoS (SCIE, SSCI o ESCI).
 
-| Revista | ISSN | Artículos del núcleo | SJR 2024 (cuartil, categoría) | WoS (colección) |
-|---|---|---|---|---|
-| Journal of Financial Economics | 0304-405X | 1, 6 | | |
-| Journal of Business Venturing Insights | 2352-6734 | 2 | | |
-| Journal of Economics and Business | 0148-6195 | 3, 12 | | |
-| Journal of Banking & Finance | 0378-4266 | 4, 15 | | |
-| Journal of Financial and Quantitative Analysis | 0022-1090 | 5 | | |
-| The British Accounting Review | 0890-8389 | 7 | | |
-| The Review of Financial Studies | 0893-9454 | 8 | | |
-| Journal of International Financial Management & Accounting | 0954-1314 | 9 | | |
-| Research in International Business and Finance | 0275-5319 | 10 | | |
-| Finance Research Letters | 1544-6123 | 11, 16 | | |
-| Management Science | 0025-1909 | 13 | | |
-| Technological Forecasting and Social Change | 0040-1625 | 14 | | |
-| Journal of Small Business & Entrepreneurship | 0827-6331 | 17 | | |
-| Journal of Economics, Finance and Administrative Science | 2077-1886 | 18 | | |
-| Journal of Economic Studies | 0144-3585 | 19 | | |
-| Global Finance Journal | 1044-0283 | 20 | | |
+**Orden sugerido:** primero las 6 marcadas con ⚠, que son las que podrían no alcanzar Q1/Q2 o no estar en WoS. Las otras 10 son revistas de primer nivel en finanzas y gestión, pero igual hay que anotar su dato.
+
+| # | Revista | ISSN | Núcleo | Scimago | WoS (MJL) | SJR 2024 (cuartil, categoría) | WoS (colección) |
+|---|---|---|---|---|---|---|---|
+| 1 | ⚠ Journal of Business Venturing Insights | 2352-6734 | 2 | [abrir](https://www.scimagojr.com/journalsearch.php?q=23526734) | [abrir](https://mjl.clarivate.com/search-results?issn=2352-6734) | **Q1** (verificado por el estudiante, 2026-11-07) | pendiente |
+| 2 | ⚠ Journal of Economics and Business | 0148-6195 | 3, 12 | [abrir](https://www.scimagojr.com/journalsearch.php?q=01486195) | [abrir](https://mjl.clarivate.com/search-results?issn=0148-6195) | **Q1** (verificado por el estudiante, 2026-11-07) | pendiente |
+| 3 | ⚠ Journal of International Financial Management & Accounting | 0954-1314 | 9 | [abrir](https://www.scimagojr.com/journalsearch.php?q=09541314) | [abrir](https://mjl.clarivate.com/search-results?issn=0954-1314) | **Q1** (verificado por el estudiante, 2026-11-07) | pendiente |
+| 4 | ⚠ Journal of Small Business & Entrepreneurship | 0827-6331 | 17 | [abrir](https://www.scimagojr.com/journalsearch.php?q=08276331) | [abrir](https://mjl.clarivate.com/search-results?issn=0827-6331) | **Q2** (verificado por el estudiante, 2026-11-07) | pendiente |
+| 5 | ⚠ Journal of Economics, Finance and Administrative Science | 2077-1886 | 18 | [abrir](https://www.scimagojr.com/journalsearch.php?q=20771886) | [abrir](https://mjl.clarivate.com/search-results?issn=2077-1886) | **Q2** (verificado por el estudiante, 2026-11-07) | pendiente |
+| 6 | ⚠ Journal of Economic Studies | 0144-3585 | 19 | [abrir](https://www.scimagojr.com/journalsearch.php?q=01443585) | [abrir](https://mjl.clarivate.com/search-results?issn=0144-3585) | **Q1** (verificado por el estudiante, 2026-11-07) | pendiente |
+| 7 | Journal of Financial Economics | 0304-405X | 1, 6 | [abrir](https://www.scimagojr.com/journalsearch.php?q=0304405X) | [abrir](https://mjl.clarivate.com/search-results?issn=0304-405X) | | |
+| 8 | Journal of Banking & Finance | 0378-4266 | 4, 15 | [abrir](https://www.scimagojr.com/journalsearch.php?q=03784266) | [abrir](https://mjl.clarivate.com/search-results?issn=0378-4266) | | |
+| 9 | Journal of Financial and Quantitative Analysis | 0022-1090 | 5 | [abrir](https://www.scimagojr.com/journalsearch.php?q=00221090) | [abrir](https://mjl.clarivate.com/search-results?issn=0022-1090) | | |
+| 10 | The British Accounting Review | 0890-8389 | 7 | [abrir](https://www.scimagojr.com/journalsearch.php?q=08908389) | [abrir](https://mjl.clarivate.com/search-results?issn=0890-8389) | | |
+| 11 | The Review of Financial Studies | 0893-9454 | 8 | [abrir](https://www.scimagojr.com/journalsearch.php?q=08939454) | [abrir](https://mjl.clarivate.com/search-results?issn=0893-9454) | | |
+| 12 | Research in International Business and Finance | 0275-5319 | 10 | [abrir](https://www.scimagojr.com/journalsearch.php?q=02755319) | [abrir](https://mjl.clarivate.com/search-results?issn=0275-5319) | | |
+| 13 | Finance Research Letters | 1544-6123 | 11, 16 | [abrir](https://www.scimagojr.com/journalsearch.php?q=15446123) | [abrir](https://mjl.clarivate.com/search-results?issn=1544-6123) | | |
+| 14 | Management Science | 0025-1909 | 13 | [abrir](https://www.scimagojr.com/journalsearch.php?q=00251909) | [abrir](https://mjl.clarivate.com/search-results?issn=0025-1909) | | |
+| 15 | Technological Forecasting and Social Change | 0040-1625 | 14 | [abrir](https://www.scimagojr.com/journalsearch.php?q=00401625) | [abrir](https://mjl.clarivate.com/search-results?issn=0040-1625) | | |
+| 16 | Global Finance Journal | 1044-0283 | 20 | [abrir](https://www.scimagojr.com/journalsearch.php?q=10440283) | [abrir](https://mjl.clarivate.com/search-results?issn=1044-0283) | | |
+
+**Qué anotar:**
+- **Scimago:** en la ficha de la revista, el recuadro *Quartiles* muestra un cuartil por categoría y por año. Anota el de **2024** en la categoría más afín (Finance; Economics and Econometrics; Business and International Management; Strategy and Management). Si en alguna categoría afín es Q1 o Q2, la revista cumple.
+- **MJL:** anota la colección de la Web of Science Core Collection: SSCI, SCIE o ESCI. Si la ficha pide iniciar sesión, la cuenta gratuita de Clarivate basta.
+- **Duda abierta:** ESCI es parte de la WoS Core Collection, pero la consigna no dice si basta. Si alguna revista solo está en ESCI, se puede reemplazar por la reserva para no correr riesgos.
 
 **Regla:** si una revista resulta Q3/Q4 o no figura en WoS, su artículo se reemplaza con la reserva (sección 4), que ya está verificada en Crossref.
 
