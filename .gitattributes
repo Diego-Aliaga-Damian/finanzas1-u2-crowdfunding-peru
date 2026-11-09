@@ -8,3 +8,4 @@ datos_crudos/** -text
 datos_procesados/** -text
 salidas/** -text
 log_ejecucion.txt -text
+pruebas/fixtures/** -text

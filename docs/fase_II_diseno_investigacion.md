@@ -158,7 +158,7 @@ El estudio es **descriptivo y comparativo**. Solo se formulan hipótesis donde l
 | Monto total y móvil de 12 meses | $\sum_i monto_{i,t}$; $\sum_{k=0}^{11} M_{t-k}$ | OE1 |
 | Variación interanual | $M^{12}_t / M^{12}_{t-12} - 1$ | OE1 |
 | Participación e HHI | $s_{i,t}=monto_{i,t}/M_t$; $HHI_t=\sum_i (100\,s_{i,t})^2$ | OE1 |
-| Tasa de colocación | $\text{financiados}/\text{publicados}$ por tipo | OE3, H2 |
+| Tasa de colocación | $\text{financiados}/\text{publicados}$ por tipo, **sobre sumas anuales o móviles de 12 meses**: en 16 plataforma-mes los financiados superan a los publicados, porque un proyecto puede financiarse en un mes posterior al de su publicación (hallazgo de la Fase IV) | OE3, H2 |
 | Monto promedio por proyecto | $\text{monto}/\text{financiados}$ por tipo | OE3, OE4 |
 | Ingresos trimestrales desacumulados | $I_q - I_{q-1}$ dentro del ejercicio (si son acumulados) | OE2 |
 | Costo de intermediación implícito | $\text{ingresos trimestrales}_{i} \times 1000 / \sum_{t\in q} monto_{i,t}$ | OE2, OE4 |

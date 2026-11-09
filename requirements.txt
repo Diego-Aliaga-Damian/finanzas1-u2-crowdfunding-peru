@@ -1,21 +1,29 @@
 # Versiones exactas de las librerías usadas (numeral 2.4.2). Python 3.14.7.
 # Instalación: python -m pip install -r requirements.txt
+annotated-types==0.8.0
 beautifulsoup4==4.15.0
 certifi==2026.10.23
 charset-normalizer==3.5.2
 colorama==0.4.6
 idna==3.20
 iniconfig==2.3.1
+mypy_extensions==1.2.0
 numpy==2.5.4
 packaging==26.3
 pandas==3.1.1
+pandera==0.35.0
 pluggy==1.7.0
+pydantic==2.14.3
+pydantic_core==2.50.4
 Pygments==2.21.0
 pytest==9.2.0
 python-dateutil==4.0.0
 python-dotenv==1.2.4
 requests==2.34.2
 soupsieve==4.0.1
+typeguard==4.6.0
+typing-inspect==0.9.0
+typing-inspection==0.4.5
 typing_extensions==4.16.0
 tzdata==2026.6
 urllib3==2.8.0

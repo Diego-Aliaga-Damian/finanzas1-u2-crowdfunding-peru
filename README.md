@@ -71,14 +71,24 @@ python codigo\03_limpieza_datos.py      # integración y base procesada (sin int
 python codigo\02_scraping_web.py --demo
 ```
 
+## Pruebas y auditoría (Fase IV)
+
+```powershell
+python -m pytest                        # pruebas con respuestas simuladas, sin internet (≈ 6 s)
+python codigo\auditoria.py              # auditoría local -> salidas\reporte_auditoria.md (≈ 1 min)
+python codigo\auditoria.py --en-vivo    # además coteja 10 filas al azar con BCRP y SIMV (semilla 0481)
+```
+
+La auditoría reproduce los controles de los numerales 2.4.1, 2.4.2, 2.4.5, 2.4.6 y 2.4.8. Cada control sale ✅ (cumple), ❌ (no cumple) o ⏳ (no ejecutado). Un control no ejecutado nunca se informa como cumplido.
+
 ## Estructura
 
 ```
-codigo/                  scripts 01-04 y comun.py (funciones compartidas)
+codigo/                  scripts 01-04, comun.py (funciones compartidas) y auditoria.py
 datos_crudos/            respuestas originales (JSON/HTML), robots.txt y CSV crudos, sin editar
 datos_procesados/        datos_procesados_2024200481M.csv
-salidas/                 reporte_limpieza.md; tablas y figuras de 04_analisis.py (pendiente)
-pruebas/                 pruebas automatizadas (pendiente)
+salidas/                 reporte_limpieza.md y reporte_auditoria.md; tablas y figuras de 04 (pendiente)
+pruebas/                 pruebas pytest con respuestas simuladas (fixtures/ = recortes de respuestas reales)
 docs/                    matriz de cumplimiento, diagnóstico, diseño, antecedentes y evidencias
 herramientas/            búsqueda bibliográfica reproducible (no forma parte de la base)
 diccionario_variables.md definición, unidad, frecuencia y fuente de cada variable

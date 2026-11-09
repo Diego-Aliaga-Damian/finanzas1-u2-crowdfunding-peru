@@ -1,7 +1,7 @@
 # Diego Sebastián Aliaga Damián
 # 2024200481M
 # Tema 96: Fintech y financiamiento participativo (crowdfunding) en el Perú: oferta y condiciones
-# Fecha de extracción: 2026-11-07
+# Fecha de extracción: 2026-11-07 (censo) y 2026-11-08 (reanudación)
 """02 — Scraping del portal SIMV de la SMV (vía 2 obligatoria de la Unidad II, numeral 2.4.1).
 
 Página: «Información de Proyectos» de Financiamiento Participativo Financiero (FPF)

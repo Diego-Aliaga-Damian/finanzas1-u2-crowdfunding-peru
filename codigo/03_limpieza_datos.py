@@ -1,7 +1,7 @@
 # Diego Sebastián Aliaga Damián
 # 2024200481M
 # Tema 96: Fintech y financiamiento participativo (crowdfunding) en el Perú: oferta y condiciones
-# Fecha de extracción: 2026-11-07
+# Fecha de extracción: 2026-11-07 (censo) y 2026-11-08 (reanudación)
 """03 — Limpieza, tipificación e integración de las fuentes (numeral 2.4.2).
 
 Entradas (solo datos_crudos/; este script no se conecta a internet):
