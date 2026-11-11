@@ -418,14 +418,45 @@ def controles_etica(http: pd.DataFrame) -> None:
 # ============================================================================
 # 8. Reproducibilidad de tablas y figuras (Bloque B del 2.4.6)
 # ============================================================================
+def reejecutar_04(destino: Path) -> Path:
+    """Ejecuta 04 completo escribiendo en una carpeta temporal (no toca las salidas entregadas ni el log)."""
+    s04 = cargar_script("04_analisis.py")
+    s04.SALIDAS = destino
+    s04.DIR_TABLAS, s04.DIR_FIGURAS = destino / "tablas", destino / "figuras"
+    s04.ARCHIVO_RESULTADOS, s04.MANIFIESTO = destino / "resultados_04.json", destino / "manifiesto_salidas.csv"
+    s04.configurar_log = lambda nombre: logger_silencioso()
+    s04.main()
+    return s04.MANIFIESTO
+
+
 def controles_salidas() -> None:
     S = "8. Tablas y figuras"
     if not (CODIGO / "04_analisis.py").exists():
         anotar(S, "Las tablas y figuras del artículo se regeneran con 04_analisis.py", "2.4.6 / B", NO_EJECUTADO,
                "no ejecutado: 04_analisis.py se escribe en la Fase V")
         return
-    anotar(S, "Las tablas y figuras del artículo se regeneran con 04_analisis.py", "2.4.6 / B", NO_EJECUTADO,
-           "pendiente de implementar en la auditoría cuando exista 04")
+    manifiesto = SALIDAS / "manifiesto_salidas.csv"
+    if not manifiesto.exists():
+        anotar(S, "Manifiesto de salidas de 04", "2.4.6 / B", NO_CUMPLE, "falta: ejecutar `python codigo/04_analisis.py`")
+        return
+    entregado = pd.read_csv(manifiesto)
+    alterados = [a for a, h in zip(entregado.archivo, entregado.sha256)
+                 if not (SALIDAS / a).exists() or sha256_archivo(SALIDAS / a) != h]
+    anotar(S, "Las salidas entregadas coinciden con su manifiesto (SHA-256)", "2.4.5",
+           CUMPLE if not alterados else NO_CUMPLE,
+           f"{len(entregado) - len(alterados)}/{len(entregado)} archivos" + (f"; alterados o ausentes: {alterados[:5]}" if alterados else ""))
+    with tempfile.TemporaryDirectory() as tmp:
+        nuevo = pd.read_csv(reejecutar_04(Path(tmp)))
+    cruce = entregado.merge(nuevo, on="archivo", how="outer", suffixes=("_entregado", "_regenerado"))
+    iguales = int((cruce.sha256_entregado == cruce.sha256_regenerado).sum())
+    tipos = entregado.archivo.str.extract(r"\.(\w+)$")[0].value_counts().to_dict()
+    anotar(S, "Las tablas y figuras del artículo se regeneran con 04_analisis.py", "2.4.6 / B",
+           CUMPLE if iguales == len(cruce) else NO_CUMPLE,
+           f"{iguales}/{len(cruce)} archivos idénticos byte a byte (" + ", ".join(f"{k}: {v}" for k, v in sorted(tipos.items())) + ")")
+    codigo_04 = (CODIGO / "04_analisis.py").read_text(encoding="utf-8")
+    lee_crudos = "CRUDOS" in codigo_04 or "datos_crudos" in codigo_04.split('"""', 2)[-1]
+    anotar(S, "04 lee exclusivamente la base procesada", "2.4.2", NO_CUMPLE if lee_crudos else CUMPLE,
+           "solo usa datos_procesados" if not lee_crudos else "referencia a datos_crudos en el código")
 
 
 # ============================================================================

@@ -73,6 +73,7 @@ NOMBRE_CORTO = {"20605667351": "Inversiones.io", "20566550939": "Afluenta", "206
                 "20610205501": "Proyecto Crowd", "20612782513": "Prestopolis", "20614384213": "Securite"}
 
 TIPOS = {"EMPRESARIAL": "emp", "PERSONAL": "per"}
+UMBRAL_ESCALA_EEFF = 50_000  # miles de S/; por encima, probable registro en soles (ver detectar_atipicos)
 VARIABLES_SIMV = {"proyectos_publicados": "proy_publicados", "proyectos_financiados": "proy_financiados",
                   "monto_total_financiado": "monto_financiado"}
 VARIABLES_EEFF = {"ActivoTotal": "activo_total_miles", "PasivoTotal": "pasivo_total_miles",
@@ -279,7 +280,13 @@ def detectar_atipicos(panel: pd.DataFrame, log) -> list[str]:
         q1, q3 = c.quantile([0.25, 0.75])
         for periodo, valor in c[(c < q1 - 3 * (q3 - q1)) | (c > q3 + 3 * (q3 - q1))].items():
             hallazgos.append(f"{serie} {periodo}: cambio mensual de {valor:+.2f} puntos porcentuales")
-    registrar(log, f"Atípicos (Tukey, 3·RIC): {len(hallazgos)} identificados; se conservan (datos oficiales)")
+    # Escala de los EEFF: la SMV los publica en miles de S/; un activo mayor a 50 000 «miles» (S/ 50 millones) en
+    # sociedades con capital del orden de S/ 0,35 millones indica un registro hecho en soles. Se reporta; no se corrige aquí.
+    escala = panel[panel.activo_total_miles > UMBRAL_ESCALA_EEFF]
+    for _, f in escala.iterrows():
+        hallazgos.append(f"{f.plataforma} {f.trimestre_eeff}: activo total = {f.activo_total_miles:,.0f} «miles de S/»; "
+                         "probable registro en soles (escala ×1 000)")
+    registrar(log, f"Atípicos (Tukey, 3·RIC, y escala de EEFF): {len(hallazgos)} identificados; se conservan (datos oficiales)")
     return hallazgos
 
 

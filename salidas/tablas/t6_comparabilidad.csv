@@ -1,0 +1,8 @@
+Dimensión,Financiamiento participativo,Crédito tradicional (BCRP),¿Comparable?
+Moneda,Soles (SIMV),Moneda nacional,Sí
+Plazo,No publicado por operación,Tramos ≤360 d y >360 d,Parcial (supuesto declarado)
+Precio (tasa),No observado,TEA promedio,No: escenarios del simulador
+Costos adicionales,Ingresos de la plataforma / monto (aprox.),Comisiones fuera de la TEA,Parcial; sin TCEA
+Riesgo del receptor,No observado (selección de la plataforma),Promedio de toda la cartera,No
+Garantías,No observadas,No observadas,No
+Regulador,SMV,SBS,Diferencia institucional

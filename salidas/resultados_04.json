@@ -1,0 +1,142 @@
+{
+  "sha256_base_procesada": "cd48b21f22844cff650f5257a324b632d5afac7a009dbaceebe7456e9a7e1b8c",
+  "titulos_figuras": {
+    "f1_monto_mensual_por_plataforma": "Monto financiado mensual mediante plataformas de financiamiento participativo financiero, por plataforma (S/ millones corrientes)",
+    "f2_publicados_financiados_colocacion": "Proyectos publicados y financiados por mes y tasa de colocación móvil de 12 meses",
+    "f3_tasas_credito_tradicional": "Tasas activas promedio del crédito tradicional en moneda nacional por segmento",
+    "f4_costo_intermediacion_implicito": "Ingresos trimestrales de la plataforma líder como porcentaje del monto financiado en el trimestre"
+  },
+  "eeff_escala_corregida": [
+    "Afluenta 2022-T2",
+    "Afluenta 2022-T3",
+    "Afluenta 2022-T4",
+    "Proyecto Crowd 2023-T3",
+    "Proyecto Crowd 2023-T4",
+    "Proyecto Crowd 2024-T1",
+    "Proyecto Crowd 2024-T2",
+    "Proyecto Crowd 2024-T3"
+  ],
+  "inicio_actividad_fpf": "2022-06",
+  "plataformas_con_financiamiento": 3,
+  "participacion_lider_periodo_pct": 98.54,
+  "plataforma_lider": "Inversiones.io",
+  "anual": {
+    "2022": {
+      "proyectos_financiados": 110,
+      "monto_soles": 6463186,
+      "monto_promedio_proyecto_soles": 58756.0,
+      "tasa_colocacion_pct": 54.5,
+      "hhi": 8882.0,
+      "var_interanual_monto_pct": null
+    },
+    "2023": {
+      "proyectos_financiados": 141,
+      "monto_soles": 16239062,
+      "monto_promedio_proyecto_soles": 115171.0,
+      "tasa_colocacion_pct": 77.9,
+      "hhi": 9770.0,
+      "var_interanual_monto_pct": 151.3
+    },
+    "2024": {
+      "proyectos_financiados": 252,
+      "monto_soles": 54282703,
+      "monto_promedio_proyecto_soles": 215408.0,
+      "tasa_colocacion_pct": 83.4,
+      "hhi": 9999.0,
+      "var_interanual_monto_pct": 234.3
+    },
+    "2025": {
+      "proyectos_financiados": 432,
+      "monto_soles": 120277837,
+      "monto_promedio_proyecto_soles": 278421.0,
+      "tasa_colocacion_pct": 88.5,
+      "hhi": 9977.0,
+      "var_interanual_monto_pct": 121.6
+    },
+    "2026": {
+      "proyectos_financiados": 327,
+      "monto_soles": 104706400,
+      "monto_promedio_proyecto_soles": 320203.0,
+      "tasa_colocacion_pct": 94.2,
+      "hhi": 9321.0,
+      "var_interanual_monto_pct": 14.7
+    }
+  },
+  "costo_intermediacion_lider": {
+    "plataforma": "Inversiones.io",
+    "mediana_trimestral_pct": 5.27,
+    "mediana_trimestral_lectura_acumulada_pct": 0.76,
+    "trimestres": 17
+  },
+  "ingresos_no_monotonos": {
+    "plataforma_anios_con_caida": 6,
+    "plataforma_anios_con_2_o_mas_trimestres": 15
+  },
+  "h1": {
+    "U": 387.0,
+    "p_valor_unilateral": 2.0836085821027377e-05,
+    "n_antes": 42,
+    "n_despues": 10,
+    "mediana_antes_soles": 3316790.5,
+    "mediana_despues_soles": 11372218.5,
+    "ic95_diferencia_medianas_soles": [
+      5632955.05,
+      11268215.0
+    ]
+  },
+  "h2": {
+    "z": 14.88,
+    "p_valor": 4.455657518211043e-50,
+    "colocacion_empresarial_pct": 89.5,
+    "colocacion_personal_pct": 51.4
+  },
+  "salto_tea_bcos_pyme_2025_03_pp": 19.25,
+  "e1": {
+    "E1: Δ monto FPF vs Δ tea_bcos_pyme_360": {
+      "rho": -0.158,
+      "p_valor": 0.26922861074262894
+    },
+    "E1: Δ monto FPF vs Δ tea_cmac_pyme_360": {
+      "rho": -0.205,
+      "p_valor": 0.14886173913164255
+    },
+    "E1: Δ monto FPF vs Δ tea_crac_pyme_360": {
+      "rho": 0.007,
+      "p_valor": 0.9617956448032297
+    },
+    "E1: Δ monto FPF vs Δ tea_bcos_pyme_mas360": {
+      "rho": -0.099,
+      "p_valor": 0.49143262587709846
+    },
+    "E1: Δ monto FPF vs Δ tea_cmac_pyme_mas360": {
+      "rho": -0.159,
+      "p_valor": 0.26479929162504495
+    },
+    "E1: Δ monto FPF vs Δ tea_crac_pyme_mas360": {
+      "rho": -0.223,
+      "p_valor": 0.11605979287002129
+    }
+  },
+  "h1_sensibilidad": {
+    "H1 base: corte dic-2025, soles corrientes": {
+      "U": 387.0,
+      "p_valor_unilateral": 2.0836085821027377e-05
+    },
+    "H1: corte nov-2025": {
+      "U": 412.0,
+      "p_valor_unilateral": 1.539678972707236e-05
+    },
+    "H1: soles reales de dic-2021 (IPC)": {
+      "U": 385.0,
+      "p_valor_unilateral": 2.5437420732544138e-05
+    },
+    "H1: solo Inversiones.io": {
+      "U": 370.0,
+      "p_valor_unilateral": 4.756675182137737e-05
+    },
+    "H1: sin Inversiones.io": {
+      "U": 258.0,
+      "p_valor_unilateral": 0.08865932119916514
+    }
+  }
+}

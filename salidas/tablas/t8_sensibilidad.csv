@@ -1,0 +1,13 @@
+contraste,estadistico,valor,p_valor,detalle
+"H1 base: corte dic-2025, soles corrientes",U,387.0,2.0836085821027377e-05,"mediana antes 3.32 M (n=42); después 11.37 M (n=10); diferencia 8.06 M, IC 95 % bootstrap [5.63; 11.27]"
+H1: corte nov-2025,U,412.0,1.539678972707236e-05,"mediana antes 3.24 M (n=41); después 11.36 M (n=11); diferencia 8.12 M, IC 95 % bootstrap [5.57; 11.27]"
+H1: soles reales de dic-2021 (IPC),U,385.0,2.5437420732544138e-05,"mediana antes 2.93 M (n=42); después 9.44 M (n=10); diferencia 6.51 M, IC 95 % bootstrap [4.63; 9.39]"
+H1: solo Inversiones.io,U,370.0,4.756675182137737e-05,"mediana antes 3.39 M (n=41); después 10.63 M (n=10); diferencia 7.24 M, IC 95 % bootstrap [4.55; 10.73]"
+H1: sin Inversiones.io,U,258.0,0.08865932119916514,"mediana antes 0.00 M (n=42); después 0.00 M (n=10); diferencia 0.00 M, IC 95 % bootstrap [0.00; 0.87]"
+E1: Δ monto FPF vs Δ tea_bcos_pyme_360,rho de Spearman,-0.15764705882352942,0.26922861074262894,n=51 cambios mensuales; IC 95 % bootstrap por bloques [-0.41; 0.16]
+E1: Δ monto FPF vs Δ tea_cmac_pyme_360,rho de Spearman,-0.2050678733031674,0.14886173913164255,n=51 cambios mensuales; IC 95 % bootstrap por bloques [-0.47; 0.09]
+E1: Δ monto FPF vs Δ tea_crac_pyme_360,rho de Spearman,0.006877828054298643,0.9617956448032297,n=51 cambios mensuales; IC 95 % bootstrap por bloques [-0.27; 0.25]
+E1: Δ monto FPF vs Δ tea_bcos_pyme_mas360,rho de Spearman,-0.09855203619909503,0.49143262587709846,n=51 cambios mensuales; IC 95 % bootstrap por bloques [-0.34; 0.18]
+E1: Δ monto FPF vs Δ tea_cmac_pyme_mas360,rho de Spearman,-0.1590950226244344,0.26479929162504495,n=51 cambios mensuales; IC 95 % bootstrap por bloques [-0.37; 0.12]
+E1: Δ monto FPF vs Δ tea_crac_pyme_mas360,rho de Spearman,-0.2228054298642534,0.11605979287002129,n=51 cambios mensuales; IC 95 % bootstrap por bloques [-0.48; 0.08]
+S1: ingresos/monto de Inversiones.io (mediana trimestral),%,5.27,,lectura acumulada de los ingresos: 0.76 %

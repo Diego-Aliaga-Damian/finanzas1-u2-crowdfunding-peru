@@ -1,9 +1,9 @@
 # Reporte de auditoría automatizada
 
-- Fecha y hora: 2026-11-09 12:18:38
-- Commit de referencia: `fedbd0f` (los cambios no confirmados también se auditan)
-- Modo: local + cotejo en vivo
-- Resultado: ✅ 44 cumplen · ❌ 0 no cumplen · ⏳ 2 no ejecutados
+- Fecha y hora: 2026-11-10 21:36:20
+- Commit de referencia: `5352138` (los cambios no confirmados también se auditan)
+- Modo: local, sin internet (cotejo en vivo: no ejecutado)
+- Resultado: ✅ 46 cumplen · ❌ 0 no cumplen · ⏳ 1 no ejecutados
 
 > Regla de autenticidad: un control marcado ⏳ no se ejecutó y no cuenta como cumplido.
 
@@ -14,20 +14,20 @@
 | ✅ | Script `01_extraccion_api.py` | 2.4.2 | presente |
 | ✅ | Script `02_scraping_web.py` | 2.4.2 | presente |
 | ✅ | Script `03_limpieza_datos.py` | 2.4.2 | presente |
-| ⏳ | Script `04_analisis.py` | 2.4.2 | pendiente: se escribe en la Fase V |
-| ✅ | Archivo `README.md` | 2.4.2 | 6,179 bytes |
-| ✅ | Archivo `requirements.txt` | 2.4.2 | 664 bytes |
+| ✅ | Script `04_analisis.py` | 2.4.2 | presente |
+| ✅ | Archivo `README.md` | 2.4.2 | 7,608 bytes |
+| ✅ | Archivo `requirements.txt` | 2.4.2 | 841 bytes |
 | ✅ | Archivo `.env.example` | 2.4.2 | 424 bytes |
-| ✅ | Archivo `log_ejecucion.txt` | 2.4.2 | 482,065 bytes |
+| ✅ | Archivo `log_ejecucion.txt` | 2.4.2 | 491,143 bytes |
 | ✅ | Archivo `diccionario_variables.md` | 2.4.2 | 9,095 bytes |
 | ✅ | Archivo `incidencias_fuente.md` | 2.4.2 | 7,382 bytes |
 | ✅ | Crudo `datos_crudos_2024200481M_bcrp.csv` | 2.4.1 | 690 filas |
 | ✅ | Crudo `datos_crudos_2024200481M_smv_odata.csv` | 2.4.1 | 6,001 filas |
 | ✅ | Crudo `datos_crudos_2024200481M_smv_simv.csv` | 2.4.1 | 536 filas |
 | ✅ | Procesado `datos_procesados_2024200481M.csv` | 2.4.1 | presente |
-| ✅ | Encabezado obligatorio de 4 líneas en cada archivo de código | 2.4.2 | 5/5 archivos |
+| ✅ | Encabezado obligatorio de 4 líneas en cada archivo de código | 2.4.2 | 6/6 archivos |
 | ✅ | Sin rutas absolutas del equipo en el código | 2.4.4 | ninguna |
-| ✅ | requirements.txt con versiones exactas | 2.4.2 | 27 librerías con `==` |
+| ✅ | requirements.txt con versiones exactas | 2.4.2 | 37 librerías con `==` |
 | ✅ | .env.example sin claves ni valores reales | 2.4.4 | 2 variables, todas vacías |
 
 ## 2. Mínimos de la base
@@ -89,11 +89,12 @@
 
 | Estado | Control | Numeral | Evidencia |
 |---|---|---|---|
-| ⏳ | Las tablas y figuras del artículo se regeneran con 04_analisis.py | 2.4.6 / B | no ejecutado: 04_analisis.py se escribe en la Fase V |
+| ✅ | Las salidas entregadas coinciden con su manifiesto (SHA-256) | 2.4.5 | 30/30 archivos |
+| ✅ | Las tablas y figuras del artículo se regeneran con 04_analisis.py | 2.4.6 / B | 30/30 archivos idénticos byte a byte (csv: 13, json: 1, pdf: 4, png: 4, tex: 8) |
+| ✅ | 04 lee exclusivamente la base procesada | 2.4.2 | solo usa datos_procesados |
 
 ## 9. Cotejo en vivo con la fuente
 
 | Estado | Control | Numeral | Evidencia |
 |---|---|---|---|
-| ✅ | BCRP en vivo: 10 filas al azar × 10 series | 2.4.6 / A1 | 100/100 valores iguales a la API hoy |
-| ✅ | SIMV en vivo: 10 plataforma-mes al azar (préstamos, ambos tipos) | 2.4.6 / A1 | 10/10 filas cotejadas; 54/54 valores iguales al portal hoy |
+| ⏳ | Cotejo de 10 filas al azar con BCRP y SIMV | 2.4.6 / A1 | no ejecutado: usar `python codigo/auditoria.py --en-vivo` |

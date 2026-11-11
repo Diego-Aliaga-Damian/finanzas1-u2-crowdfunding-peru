@@ -14,7 +14,7 @@ Archivo generado: `datos_procesados/datos_procesados_2024200481M.csv` · filas: 
 - ✅ Panel: 414 filas = 6 plataformas × 69 meses; llave ruc + periodo única
 - ✅ estado_simv: sin_registros=267, con_registros=107, no_obtenido=40
 - ✅ EEFF integrados: 52/52 trimestres
-- ✅ Atípicos (Tukey, 3·RIC): 27 identificados; se conservan (datos oficiales)
+- ✅ Atípicos (Tukey, 3·RIC, y escala de EEFF): 35 identificados; se conservan (datos oficiales)
 
 ## Transformaciones aplicadas
 
@@ -76,3 +76,11 @@ Los faltantes de SIMV corresponden a meses sin registros o no obtenidos (`estado
 - tea_crac_pyme_mas360 2023-09: cambio mensual de +2.39 puntos porcentuales
 - tea_crac_pyme_mas360 2023-10: cambio mensual de +3.51 puntos porcentuales
 - tea_crac_pyme_mas360 2024-02: cambio mensual de -1.25 puntos porcentuales
+- Afluenta 2022-T2: activo total = 1,113,218 «miles de S/»; probable registro en soles (escala ×1 000)
+- Afluenta 2022-T3: activo total = 963,476 «miles de S/»; probable registro en soles (escala ×1 000)
+- Afluenta 2022-T4: activo total = 966,653 «miles de S/»; probable registro en soles (escala ×1 000)
+- Proyecto Crowd 2023-T3: activo total = 361,538 «miles de S/»; probable registro en soles (escala ×1 000)
+- Proyecto Crowd 2023-T4: activo total = 388,734 «miles de S/»; probable registro en soles (escala ×1 000)
+- Proyecto Crowd 2024-T1: activo total = 361,538 «miles de S/»; probable registro en soles (escala ×1 000)
+- Proyecto Crowd 2024-T2: activo total = 421,899 «miles de S/»; probable registro en soles (escala ×1 000)
+- Proyecto Crowd 2024-T3: activo total = 421,899 «miles de S/»; probable registro en soles (escala ×1 000)

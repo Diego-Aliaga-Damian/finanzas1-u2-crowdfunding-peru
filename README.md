@@ -10,7 +10,7 @@
 | Docente | Dr. Ciro Iván Machacuay Meza |
 | Repositorio | https://github.com/Diego-Aliaga-Damian/finanzas1-u2-crowdfunding-peru |
 
-> **Estado: en construcción (Fase III).** Ya están la extracción (01 y 02), la limpieza (03) y la base procesada. Falta el análisis (04). Lo que todavía no existe figura como *pendiente*.
+> **Estado: en construcción.** Ya están la extracción (01 y 02), la limpieza (03), el análisis (04), las pruebas y la auditoría. Faltan el artículo, el Beamer y el póster.
 
 ## Objetivo
 
@@ -61,9 +61,14 @@ python codigo\01_extraccion_api.py      # API: BCRPData y SMV OData (≈ 3 min)
 python codigo\02_scraping_web.py        # scraping del SIMV (≈ 50 min, con pausas de 3 s)
 python codigo\02_scraping_web.py --reanudar   # solo consulta lo que falta
 python codigo\03_limpieza_datos.py      # integración y base procesada (sin internet)
+python codigo\04_analisis.py            # tablas y figuras del artículo en salidas\ (sin internet, ≈ 1 min)
 ```
 
-`04_analisis.py`: pendiente.
+## Análisis (04)
+
+`04_analisis.py` lee solo `datos_procesados` y genera en `salidas/` 8 tablas (CSV y LaTeX), 4 figuras (PNG y PDF, cada una con su tabla de datos), `resultados_04.json` con las cifras clave y `manifiesto_salidas.csv` con el SHA-256 de cada salida. Dos ejecuciones producen archivos idénticos byte a byte.
+
+Supuestos declarados: (S1) los ingresos de la SMV son trimestrales, no acumulados; (S2) los meses no obtenidos no se imputan; (S3) la tasa de colocación se calcula sobre sumas anuales o de 12 meses; (S4) las asociaciones no implican causalidad; (S5) los estados financieros registrados en soles en lugar de miles se reescalan solo para el análisis. Bootstrap con semilla `0481`.
 
 **Demostración en vivo (3 solicitudes, ≈ 15 s; escribe en `salidas/demo/` y no toca los crudos):**
 
@@ -87,7 +92,7 @@ La auditoría reproduce los controles de los numerales 2.4.1, 2.4.2, 2.4.5, 2.4.
 codigo/                  scripts 01-04, comun.py (funciones compartidas) y auditoria.py
 datos_crudos/            respuestas originales (JSON/HTML), robots.txt y CSV crudos, sin editar
 datos_procesados/        datos_procesados_2024200481M.csv
-salidas/                 reporte_limpieza.md y reporte_auditoria.md; tablas y figuras de 04 (pendiente)
+salidas/                 tablas/ y figuras/ de 04, resultados_04.json, manifiesto_salidas.csv y reportes
 pruebas/                 pruebas pytest con respuestas simuladas (fixtures/ = recortes de respuestas reales)
 docs/                    matriz de cumplimiento, diagnóstico, diseño, antecedentes y evidencias
 herramientas/            búsqueda bibliográfica reproducible (no forma parte de la base)
