@@ -35,6 +35,7 @@ Ejecución (desde la raíz del proyecto):  python codigo/04_analisis.py
 from __future__ import annotations
 
 import json
+import re
 import sys
 
 import matplotlib
@@ -167,8 +168,10 @@ def guardar_tabla(raw: pd.DataFrame, formateada: pd.DataFrame, nombre: str, log,
     DIR_TABLAS.mkdir(parents=True, exist_ok=True)
     csv = DIR_TABLAS / f"{nombre}.csv"
     raw.to_csv(csv, index=False, encoding="utf-8", lineterminator="\n")
-    esc = lambda s: (str(s).replace("\\", "\\textbackslash{}").replace("&", "\\&").replace("%", "\\%")
-                     .replace("_", "\\_").replace("#", "\\#").replace("$", "\\$").replace("\u2009", "\\,"))
+    # Signo menos tipográfico (U+2212) en números negativos; no toca fechas como 2022-T2 ni rangos como jun-2023
+    esc = lambda s: re.sub(r"(?<![\w-])-(?=\d)", "\u2212",
+                           str(s).replace("\\", "\\textbackslash{}").replace("&", "\\&").replace("%", "\\%")
+                           .replace("_", "\\_").replace("#", "\\#").replace("$", "\\$").replace("\u2009", "\\,"))
     al = alineacion or ("l" + "r" * (formateada.shape[1] - 1))
     lineas = [f"% Generado por codigo/04_analisis.py; no editar a mano.",
               f"\\begin{{tabularx}}{{\\linewidth}}{{{columnas_x(al, pesos)}}}", "\\toprule",
@@ -249,7 +252,7 @@ def t1_plataformas(d: pd.DataFrame, log) -> None:
         "Plataforma": t.plataforma, "Lista SIMV": t.lista_simv.str.capitalize(),
         "Meses obtenidos": [f"{a}/{b}" for a, b in zip(t.meses_obtenidos_simv, t.meses_periodo)],
         "Meses con financiamiento": t.meses_con_financiamiento,
-        "Periodo de actividad": [f"{a} a {b}" if a else "—" for a, b in zip(t.primer_mes_financiamiento, t.ultimo_mes_financiamiento)],
+        "Periodo de actividad": [f"{a} a {b}" if pd.notna(a) else "—" for a, b in zip(t.primer_mes_financiamiento, t.ultimo_mes_financiamiento)],
         "Proyectos financiados": t.proyectos_financiados.map(num),
         "Monto (S/ millones)": (t.monto_financiado_soles / 1e6).map(lambda x: num(x, 2)),
         "Participación (%)": t.participacion_monto_pct.map(lambda x: num(x, 1)),
@@ -543,7 +546,8 @@ def f3_tasas_tradicionales(m: pd.DataFrame, log) -> None:
     ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.2), ncols=2)  # fuera del área de datos
     ax.set_xlim(-1, len(m) + 4)
     guardar_figura(fig, "f3_tasas_credito_tradicional", m[list(COLOR_SEGMENTO)], log)
-    resultados["salto_tea_bcos_pyme_2025_03_pp"] = round(float(m.loc["2025-03", "tea_bcos_pyme_360"] - m.loc["2025-02", "tea_bcos_pyme_360"]), 2)
+    # 4 decimales: con 2 (19.25) el texto redondeaba a 19.2 y la figura mostraba 19.3
+    resultados["salto_tea_bcos_pyme_2025_03_pp"] = round(float(m.loc["2025-03", "tea_bcos_pyme_360"] - m.loc["2025-02", "tea_bcos_pyme_360"]), 4)
 
 
 def t6_comparabilidad(log) -> None:

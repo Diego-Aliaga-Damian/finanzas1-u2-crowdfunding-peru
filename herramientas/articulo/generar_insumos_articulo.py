@@ -8,7 +8,6 @@ Salidas en articulo/generado/:
     cifras.tex                macros \\cifra{clave} con las cifras citadas en el texto (de salidas/resultados_04.json,
                               datos_procesados y log_ejecucion.txt)
     anexo_endpoints.tex       fuentes, endpoints y parámetros (constantes de los scripts 01 y 02)
-    anexo_series_bcrp.tex     códigos BCRP con su nombre oficial (del JSON crudo)
     anexo_diccionario.tex     diccionario de variables (de diccionario_variables.md)
     anexo_reproducibilidad.tex  repositorio, commit, fechas, SHA-256 y versiones
 
@@ -27,7 +26,7 @@ import pandas as pd
 
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ / "codigo"))
-from comun import CODIGO_MATRICULA, CRUDOS, PROCESADOS, SALIDAS, sha256_archivo  # noqa: E402
+from comun import CODIGO_MATRICULA, PROCESADOS, SALIDAS, sha256_archivo  # noqa: E402
 
 DESTINO = RAIZ / "articulo" / "generado"
 CSV_PROCESADO = PROCESADOS / f"datos_procesados_{CODIGO_MATRICULA}.csv"
@@ -54,8 +53,8 @@ def esc(texto) -> str:
 
 
 def num(x: float, dec: int = 0) -> str:
-    """Punto decimal y espacio fino de miles (recomendación de la RAE)."""
-    return f"{x:,.{dec}f}".replace(",", "\\,")
+    """Punto decimal, espacio fino de miles (recomendación de la RAE) y signo menos tipográfico (U+2212)."""
+    return f"{x:,.{dec}f}".replace(",", "\\,").replace("-", "−")
 
 
 def col(*anchos: float) -> str:
@@ -150,6 +149,77 @@ def cifras() -> dict[str, str]:
     c["solicitudesHTTP"] = num(len(extraccion))
     c["solicitudesHTTPok"] = num(sum(x == "200" for x in extraccion))
     c["solicitudesDiagnostico"] = num(sum(1 for f, s, _ in lineas_http if s not in SCRIPTS_EXTRACCION and f in FECHAS_EXTRACCION))
+    c.update(cifras_tablas(r))
+    # Versión de cada valor p con su relación, para escribir $p\cifra{xRel}$: «< 0.001» o «= 0.127»
+    for k in [k for k in c if k.endswith("P") or k.endswith("PMin") or k.endswith("PMax") or k.startswith("hUnoP")]:
+        c[f"{k}Rel"] = c[k] if c[k].startswith("<") else f"= {c[k]}"
+    return c
+
+
+def cifras_tablas(r: dict) -> dict[str, str]:
+    """Cifras que el texto de Resultados cita de las tablas de 04 (se leen de los CSV, sin redondeos manuales)."""
+    tablas, c = SALIDAS / "tablas", {}
+    lider = r["plataforma_lider"]
+    # T1: plataformas, ordenadas por monto financiado
+    t1 = pd.read_csv(tablas / "t1_plataformas.csv").sort_values("monto_financiado_soles", ascending=False)
+    c["plataformasRetiradas"] = str(int((t1.lista_simv == "retiradas").sum()))
+    for orden, f in zip(("Lider", "Segunda", "Tercera"), t1[t1.proyectos_financiados > 0].itertuples()):
+        c[f"nombre{orden}"] = f.plataforma
+        c[f"proyFin{orden}"] = num(f.proyectos_financiados)
+        c[f"monto{orden}"] = num(f.monto_financiado_soles / 1e6, 2)
+        c[f"inicio{orden}"] = mes_texto(f.primer_mes_financiamiento)
+        c[f"fin{orden}"] = mes_texto(f.ultimo_mes_financiamiento)
+        c[f"mesesFin{orden}"] = str(f.meses_con_financiamiento)
+    # T2: oferta anual
+    t2 = pd.read_csv(tablas / "t2_oferta_anual.csv")
+    for f in t2.itertuples():
+        c[f"publicados{f.anio}"] = num(f.proyectos_publicados)
+        c[f"partEmp{f.anio}"] = num(f.participacion_empresarial_pct, 1)
+        c[f"montoReal{f.anio}"] = num(f.monto_real_soles_dic2021 / 1e6, 2)
+    # T3: situación financiera de las sociedades administradoras
+    t3 = pd.read_csv(tablas / "t3_plataformas_financieros.csv")
+    tl = t3[t3.plataforma == lider]
+    for f in tl.itertuples():
+        c[f"roaLider{f.anio}"] = num(f.roa_pct, 1)
+        c[f"ingresosLider{f.anio}"] = num(f.ingresos_miles)
+        c[f"utilidadLider{f.anio}"] = num(f.utilidad_miles)
+        c[f"activoLider{f.anio}"] = num(f.activo_cierre_miles)
+        c[f"patrimonioLider{f.anio}"] = num(f.patrimonio_cierre_miles)
+    c["primerAnioUtilidadLider"] = str(int(tl[tl.utilidad_miles > 0].anio.min()))
+    c["costoAnualLiderMin"] = num(tl.costo_intermediacion_pct.min(), 1)
+    c["costoAnualLiderMax"] = num(tl.costo_intermediacion_pct.max(), 1)
+    otras = t3[(t3.plataforma != lider) & t3.roa_pct.notna()]
+    c["aniosOtras"] = str(len(otras))
+    c["aniosOtrasPerdida"] = str(int((otras.utilidad_miles < 0).sum()))
+    # T4: condiciones por tipo de receptor
+    t4 = pd.read_csv(tablas / "t4_condiciones_por_receptor.csv").set_index(["periodo", "tipo_receptor"])
+    for periodo, sufijo in (("Todo el periodo", ""), ("Antes de la reforma", "Antes"), ("Después de la reforma", "Despues")):
+        for tipo, t in (("Empresarial", "Emp"), ("Personal", "Per")):
+            f = t4.loc[(periodo, tipo)]
+            c[f"publicados{t}{sufijo}"] = num(f.proyectos_publicados)
+            if f.proyectos_publicados > 0:
+                c[f"colocacion{t}{sufijo}"] = num(f.tasa_colocacion_pct, 1)
+                c[f"montoMedio{t}{sufijo}"] = num(f.monto_promedio_proyecto_soles / 1e3, 1)
+                c[f"ic{t}{sufijo}Inf"] = num(f.ic95_inferior, 1)
+                c[f"ic{t}{sufijo}Sup"] = num(f.ic95_superior, 1)
+    # T7: tasas medias por periodo (2025 dividido por el quiebre de marzo)
+    t7 = pd.read_csv(tablas / "t7_comparacion_segmentos.csv")
+    claves = {"tamn": "Tamn", "tea_bcos_pyme_360": "BcosPyme", "tea_cmac_pyme_360": "CmacPyme",
+              "tea_crac_pyme_360": "CracPyme", "tea_bcos_consumo_360": "BcosConsumo"}
+    for f in t7.to_dict("records"):
+        etiqueta = f["periodo"][:4] + ("a" if "(ene-feb)" in f["periodo"] else "b" if "(mar-dic)" in f["periodo"] else "")
+        for col, nombre in claves.items():
+            c[f"tea{nombre}{etiqueta}"] = num(f[f"{col}_media"], 1)
+    for col, nombre in claves.items():
+        c[f"tea{nombre}Min"] = num(t7[f"{col}_media"].min(), 1)
+        c[f"tea{nombre}Max"] = num(t7[f"{col}_media"].max(), 1)
+    c["fpfEmpPrimero"] = num(t7.fpf_empresarial_monto_medio_soles.iloc[0] / 1e3, 1)
+    c["fpfEmpUltimo"] = num(t7.fpf_empresarial_monto_medio_soles.iloc[-1] / 1e3, 1)
+    # F1: monto mensual del sistema (datos de la figura)
+    f1 = pd.read_csv(SALIDAS / "figuras" / "f1_monto_mensual_por_plataforma_datos.csv", index_col=0).sum(axis=1)
+    for anio, mediana in f1.groupby(f1.index.str[:4]).median().items():
+        c[f"medianaMensual{anio}"] = num(mediana, 2)
+    c["maxMensual"], c["mesMaxMensual"] = num(f1.max(), 2), mes_texto(f1.idxmax())
     return c
 
 
@@ -166,20 +236,10 @@ def anexo_endpoints() -> list[str]:
     return lineas + ["\\bottomrule", "\\end{longtable}"]
 
 
-def anexo_series() -> list[str]:
-    s01 = cargar("01_extraccion_api.py")
-    datos = json.loads((CRUDOS / "bcrp" / "bcrp_series_mensuales.json").read_bytes().decode("utf-8"))
-    lineas = ["{\\small", f"\\begin{{longtable}}{{{col(2.1, 4.8, 8.0)}}}", "\\toprule", "Código & Variable & Nombre oficial en BCRPData \\\\",
-              "\\midrule", "\\endhead"]
-    for codigo, serie in zip(s01.SERIES_BCRP, datos["config"]["series"]):
-        lineas.append(f"{codigo} & \\texttt{{{esc(s01.SERIES_BCRP[codigo][0])}}} & {esc(serie['name'])} \\\\")
-    return lineas + ["\\bottomrule", "\\end{longtable}", "}"]
-
-
 def anexo_diccionario() -> list[str]:
     texto = (RAIZ / "diccionario_variables.md").read_text(encoding="utf-8").splitlines()
     filas = [l for l in texto if re.match(r"^\| \d+ \|", l)]
-    lineas = ["{\\footnotesize\\setlength{\\tabcolsep}{4pt}", f"\\begin{{longtable}}{{{col(3.8, 5.0, 2.2, 1.7, 1.9)}}}", "\\toprule",
+    lineas = ["{\\scriptsize\\setlength{\\tabcolsep}{4pt}", f"\\begin{{longtable}}{{{col(3.8, 5.0, 2.2, 1.7, 1.9)}}}", "\\toprule",
               "Variable & Definición & Unidad & Frecuencia & Fuente \\\\", "\\midrule", "\\endhead"]
     for f in filas:
         partes = [x.strip() for x in f.strip("|").split("|")]
@@ -222,7 +282,6 @@ def main() -> int:
     lineas += [f"\\expandafter\\def\\csname cifra@{k}\\endcsname{{{v}}}" for k, v in sorted(c.items())]
     escribir("cifras.tex", lineas)
     escribir("anexo_endpoints.tex", anexo_endpoints())
-    escribir("anexo_series_bcrp.tex", anexo_series())
     escribir("anexo_diccionario.tex", anexo_diccionario())
     escribir("anexo_reproducibilidad.tex", anexo_reproducibilidad())
     print(f"cifras disponibles: {len(c)}")

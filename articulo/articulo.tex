@@ -40,11 +40,13 @@
 
 % ---------- Tablas y figuras con formato APA 7 ----------
 \usepackage{graphicx,booktabs,array,float,pdflscape,ragged2e,longtable,tabularx}  % 04 escribe las tablas con tabularx
+\usepackage{placeins}  % \FloatBarrier: las tablas y figuras de Resultados no pasan a la Discusión
 \usepackage{newunicodechar}  % símbolos que aparecen en las tablas generadas por 04
 \newunicodechar{≤}{\ensuremath{\leq}}
 \newunicodechar{≥}{\ensuremath{\geq}}
 \newunicodechar{Δ}{\ensuremath{\Delta}}
 \newunicodechar{≈}{\ensuremath{\approx}}
+\newunicodechar{−}{\ensuremath{-}}  % signo menos de los números negativos (U+2212)
 \usepackage{caption}
 \captionsetup{labelfont=bf,textfont=it,labelsep=newline,justification=RaggedRight,singlelinecheck=false,
               skip=4pt,font={normalsize,singlespacing}}
@@ -52,9 +54,14 @@
 \captionsetup[figure]{position=top}
 \graphicspath{{../salidas/figuras/}}
 \newcommand{\tablas}{../salidas/tablas}
-\usepackage{etoolbox}
-\AtBeginEnvironment{table}{\singlespacing\small}  % APA 7 admite interlineado sencillo dentro de tablas y figuras
-\AtBeginEnvironment{figure}{\singlespacing}
+% Interlineado sencillo y letra pequeña dentro de tablas y figuras (APA 7 lo admite). Se agrega a
+% \@floatboxreset porque LaTeX restablece la letra al abrir cada flotante (un \AtBeginEnvironment no basta).
+\makeatletter
+\g@addto@macro\@floatboxreset{\singlespacing\small}
+\setlength{\@fptop}{0pt}  % las páginas solo de tablas o figuras empiezan arriba, no centradas
+\setlength{\@fpsep}{18pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
 \newcommand{\notaapa}[1]{\par\vspace{4pt}{\small\RaggedRight\textit{Nota.} #1\par}}
 
 % ---------- Referencias en APA 7 (biblatex-apa + biber) ----------
@@ -62,6 +69,7 @@
 \addbibresource{referencias.bib}
 \usepackage{xurl}
 \usepackage[hidelinks]{hyperref}
+\urlstyle{same}  % APA 7: las URL y DOI con la misma letra del texto, no en monoespaciada
 
 % ---------- Cifras del texto generadas desde salidas/resultados_04.json ----------
 \input{generado/cifras.tex}
@@ -78,6 +86,7 @@
 \input{secciones/03_antecedentes}
 \input{secciones/04_materiales_metodos}
 \input{secciones/05_resultados}
+\FloatBarrier
 \input{secciones/06_discusion}
 \input{secciones/07_conclusiones}
 \input{secciones/08_declaracion_ia}

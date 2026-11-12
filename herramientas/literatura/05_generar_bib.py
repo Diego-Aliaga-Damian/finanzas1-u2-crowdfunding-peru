@@ -32,6 +32,9 @@ DOIS = {  # núcleo del estado del arte (2023-2026) + contexto peruano
     "peru": ["10.18601/16923960.v25n2.09", "10.18178/ijtef.2023.14.4.759"],
 }
 IDIOMA = {"10.18601/16923960.v25n2.09": "spanish"}
+# Apellidos compuestos que Crossref parte mal (verificado en la ficha del FMI del documento de trabajo previo:
+# "Sami Ben Naceur"). Las llaves evitan que biblatex tome "Ben" como nombre de pila.
+AUTOR_CORREGIDO = {"10.1111/jifm.12242": ("Naceur, Sami Ben", "{Ben Naceur}, Sami")}
 PROTEGER = ["Latin America", "Caribbean", "Peruvian", "Peru", "FinTech", "FinTechs", "Fintech", "P2P", "U.S.", "Italian",
             "LendingClub", "SMEs", "ESG", "UK", "EU"]
 SALIDA = RAIZ / "articulo" / "referencias.bib"
@@ -80,8 +83,9 @@ def limpiar(bib: str, doi: str, k: str) -> str:
             t = re.sub(rf"(?<![{{\w]){re.escape(palabra)}(?![\w}}])", "{" + palabra + "}", t)
         bib = bib.replace(titulo.group(1), t, 1)
     bib = re.sub(r",\s*url\s*=\s*\{[^}]*\}", "", bib)  # biblatex-apa construye el enlace desde el DOI
-    nota = "\n  % VERIFICAR en el PDF: el apellido del primer autor es compuesto («Ben Naceur»)" if doi == "10.1111/jifm.12242" else ""
-    bib = bib.rstrip("}").rstrip().rstrip(",") + f",\n  langid = {{{IDIOMA.get(doi, 'english')}}}{nota}\n}}"
+    # Crossref registra a veces al editor de la revista; en APA 7 un artículo de revista no lleva editor
+    bib = re.sub(r",\s*editor\s*=\s*\{[^}]*\}", "", bib)
+    bib = bib.rstrip("}").rstrip().rstrip(",") + f",\n  langid = {{{IDIOMA.get(doi, 'english')}}}\n}}"
     return re.sub(r",\s+(\w+)\s*=", r",\n  \1 =", bib)
 
 
@@ -97,6 +101,8 @@ def main() -> int:
                 print(f"ERROR {r.status_code} {doi}")
                 return 1
             texto = corregir_autor_y_anio(r.text, anio_version_final(sesion, doi))
+            if doi in AUTOR_CORREGIDO:
+                texto = texto.replace(*AUTOR_CORREGIDO[doi])
             k = clave(texto, usadas)
             entradas.append(f"% {grupo} · doi:{doi}\n" + limpiar(texto, doi, k))
             print(f"OK {k:22s} {doi}")
