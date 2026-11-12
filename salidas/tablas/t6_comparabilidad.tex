@@ -1,14 +1,15 @@
 % Generado por codigo/04_analisis.py; no editar a mano.
-\begin{tabular}{llll}
+\begin{tabularx}{\linewidth}{>{\hsize=0.800\hsize\RaggedRight\arraybackslash\hspace{0pt}}X>{\hsize=1.120\hsize\RaggedRight\arraybackslash\hspace{0pt}}X>{\hsize=1.200\hsize\RaggedRight\arraybackslash\hspace{0pt}}X>{\hsize=0.880\hsize\RaggedRight\arraybackslash\hspace{0pt}}X}
 \toprule
 Dimensión & Financiamiento participativo & Crédito tradicional (BCRP) & ¿Comparable? \\
 \midrule
 Moneda & Soles (SIMV) & Moneda nacional & Sí \\
-Plazo & No publicado por operación & Tramos ≤360 d y >360 d & Parcial (supuesto declarado) \\
-Precio (tasa) & No observado & TEA promedio & No: escenarios del simulador \\
-Costos adicionales & Ingresos de la plataforma / monto (aprox.) & Comisiones fuera de la TEA & Parcial; sin TCEA \\
+Precio (tasa) & No observado por operación & TEA promedio por segmento & No: la TEA solo sirve de referencia \\
+Plazo & No publicado por operación & Tramos ≤360 d y >360 d & Parcial: se usa ≤360 d (supuesto declarado) \\
+Segmento (sustituto del sector) & Tipo de receptor: empresarial o personal & Pyme y consumo & Parcial \\
+Costo de intermediación & Ingresos de la plataforma / monto financiado (aprox.) & Comisiones fuera de la TEA (no publicadas) & No: no es un precio para el receptor \\
 Riesgo del receptor & No observado (selección de la plataforma) & Promedio de toda la cartera & No \\
 Garantías & No observadas & No observadas & No \\
 Regulador & SMV & SBS & Diferencia institucional \\
 \bottomrule
-\end{tabular}
+\end{tabularx}

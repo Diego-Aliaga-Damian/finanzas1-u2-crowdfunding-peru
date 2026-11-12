@@ -1,9 +1,9 @@
 # Reporte de auditoría automatizada
 
-- Fecha y hora: 2026-11-10 21:36:20
-- Commit de referencia: `5352138` (los cambios no confirmados también se auditan)
-- Modo: local, sin internet (cotejo en vivo: no ejecutado)
-- Resultado: ✅ 46 cumplen · ❌ 0 no cumplen · ⏳ 1 no ejecutados
+- Fecha y hora: 2026-11-11 19:38:22
+- Commit de referencia: `ce8e9f3` (los cambios no confirmados también se auditan)
+- Modo: local + cotejo en vivo
+- Resultado: ✅ 48 cumplen · ❌ 0 no cumplen · ⏳ 0 no ejecutados
 
 > Regla de autenticidad: un control marcado ⏳ no se ejecutó y no cuenta como cumplido.
 
@@ -15,11 +15,11 @@
 | ✅ | Script `02_scraping_web.py` | 2.4.2 | presente |
 | ✅ | Script `03_limpieza_datos.py` | 2.4.2 | presente |
 | ✅ | Script `04_analisis.py` | 2.4.2 | presente |
-| ✅ | Archivo `README.md` | 2.4.2 | 7,608 bytes |
+| ✅ | Archivo `README.md` | 2.4.2 | 7,988 bytes |
 | ✅ | Archivo `requirements.txt` | 2.4.2 | 841 bytes |
 | ✅ | Archivo `.env.example` | 2.4.2 | 424 bytes |
-| ✅ | Archivo `log_ejecucion.txt` | 2.4.2 | 491,143 bytes |
-| ✅ | Archivo `diccionario_variables.md` | 2.4.2 | 9,095 bytes |
+| ✅ | Archivo `log_ejecucion.txt` | 2.4.2 | 505,472 bytes |
+| ✅ | Archivo `diccionario_variables.md` | 2.4.2 | 9,450 bytes |
 | ✅ | Archivo `incidencias_fuente.md` | 2.4.2 | 7,382 bytes |
 | ✅ | Crudo `datos_crudos_2024200481M_bcrp.csv` | 2.4.1 | 690 filas |
 | ✅ | Crudo `datos_crudos_2024200481M_smv_odata.csv` | 2.4.1 | 6,001 filas |
@@ -97,4 +97,5 @@
 
 | Estado | Control | Numeral | Evidencia |
 |---|---|---|---|
-| ⏳ | Cotejo de 10 filas al azar con BCRP y SIMV | 2.4.6 / A1 | no ejecutado: usar `python codigo/auditoria.py --en-vivo` |
+| ✅ | BCRP en vivo: 10 filas al azar × 10 series | 2.4.6 / A1 | 100/100 valores iguales a la API hoy |
+| ✅ | SIMV en vivo: 10 plataforma-mes al azar (préstamos, ambos tipos) | 2.4.6 / A1 | 10/10 filas cotejadas; 54/54 valores iguales al portal hoy |

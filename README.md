@@ -68,7 +68,7 @@ python codigo\04_analisis.py            # tablas y figuras del artículo en sali
 
 `04_analisis.py` lee solo `datos_procesados` y genera en `salidas/` 8 tablas (CSV y LaTeX), 4 figuras (PNG y PDF, cada una con su tabla de datos), `resultados_04.json` con las cifras clave y `manifiesto_salidas.csv` con el SHA-256 de cada salida. Dos ejecuciones producen archivos idénticos byte a byte.
 
-Supuestos declarados: (S1) los ingresos de la SMV son trimestrales, no acumulados; (S2) los meses no obtenidos no se imputan; (S3) la tasa de colocación se calcula sobre sumas anuales o de 12 meses; (S4) las asociaciones no implican causalidad; (S5) los estados financieros registrados en soles en lugar de miles se reescalan solo para el análisis. Bootstrap con semilla `0481`.
+Supuestos declarados: (S1) los ingresos y la utilidad de la SMV son flujos trimestrales, no acumulados (los ingresos bajan dentro del año); (S2) los meses no obtenidos no se imputan, los agregados son una cota inferior y T8 acota su efecto; los meses sin registros cuentan como cero; (S3) la tasa de colocación se calcula sobre sumas anuales o de subperiodos; (S4) las asociaciones no implican causalidad: H1 compara niveles, y T8 agrega cortes placebo y el crecimiento interanual porque el monto ya crecía antes de la reforma; (S5) los estados financieros registrados en soles en lugar de miles se dividen entre 1 000 solo si la misma empresa tiene trimestres de referencia (S5a); si no los tiene, sus saldos no se usan (S5b). Bootstrap con semilla `0481`.
 
 **Demostración en vivo (3 solicitudes, ≈ 15 s; escribe en `salidas/demo/` y no toca los crudos):**
 

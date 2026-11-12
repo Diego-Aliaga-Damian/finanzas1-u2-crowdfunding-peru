@@ -1,0 +1,95 @@
+% Diego Sebastián Aliaga Damián
+% 2024200481M
+% Tema 96: Fintech y financiamiento participativo (crowdfunding) en el Perú: oferta y condiciones
+% Artículo científico (journal), Finanzas I (055D), Unidad II, UNCP, 2026-II
+%
+% Compilación (desde esta carpeta):  latexmk -pdf articulo.tex
+% Antes de compilar:                 python ..\herramientas\articulo\generar_insumos_articulo.py
+% Las tablas y figuras se leen de ../salidas (generadas por codigo/04_analisis.py) y las cifras del
+% texto de generado/cifras.tex (derivadas de salidas/resultados_04.json): nada se transcribe a mano.
+
+\documentclass[12pt]{article}
+
+% ---------- Página y tipografía (APA 7: márgenes de 2,54 cm, Times 12, doble espacio) ----------
+\usepackage[a4paper,margin=2.54cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands,es-tabla,es-nodecimaldot]{babel}
+\usepackage{newtxtext,newtxmath}
+\usepackage{setspace}
+\doublespacing
+\setlength{\parindent}{1.27cm}
+\usepackage{csquotes}
+\usepackage[expansion=false]{microtype}  % sin expansión de fuentes: compila igual en cualquier instalación
+
+% ---------- Encabezado: número de página arriba a la derecha ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% ---------- Títulos de sección según APA 7 (niveles 1 a 3) ----------
+\usepackage{titlesec}
+\titleformat{\section}{\centering\bfseries\normalsize}{}{0pt}{}
+\titleformat{\subsection}{\bfseries\normalsize}{}{0pt}{}
+\titleformat{\subsubsection}{\bfseries\itshape\normalsize}{}{0pt}{}
+\titlespacing*{\section}{0pt}{12pt}{0pt}
+\titlespacing*{\subsection}{0pt}{12pt}{0pt}
+\titlespacing*{\subsubsection}{0pt}{12pt}{0pt}
+
+% ---------- Tablas y figuras con formato APA 7 ----------
+\usepackage{graphicx,booktabs,array,float,pdflscape,ragged2e,longtable,tabularx}  % 04 escribe las tablas con tabularx
+\usepackage{newunicodechar}  % símbolos que aparecen en las tablas generadas por 04
+\newunicodechar{≤}{\ensuremath{\leq}}
+\newunicodechar{≥}{\ensuremath{\geq}}
+\newunicodechar{Δ}{\ensuremath{\Delta}}
+\newunicodechar{≈}{\ensuremath{\approx}}
+\usepackage{caption}
+\captionsetup{labelfont=bf,textfont=it,labelsep=newline,justification=RaggedRight,singlelinecheck=false,
+              skip=4pt,font={normalsize,singlespacing}}
+\captionsetup[table]{position=top}
+\captionsetup[figure]{position=top}
+\graphicspath{{../salidas/figuras/}}
+\newcommand{\tablas}{../salidas/tablas}
+\usepackage{etoolbox}
+\AtBeginEnvironment{table}{\singlespacing\small}  % APA 7 admite interlineado sencillo dentro de tablas y figuras
+\AtBeginEnvironment{figure}{\singlespacing}
+\newcommand{\notaapa}[1]{\par\vspace{4pt}{\small\RaggedRight\textit{Nota.} #1\par}}
+
+% ---------- Referencias en APA 7 (biblatex-apa + biber) ----------
+\usepackage[style=apa,backend=biber]{biblatex}
+\addbibresource{referencias.bib}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+% ---------- Cifras del texto generadas desde salidas/resultados_04.json ----------
+\input{generado/cifras.tex}
+
+% ---------- Marca de borrador: debe desaparecer antes de entregar ----------
+\usepackage{xcolor}
+\newcommand{\pendiente}[1]{\textcolor{red}{[PENDIENTE: #1]}}
+
+\begin{document}
+
+\input{secciones/00_portada}
+\input{secciones/01_resumen_abstract}
+\input{secciones/02_introduccion}
+\input{secciones/03_antecedentes}
+\input{secciones/04_materiales_metodos}
+\input{secciones/05_resultados}
+\input{secciones/06_discusion}
+\input{secciones/07_conclusiones}
+\input{secciones/08_declaracion_ia}
+
+\clearpage
+\section{Referencias}
+\begingroup
+\setlength{\parindent}{0pt}
+\printbibliography[heading=none]
+\endgroup
+
+\clearpage
+\input{secciones/09_anexo_datos_codigo}
+
+\end{document}

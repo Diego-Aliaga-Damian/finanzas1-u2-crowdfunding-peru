@@ -1,6 +1,6 @@
 # Diccionario de variables — datos_procesados_2024200481M.csv
 
-Generado automáticamente por `codigo/03_limpieza_datos.py`. Unidad de análisis: plataforma-mes. Llave común: `ruc` + `periodo`. Celda vacía = dato no disponible (no se imputa).
+Generado automáticamente por `codigo/03_limpieza_datos.py`. Unidad de análisis: plataforma-mes. Llaves: `ruc` + `periodo` une el SIMV con la API OData de la SMV; `periodo` une las series del BCRP (son del sistema, no de cada plataforma). Celdas vacías de proyectos y montos: si `estado_simv` = `sin_registros`, el portal respondió sin proyectos (04 las cuenta como cero); si es `no_obtenido`, el dato no está disponible y no se imputa. Celdas vacías de los EEFF: trimestre sin información o mes que no es de cierre de trimestre.
 
 | N.º | Variable | Definición | Unidad de medida | Frecuencia | Fuente exacta y URL o endpoint |
 |---|---|---|---|---|---|

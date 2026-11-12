@@ -16,3 +16,18 @@ salidas/demo/
 # Respuestas crudas de la búsqueda bibliográfica: contienen resúmenes con derechos
 # de autor de las editoriales; se regeneran con los scripts de herramientas/literatura/
 herramientas/literatura/crudos/
+
+# LaTeX: archivos intermedios de compilación (se regeneran con pdflatex + biber)
+articulo/*.aux
+articulo/*.bbl
+articulo/*.bcf
+articulo/*.blg
+articulo/*.log
+articulo/*.out
+articulo/*.run.xml
+articulo/*.toc
+articulo/*.fls
+articulo/*.fdb_latexmk
+articulo/*.synctex.gz
+# Borrador en PDF: se versiona solo la versión final, sin marcas [PENDIENTE]
+articulo/articulo.pdf

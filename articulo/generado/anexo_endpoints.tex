@@ -1,0 +1,11 @@
+% Generado por herramientas/articulo/generar_insumos_articulo.py; no editar a mano.
+\begin{longtable}{@{}>{\RaggedRight\arraybackslash}p{1.6cm}>{\RaggedRight\arraybackslash}p{2.8cm}>{\RaggedRight\arraybackslash}p{5.8cm}>{\RaggedRight\arraybackslash}p{3.9cm}@{}}
+\toprule
+Vía & Fuente & Endpoint o URL & Parámetros \\
+\midrule
+\endhead
+API & BCRP, BCRPData & \url{https://estadisticas.bcrp.gob.pe/estadisticas/series/api/{codigos}/json/{inicio}/{fin}} & 10 series mensuales; 2021-1 a 2026-9 \\
+API & SMV, OData PrincipalCuentaSMV & \url{https://mvnet.smv.gob.pe/SMV.OData.Api/api/InfFinanciera/PrincipalCuentaSMV} & sEjercicio=2021-2026; sPeriodo=1-4; sTipoInf=I (23 trimestres) \\
+Scraping & SMV, SIMV «Información de Proyectos» & \url{https://www.smv.gob.pe/SIMV/Frm_ProyectosFPF?data=785FE29A0201FCD759A08F94A0F74DBB4FD1B4D805} & POST ASP.NET por plataforma, año y mes; pausa de 3 s; 6 plataformas × 69 meses \\
+\bottomrule
+\end{longtable}

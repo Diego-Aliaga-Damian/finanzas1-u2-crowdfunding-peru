@@ -5,6 +5,7 @@
 """Pruebas de 04_analisis.py: regeneración idéntica de tablas y figuras y coherencia de las cifras clave."""
 import json
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -48,6 +49,30 @@ def test_intervalo_de_wilson(s04):
 def test_indice_de_herfindahl(s04):
     assert s04.hhi(pd.Series([1.0])) == 10_000
     assert s04.hhi(pd.Series([0.5, 0.5])) == 5_000
+
+
+def test_sin_lider_no_imputa_meses_no_obtenidos(s04):
+    """S2: un mes sin registros en las demás plataformas vale cero solo si ninguna quedó no obtenida."""
+    d = pd.DataFrame({"plataforma": ["L", "A", "B"] * 3,
+                      "periodo": ["2024-01"] * 3 + ["2024-02"] * 3 + ["2024-03"] * 3,
+                      "estado_simv": ["con_registros", "sin_registros", "sin_registros",
+                                      "con_registros", "no_obtenido", "sin_registros",
+                                      "con_registros", "con_registros", "no_obtenido"],
+                      "monto_financiado_total": [10.0, 0.0, 0.0, 10.0, np.nan, 0.0, 10.0, 5.0, np.nan]})
+    s = s04.serie_sin_lider(d, pd.Index(["2024-01", "2024-02", "2024-03"]), "L")
+    assert s["2024-01"] == 0 and pd.isna(s["2024-02"]) and s["2024-03"] == 5
+
+
+def test_escala_eeff_con_y_sin_referencia_interna(s04):
+    """S5a: con trimestres propios bajo el umbral se divide entre 1 000; S5b: sin referencia, los saldos no se usan."""
+    d = pd.DataFrame({"plataforma": ["A", "A", "B"], "trimestre_eeff": ["2022-T4", "2023-T1", "2023-T3"],
+                      "activo_total_miles": [966_653.0, 1_098.0, 361_538.0], "pasivo_total_miles": [686_562.0, 533.0, 708.0],
+                      "patrimonio_total_miles": [280_091.0, 565.0, 360_830.0], "ingresos_totales_miles": [113_930.0, 99.0, 0.0],
+                      "utilidad_neta_miles": [-100_278.0, -112.0, 0.0]})
+    a = s04.ajustar_escala_eeff(d)
+    assert a.loc[0, "activo_total_miles"] == pytest.approx(966.653) and a.loc[0, "ingresos_totales_miles"] == pytest.approx(113.93)
+    assert a.loc[1, "activo_total_miles"] == 1_098
+    assert pd.isna(a.loc[2, "activo_total_miles"]) and a.loc[2, "ingresos_totales_miles"] == 0
 
 
 def test_04_no_lee_datos_crudos():

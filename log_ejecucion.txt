@@ -2653,3 +2653,151 @@
 2026-11-10 21:31:06 | 04_analisis | INFO | TABLA | t8_sensibilidad | filas=12
 2026-11-10 21:31:06 | 04_analisis | INFO | MANIFIESTO | salidas=30 | archivo=salidas/manifiesto_salidas.csv
 2026-11-10 21:31:06 | 04_analisis | INFO | FIN | 04 completado | salidas=30
+2026-11-11 18:51:55 | 04_analisis | INFO | INICIO | entrada: datos_procesados/datos_procesados_2024200481M.csv | sha256=cd48b21f22844cff650f5257a324b632d5afac7a009dbaceebe7456e9a7e1b8c
+2026-11-11 18:51:55 | 04_analisis | INFO | TABLA | t1_plataformas | filas=6
+2026-11-11 18:51:55 | 04_analisis | INFO | TABLA | t2_oferta_anual | filas=5
+2026-11-11 18:51:57 | 04_analisis | INFO | FIGURA | f1_monto_mensual_por_plataforma
+2026-11-11 18:51:59 | 04_analisis | INFO | FIGURA | f2_publicados_financiados_colocacion
+2026-11-11 18:51:59 | 04_analisis | INFO | TABLA | t3_plataformas_financieros | filas=17
+2026-11-11 18:52:00 | 04_analisis | INFO | FIGURA | f4_costo_intermediacion_implicito
+2026-11-11 18:52:00 | 04_analisis | INFO | TABLA | t4_condiciones_por_receptor | filas=6
+2026-11-11 18:52:00 | 04_analisis | INFO | TABLA | t5_contrastes_h1_h2 | filas=2
+2026-11-11 18:52:01 | 04_analisis | INFO | FIGURA | f3_tasas_credito_tradicional
+2026-11-11 18:52:01 | 04_analisis | INFO | TABLA | t6_comparabilidad | filas=7
+2026-11-11 18:52:01 | 04_analisis | INFO | TABLA | t7_comparacion_segmentos | filas=5
+2026-11-11 18:52:11 | 04_analisis | INFO | TABLA | t8_sensibilidad | filas=12
+2026-11-11 18:52:12 | 04_analisis | INFO | MANIFIESTO | salidas=30 | archivo=salidas/manifiesto_salidas.csv
+2026-11-11 18:52:12 | 04_analisis | INFO | FIN | 04 completado | salidas=30
+2026-11-11 18:52:29 | 04_analisis | INFO | INICIO | entrada: datos_procesados/datos_procesados_2024200481M.csv | sha256=cd48b21f22844cff650f5257a324b632d5afac7a009dbaceebe7456e9a7e1b8c
+2026-11-11 18:52:29 | 04_analisis | INFO | TABLA | t1_plataformas | filas=6
+2026-11-11 18:52:29 | 04_analisis | INFO | TABLA | t2_oferta_anual | filas=5
+2026-11-11 18:52:29 | 04_analisis | INFO | FIGURA | f1_monto_mensual_por_plataforma
+2026-11-11 18:52:30 | 04_analisis | INFO | FIGURA | f2_publicados_financiados_colocacion
+2026-11-11 18:52:30 | 04_analisis | INFO | TABLA | t3_plataformas_financieros | filas=17
+2026-11-11 18:52:30 | 04_analisis | INFO | FIGURA | f4_costo_intermediacion_implicito
+2026-11-11 18:52:30 | 04_analisis | INFO | TABLA | t4_condiciones_por_receptor | filas=6
+2026-11-11 18:52:30 | 04_analisis | INFO | TABLA | t5_contrastes_h1_h2 | filas=2
+2026-11-11 18:52:31 | 04_analisis | INFO | FIGURA | f3_tasas_credito_tradicional
+2026-11-11 18:52:31 | 04_analisis | INFO | TABLA | t6_comparabilidad | filas=7
+2026-11-11 18:52:31 | 04_analisis | INFO | TABLA | t7_comparacion_segmentos | filas=5
+2026-11-11 18:52:41 | 04_analisis | INFO | TABLA | t8_sensibilidad | filas=12
+2026-11-11 18:52:41 | 04_analisis | INFO | MANIFIESTO | salidas=30 | archivo=salidas/manifiesto_salidas.csv
+2026-11-11 18:52:41 | 04_analisis | INFO | FIN | 04 completado | salidas=30
+2026-11-11 18:52:55 | 04_analisis | INFO | INICIO | entrada: datos_procesados/datos_procesados_2024200481M.csv | sha256=cd48b21f22844cff650f5257a324b632d5afac7a009dbaceebe7456e9a7e1b8c
+2026-11-11 18:52:55 | 04_analisis | INFO | TABLA | t1_plataformas | filas=6
+2026-11-11 18:52:55 | 04_analisis | INFO | TABLA | t2_oferta_anual | filas=5
+2026-11-11 18:52:55 | 04_analisis | INFO | FIGURA | f1_monto_mensual_por_plataforma
+2026-11-11 18:52:56 | 04_analisis | INFO | FIGURA | f2_publicados_financiados_colocacion
+2026-11-11 18:52:56 | 04_analisis | INFO | TABLA | t3_plataformas_financieros | filas=17
+2026-11-11 18:52:56 | 04_analisis | INFO | FIGURA | f4_costo_intermediacion_implicito
+2026-11-11 18:52:56 | 04_analisis | INFO | TABLA | t4_condiciones_por_receptor | filas=6
+2026-11-11 18:52:56 | 04_analisis | INFO | TABLA | t5_contrastes_h1_h2 | filas=2
+2026-11-11 18:52:57 | 04_analisis | INFO | FIGURA | f3_tasas_credito_tradicional
+2026-11-11 18:52:57 | 04_analisis | INFO | TABLA | t6_comparabilidad | filas=7
+2026-11-11 18:52:57 | 04_analisis | INFO | TABLA | t7_comparacion_segmentos | filas=5
+2026-11-11 18:53:07 | 04_analisis | INFO | TABLA | t8_sensibilidad | filas=12
+2026-11-11 18:53:07 | 04_analisis | INFO | MANIFIESTO | salidas=30 | archivo=salidas/manifiesto_salidas.csv
+2026-11-11 18:53:07 | 04_analisis | INFO | FIN | 04 completado | salidas=30
+2026-11-11 18:53:24 | 04_analisis | INFO | INICIO | entrada: datos_procesados/datos_procesados_2024200481M.csv | sha256=cd48b21f22844cff650f5257a324b632d5afac7a009dbaceebe7456e9a7e1b8c
+2026-11-11 18:53:24 | 04_analisis | INFO | TABLA | t1_plataformas | filas=6
+2026-11-11 18:53:24 | 04_analisis | INFO | TABLA | t2_oferta_anual | filas=5
+2026-11-11 18:53:25 | 04_analisis | INFO | FIGURA | f1_monto_mensual_por_plataforma
+2026-11-11 18:53:25 | 04_analisis | INFO | FIGURA | f2_publicados_financiados_colocacion
+2026-11-11 18:53:25 | 04_analisis | INFO | TABLA | t3_plataformas_financieros | filas=17
+2026-11-11 18:53:25 | 04_analisis | INFO | FIGURA | f4_costo_intermediacion_implicito
+2026-11-11 18:53:25 | 04_analisis | INFO | TABLA | t4_condiciones_por_receptor | filas=6
+2026-11-11 18:53:25 | 04_analisis | INFO | TABLA | t5_contrastes_h1_h2 | filas=2
+2026-11-11 18:53:26 | 04_analisis | INFO | FIGURA | f3_tasas_credito_tradicional
+2026-11-11 18:53:26 | 04_analisis | INFO | TABLA | t6_comparabilidad | filas=7
+2026-11-11 18:53:26 | 04_analisis | INFO | TABLA | t7_comparacion_segmentos | filas=5
+2026-11-11 18:53:35 | 04_analisis | INFO | TABLA | t8_sensibilidad | filas=12
+2026-11-11 18:53:35 | 04_analisis | INFO | MANIFIESTO | salidas=30 | archivo=salidas/manifiesto_salidas.csv
+2026-11-11 18:53:35 | 04_analisis | INFO | FIN | 04 completado | salidas=30
+2026-11-11 18:54:45 | 04_analisis | INFO | INICIO | entrada: datos_procesados/datos_procesados_2024200481M.csv | sha256=cd48b21f22844cff650f5257a324b632d5afac7a009dbaceebe7456e9a7e1b8c
+2026-11-11 18:54:45 | 04_analisis | INFO | TABLA | t1_plataformas | filas=6
+2026-11-11 18:54:45 | 04_analisis | INFO | TABLA | t2_oferta_anual | filas=5
+2026-11-11 18:54:46 | 04_analisis | INFO | FIGURA | f1_monto_mensual_por_plataforma
+2026-11-11 18:54:46 | 04_analisis | INFO | FIGURA | f2_publicados_financiados_colocacion
+2026-11-11 18:54:46 | 04_analisis | INFO | TABLA | t3_plataformas_financieros | filas=17
+2026-11-11 18:54:47 | 04_analisis | INFO | FIGURA | f4_costo_intermediacion_implicito
+2026-11-11 18:54:47 | 04_analisis | INFO | TABLA | t4_condiciones_por_receptor | filas=6
+2026-11-11 18:54:47 | 04_analisis | INFO | TABLA | t5_contrastes_h1_h2 | filas=2
+2026-11-11 18:54:47 | 04_analisis | INFO | FIGURA | f3_tasas_credito_tradicional
+2026-11-11 18:54:47 | 04_analisis | INFO | TABLA | t6_comparabilidad | filas=7
+2026-11-11 18:54:47 | 04_analisis | INFO | TABLA | t7_comparacion_segmentos | filas=5
+2026-11-11 18:54:57 | 04_analisis | INFO | TABLA | t8_sensibilidad | filas=12
+2026-11-11 18:54:57 | 04_analisis | INFO | MANIFIESTO | salidas=30 | archivo=salidas/manifiesto_salidas.csv
+2026-11-11 18:54:57 | 04_analisis | INFO | FIN | 04 completado | salidas=30
+2026-11-11 19:15:12 | 04_analisis | INFO | INICIO | entrada: datos_procesados/datos_procesados_2024200481M.csv | sha256=cd48b21f22844cff650f5257a324b632d5afac7a009dbaceebe7456e9a7e1b8c
+2026-11-11 19:15:12 | 04_analisis | INFO | TABLA | t1_plataformas | filas=6
+2026-11-11 19:15:12 | 04_analisis | INFO | TABLA | t2_oferta_anual | filas=5
+2026-11-11 19:15:13 | 04_analisis | INFO | FIGURA | f1_monto_mensual_por_plataforma
+2026-11-11 19:15:13 | 04_analisis | INFO | FIGURA | f2_publicados_financiados_colocacion
+2026-11-11 19:15:13 | 04_analisis | INFO | TABLA | t3_plataformas_financieros | filas=17
+2026-11-11 19:15:13 | 04_analisis | INFO | FIGURA | f4_costo_intermediacion_implicito
+2026-11-11 19:15:13 | 04_analisis | INFO | TABLA | t4_condiciones_por_receptor | filas=6
+2026-11-11 19:15:13 | 04_analisis | INFO | TABLA | t5_contrastes_h1_h2 | filas=2
+2026-11-11 19:15:14 | 04_analisis | INFO | FIGURA | f3_tasas_credito_tradicional
+2026-11-11 19:15:14 | 04_analisis | INFO | TABLA | t6_comparabilidad | filas=7
+2026-11-11 19:15:14 | 04_analisis | INFO | TABLA | t7_comparacion_segmentos | filas=5
+2026-11-11 19:15:21 | 04_analisis | INFO | TABLA | t8_sensibilidad | filas=12
+2026-11-11 19:15:21 | 04_analisis | INFO | MANIFIESTO | salidas=30 | archivo=salidas/manifiesto_salidas.csv
+2026-11-11 19:15:21 | 04_analisis | INFO | FIN | 04 completado | salidas=30
+2026-11-11 19:29:36 | 04_analisis | INFO | INICIO | entrada: datos_procesados/datos_procesados_2024200481M.csv | sha256=cd48b21f22844cff650f5257a324b632d5afac7a009dbaceebe7456e9a7e1b8c
+2026-11-11 19:29:36 | 04_analisis | INFO | TABLA | t1_plataformas | filas=6
+2026-11-11 19:29:36 | 04_analisis | INFO | TABLA | t2_oferta_anual | filas=5
+2026-11-11 19:29:38 | 04_analisis | INFO | FIGURA | f1_monto_mensual_por_plataforma
+2026-11-11 19:29:39 | 04_analisis | INFO | FIGURA | f2_publicados_financiados_colocacion
+2026-11-11 19:29:39 | 04_analisis | INFO | TABLA | t3_plataformas_financieros | filas=17
+2026-11-11 19:29:39 | 04_analisis | INFO | FIGURA | f4_costo_intermediacion_implicito
+2026-11-11 19:29:39 | 04_analisis | INFO | TABLA | t4_condiciones_por_receptor | filas=6
+2026-11-11 19:29:39 | 04_analisis | INFO | TABLA | t5_contrastes_h1_h2 | filas=3
+2026-11-11 19:29:40 | 04_analisis | INFO | FIGURA | f3_tasas_credito_tradicional
+2026-11-11 19:29:40 | 04_analisis | INFO | TABLA | t6_comparabilidad | filas=8
+2026-11-11 19:29:40 | 04_analisis | INFO | TABLA | t7_comparacion_segmentos | filas=6
+2026-11-11 19:30:16 | 04_analisis | INFO | INICIO | entrada: datos_procesados/datos_procesados_2024200481M.csv | sha256=cd48b21f22844cff650f5257a324b632d5afac7a009dbaceebe7456e9a7e1b8c
+2026-11-11 19:30:16 | 04_analisis | INFO | TABLA | t1_plataformas | filas=6
+2026-11-11 19:30:16 | 04_analisis | INFO | TABLA | t2_oferta_anual | filas=5
+2026-11-11 19:30:17 | 04_analisis | INFO | FIGURA | f1_monto_mensual_por_plataforma
+2026-11-11 19:30:18 | 04_analisis | INFO | FIGURA | f2_publicados_financiados_colocacion
+2026-11-11 19:30:18 | 04_analisis | INFO | TABLA | t3_plataformas_financieros | filas=17
+2026-11-11 19:30:18 | 04_analisis | INFO | FIGURA | f4_costo_intermediacion_implicito
+2026-11-11 19:30:18 | 04_analisis | INFO | TABLA | t4_condiciones_por_receptor | filas=6
+2026-11-11 19:30:18 | 04_analisis | INFO | TABLA | t5_contrastes_h1_h2 | filas=3
+2026-11-11 19:30:19 | 04_analisis | INFO | FIGURA | f3_tasas_credito_tradicional
+2026-11-11 19:30:19 | 04_analisis | INFO | TABLA | t6_comparabilidad | filas=8
+2026-11-11 19:30:19 | 04_analisis | INFO | TABLA | t7_comparacion_segmentos | filas=6
+2026-11-11 19:30:51 | 04_analisis | INFO | TABLA | t8_sensibilidad | filas=18
+2026-11-11 19:30:51 | 04_analisis | INFO | MANIFIESTO | salidas=30 | archivo=salidas/manifiesto_salidas.csv
+2026-11-11 19:30:51 | 04_analisis | INFO | FIN | 04 completado | salidas=30
+2026-11-11 19:31:25 | 04_analisis | INFO | INICIO | entrada: datos_procesados/datos_procesados_2024200481M.csv | sha256=cd48b21f22844cff650f5257a324b632d5afac7a009dbaceebe7456e9a7e1b8c
+2026-11-11 19:31:25 | 04_analisis | INFO | TABLA | t1_plataformas | filas=6
+2026-11-11 19:31:25 | 04_analisis | INFO | TABLA | t2_oferta_anual | filas=5
+2026-11-11 19:31:25 | 04_analisis | INFO | FIGURA | f1_monto_mensual_por_plataforma
+2026-11-11 19:31:26 | 04_analisis | INFO | FIGURA | f2_publicados_financiados_colocacion
+2026-11-11 19:31:27 | 04_analisis | INFO | TABLA | t3_plataformas_financieros | filas=17
+2026-11-11 19:31:27 | 04_analisis | INFO | FIGURA | f4_costo_intermediacion_implicito
+2026-11-11 19:31:27 | 04_analisis | INFO | TABLA | t4_condiciones_por_receptor | filas=6
+2026-11-11 19:31:27 | 04_analisis | INFO | TABLA | t5_contrastes_h1_h2 | filas=3
+2026-11-11 19:31:28 | 04_analisis | INFO | FIGURA | f3_tasas_credito_tradicional
+2026-11-11 19:31:28 | 04_analisis | INFO | TABLA | t6_comparabilidad | filas=8
+2026-11-11 19:31:28 | 04_analisis | INFO | TABLA | t7_comparacion_segmentos | filas=6
+2026-11-11 19:32:01 | 04_analisis | INFO | TABLA | t8_sensibilidad | filas=18
+2026-11-11 19:32:01 | 04_analisis | INFO | MANIFIESTO | salidas=30 | archivo=salidas/manifiesto_salidas.csv
+2026-11-11 19:32:01 | 04_analisis | INFO | FIN | 04 completado | salidas=30
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | INICIO | entradas: datos_crudos/datos_crudos_2024200481M_smv_simv.csv, datos_crudos/datos_crudos_2024200481M_smv_odata.csv, datos_crudos/datos_crudos_2024200481M_bcrp.csv
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | CONTROL | EEFF: identidad activo = pasivo + patrimonio se cumple (±1 mil S/) en 52/52 trimestres
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | CONTROL | EEFF: 52 trimestres de 6 sociedades administradoras (2022-T2 a 2026-T3)
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | CONTROL | Catálogo del SIMV: 6 plataformas (3 vigentes, 3 retiradas)
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | CONTROL | Llave RUC: 6/6 plataformas del SIMV cruzadas uno a uno con la API OData por razón social idéntica
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | CONTROL | SIMV: TOTAL = suma de tipos de receptor en 107/107 consultas con registros
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | CONTROL | SIMV: modalidad VALORES en 10 consultas; monto financiado total = S/ 0
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | CONTROL | BCRP: 10 series × 69 meses (2021-01 a 2026-09); valores faltantes = 0
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | CONTROL | Panel: 414 filas = 6 plataformas × 69 meses; llave ruc + periodo única
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | CONTROL | estado_simv: sin_registros=267, con_registros=107, no_obtenido=40
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | CONTROL | EEFF integrados: 52/52 trimestres
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | CONTROL | Atípicos (Tukey, 3·RIC, y escala de EEFF): 35 identificados; se conservan (datos oficiales)
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | PROCESADO | filas=414 | columnas=35 | archivo=datos_procesados/datos_procesados_2024200481M.csv | sha256=cd48b21f22844cff650f5257a324b632d5afac7a009dbaceebe7456e9a7e1b8c
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | DICCIONARIO | variables=35 | archivo=diccionario_variables.md
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | REPORTE | archivo=salidas/reporte_limpieza.md
+2026-11-11 19:32:16 | 03_limpieza_datos | INFO | FIN | 03 completado

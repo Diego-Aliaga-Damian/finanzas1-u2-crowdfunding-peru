@@ -9,7 +9,9 @@
   "eeff_escala_corregida": [
     "Afluenta 2022-T2",
     "Afluenta 2022-T3",
-    "Afluenta 2022-T4",
+    "Afluenta 2022-T4"
+  ],
+  "eeff_escala_excluida": [
     "Proyecto Crowd 2023-T3",
     "Proyecto Crowd 2023-T4",
     "Proyecto Crowd 2024-T1",
@@ -88,39 +90,104 @@
     "z": 14.88,
     "p_valor": 4.455657518211043e-50,
     "colocacion_empresarial_pct": 89.5,
-    "colocacion_personal_pct": 51.4
+    "colocacion_personal_pct": 51.4,
+    "plataforma_principal_empresarial": "Inversiones.io",
+    "pct_empresarial_en_principal": 99.5,
+    "plataforma_principal_personal": "Afluenta",
+    "pct_personal_en_principal": 95.3,
+    "dentro_lider": {
+      "plataforma": "Inversiones.io",
+      "odds_ratio": 2.838,
+      "p_valor_fisher": 0.12703217574234704,
+      "publicados_emp": 1256,
+      "financiados_emp": 1124,
+      "publicados_per": 12,
+      "financiados_per": 9
+    }
   },
   "salto_tea_bcos_pyme_2025_03_pp": 19.25,
+  "h1_tendencia": {
+    "cortes_placebo": [
+      "2023-06",
+      "2023-12",
+      "2024-06",
+      "2024-12",
+      "2025-06"
+    ],
+    "p_placebo_min": 3.3136869555733164e-08,
+    "p_placebo_max": 4.079420050817193e-05,
+    "interanual_mediana_antes_pct": 169.409977232183,
+    "interanual_mediana_despues_pct": 26.513198593270623,
+    "interanual_n_antes": 30,
+    "interanual_n_despues": 10,
+    "interanual_U": 20.0,
+    "interanual_p": 0.9999771047978346,
+    "crecimiento_mensual_previo_pct": 8.909141835038525,
+    "r2_tendencia_previa": 0.8078262987734255,
+    "meses_despues_sobre_tendencia": 0,
+    "meses_despues": 10,
+    "desvio_medio_despues_pct": -54.92707050012352,
+    "autocorrelacion_log_monto_previa": 0.8381109991454057
+  },
+  "cota_no_obtenidos": {
+    "meses_no_obtenidos_en_ventana": 28,
+    "por_anio_soles": {
+      "2022": 109369.0,
+      "2023": 218738.0,
+      "2024": 109369.0,
+      "2025": 218738.0,
+      "2026": 218738.0
+    },
+    "por_anio_pct_del_monto": {
+      "2022": 1.6921840095581344,
+      "2023": 1.3469866670870523,
+      "2024": 0.20148038685545927,
+      "2025": 0.1818606032963496,
+      "2026": 0.20890604585775083
+    }
+  },
   "e1": {
-    "E1: Δ monto FPF vs Δ tea_bcos_pyme_360": {
+    "E1: Δ monto FPF vs Δ TEA Bancos · pyme ≤360 d": {
       "rho": -0.158,
       "p_valor": 0.26922861074262894
     },
-    "E1: Δ monto FPF vs Δ tea_cmac_pyme_360": {
+    "E1: Δ monto FPF vs Δ TEA Cajas municipales · pyme ≤360 d": {
       "rho": -0.205,
       "p_valor": 0.14886173913164255
     },
-    "E1: Δ monto FPF vs Δ tea_crac_pyme_360": {
+    "E1: Δ monto FPF vs Δ TEA Cajas rurales · pyme ≤360 d": {
       "rho": 0.007,
       "p_valor": 0.9617956448032297
     },
-    "E1: Δ monto FPF vs Δ tea_bcos_pyme_mas360": {
+    "E1: Δ monto FPF vs Δ TEA Bancos · consumo ≤360 d": {
+      "rho": -0.131,
+      "p_valor": 0.35869435286169415
+    },
+    "E1: Δ monto FPF vs Δ TEA Bancos · pyme >360 d": {
       "rho": -0.099,
       "p_valor": 0.49143262587709846
     },
-    "E1: Δ monto FPF vs Δ tea_cmac_pyme_mas360": {
+    "E1: Δ monto FPF vs Δ TEA Cajas municipales · pyme >360 d": {
       "rho": -0.159,
       "p_valor": 0.26479929162504495
     },
-    "E1: Δ monto FPF vs Δ tea_crac_pyme_mas360": {
+    "E1: Δ monto FPF vs Δ TEA Cajas rurales · pyme >360 d": {
       "rho": -0.223,
       "p_valor": 0.11605979287002129
+    },
+    "E1: Δ monto FPF vs Δ TEA Bancos · consumo >360 d": {
+      "rho": -0.005,
+      "p_valor": 0.9703369897237629
     }
   },
   "h1_sensibilidad": {
     "H1 base: corte dic-2025, soles corrientes": {
       "U": 387.0,
       "p_valor_unilateral": 2.0836085821027377e-05
+    },
+    "H1 con tendencia: crecimiento interanual mayor tras la reforma": {
+      "U": 20.0,
+      "p_valor_unilateral": 0.9999771047978346
     },
     "H1: corte nov-2025": {
       "U": 412.0,
@@ -130,13 +197,17 @@
       "U": 385.0,
       "p_valor_unilateral": 2.5437420732544138e-05
     },
+    "H1: cota superior de los meses no obtenidos (S2)": {
+      "U": 387.0,
+      "p_valor_unilateral": 2.0836085821027377e-05
+    },
     "H1: solo Inversiones.io": {
-      "U": 370.0,
-      "p_valor_unilateral": 4.756675182137737e-05
+      "U": 380.0,
+      "p_valor_unilateral": 4.151523326058222e-05
     },
     "H1: sin Inversiones.io": {
-      "U": 258.0,
-      "p_valor_unilateral": 0.08865932119916514
+      "U": 223.0,
+      "p_valor_unilateral": 0.12420636906804428
     }
   }
 }

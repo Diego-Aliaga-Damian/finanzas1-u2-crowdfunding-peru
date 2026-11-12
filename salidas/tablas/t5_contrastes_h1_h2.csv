@@ -1,3 +1,4 @@
 contraste,estadistico,valor,p_valor,detalle
-H2: colocación empresarial = personal,z,14.879839702105027,4.455657518211043e-50,empresarial 89.5 % (1130/1262); personal 51.4 % (132/257)
+H2: colocación empresarial = personal (todas las plataformas),z,14.879839702105027,4.455657518211043e-50,"empresarial 89.5 % (1130/1262); personal 51.4 % (132/257). El 99.5 % de los empresariales es de Inversiones.io y el 95.3 % de los personales, de Afluenta"
+H2 dentro de Inversiones.io,OR (Fisher),2.8383838383838382,0.12703217574234704,empresarial 89.5 % (1124/1256); personal 75.0 % (9/12)
 H1: monto mensual mayor tras la reforma (corte dic-2025),U,387.0,2.0836085821027377e-05,"mediana antes 3.32 M (n=42); después 11.37 M (n=10); diferencia 8.06 M, IC 95 % bootstrap [5.63; 11.27]"

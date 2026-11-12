@@ -1,0 +1,45 @@
+% Generado por herramientas/articulo/generar_insumos_articulo.py; no editar a mano.
+{\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}>{\RaggedRight\arraybackslash}p{3.8cm}>{\RaggedRight\arraybackslash}p{5.0cm}>{\RaggedRight\arraybackslash}p{2.2cm}>{\RaggedRight\arraybackslash}p{1.7cm}>{\RaggedRight\arraybackslash}p{1.9cm}@{}}
+\toprule
+Variable & Definición & Unidad & Frecuencia & Fuente \\
+\midrule
+\endhead
+\texttt{periodo} & Mes de referencia (AAAA-MM). Llave común & — & Mensual & Derivada \\
+\texttt{anio} & Año del periodo & — & Mensual & Derivada \\
+\texttt{mes} & Mes del periodo (1-12) & — & Mensual & Derivada \\
+\texttt{ruc} & RUC de la sociedad administradora. Llave común & — & — & SMV-OData \\
+\texttt{empresa\_\allowbreak{}id\_\allowbreak{}simv} & Código de la empresa en el formulario del SIMV & — & — & SIMV \\
+\texttt{plataforma} & Nombre corto de la plataforma (etiqueta asignada por el autor) & — & — & Derivada \\
+\texttt{razon\_\allowbreak{}social} & Razón social de la sociedad administradora & — & — & SIMV \\
+\texttt{lista\_\allowbreak{}simv} & Lista del SIMV en que figura: vigentes o retiradas & — & — & SIMV \\
+\texttt{estado\_\allowbreak{}simv} & Resultado de la consulta: con\_registros, sin\_registros (el portal no reporta datos) o no\_obtenido (sin respuesta válida; ver incidencias\_fuente.md) & — & Mensual & SIMV \\
+\texttt{proy\_\allowbreak{}publicados\_\allowbreak{}emp} & Proyectos de préstamo empresariales publicados en la plataforma en el mes & proyectos & Mensual & SIMV \\
+\texttt{proy\_\allowbreak{}financiados\_\allowbreak{}emp} & Proyectos de préstamo empresariales publicados que fueron financiados & proyectos & Mensual & SIMV \\
+\texttt{monto\_\allowbreak{}financiado\_\allowbreak{}emp} & Monto total financiado de proyectos de préstamo empresariales & soles corrientes (S/) & Mensual & SIMV \\
+\texttt{proy\_\allowbreak{}publicados\_\allowbreak{}per} & Proyectos de préstamo personales publicados en la plataforma en el mes & proyectos & Mensual & SIMV \\
+\texttt{proy\_\allowbreak{}financiados\_\allowbreak{}per} & Proyectos de préstamo personales publicados que fueron financiados & proyectos & Mensual & SIMV \\
+\texttt{monto\_\allowbreak{}financiado\_\allowbreak{}per} & Monto total financiado de proyectos de préstamo personales & soles corrientes (S/) & Mensual & SIMV \\
+\texttt{proy\_\allowbreak{}publicados\_\allowbreak{}valores} & Proyectos publicados en la modalidad valores (todos los receptores) & proyectos & Mensual & SIMV \\
+\texttt{proy\_\allowbreak{}financiados\_\allowbreak{}valores} & Proyectos financiados en la modalidad valores & proyectos & Mensual & SIMV \\
+\texttt{monto\_\allowbreak{}financiado\_\allowbreak{}valores} & Monto financiado en la modalidad valores & soles corrientes (S/) & Mensual & SIMV \\
+\texttt{trimestre\_\allowbreak{}eeff} & Trimestre del estado financiero (AAAA-Tn), asignado a su mes de cierre & — & Trimestral & SMV-OData \\
+\texttt{activo\_\allowbreak{}total\_\allowbreak{}miles} & Activo total de la sociedad administradora & miles de S/ & Trimestral & SMV-OData \\
+\texttt{pasivo\_\allowbreak{}total\_\allowbreak{}miles} & Pasivo total & miles de S/ & Trimestral & SMV-OData \\
+\texttt{patrimonio\_\allowbreak{}total\_\allowbreak{}miles} & Patrimonio total & miles de S/ & Trimestral & SMV-OData \\
+\texttt{ingresos\_\allowbreak{}totales\_\allowbreak{}miles} & Ingresos totales del periodo informado & miles de S/ & Trimestral & SMV-OData \\
+\texttt{utilidad\_\allowbreak{}neta\_\allowbreak{}miles} & Utilidad neta del periodo informado & miles de S/ & Trimestral & SMV-OData \\
+\texttt{fecha\_\allowbreak{}registro\_\allowbreak{}eeff} & Fecha en que la empresa registró el estado financiero en la SMV & fecha (AAAA-MM-DD) & Trimestral & SMV-OData \\
+\texttt{tamn} & Tasa activa promedio en moneda nacional (TAMN), empresas bancarias & \% (tasa efectiva anual) & Mensual & PN07807NM \\
+\texttt{tea\_\allowbreak{}bcos\_\allowbreak{}pyme\_\allowbreak{}360} & TEA de préstamos a pequeña y microempresa hasta 360 días, empresas bancarias, MN & \% (tasa efectiva anual) & Mensual & PN07843NM \\
+\texttt{tea\_\allowbreak{}bcos\_\allowbreak{}pyme\_\allowbreak{}mas360} & TEA de préstamos a pequeña y microempresa a más de 360 días, empresas bancarias, MN & \% (tasa efectiva anual) & Mensual & PN07844NM \\
+\texttt{tea\_\allowbreak{}bcos\_\allowbreak{}consumo\_\allowbreak{}360} & TEA de préstamos de consumo hasta 360 días, empresas bancarias, MN & \% (tasa efectiva anual) & Mensual & PN07846NM \\
+\texttt{tea\_\allowbreak{}bcos\_\allowbreak{}consumo\_\allowbreak{}mas360} & TEA de préstamos de consumo a más de 360 días, empresas bancarias, MN & \% (tasa efectiva anual) & Mensual & PN07847NM \\
+\texttt{tea\_\allowbreak{}cmac\_\allowbreak{}pyme\_\allowbreak{}360} & TEA de préstamos a pequeña y microempresa hasta 360 días, cajas municipales, MN & \% (tasa efectiva anual) & Mensual & PN07861NM \\
+\texttt{tea\_\allowbreak{}cmac\_\allowbreak{}pyme\_\allowbreak{}mas360} & TEA de préstamos a pequeña y microempresa a más de 360 días, cajas municipales, MN & \% (tasa efectiva anual) & Mensual & PN07862NM \\
+\texttt{tea\_\allowbreak{}crac\_\allowbreak{}pyme\_\allowbreak{}360} & TEA de préstamos a pequeña y microempresa hasta 360 días, cajas rurales, MN & \% (tasa efectiva anual) & Mensual & PN07879NM \\
+\texttt{tea\_\allowbreak{}crac\_\allowbreak{}pyme\_\allowbreak{}mas360} & TEA de préstamos a pequeña y microempresa a más de 360 días, cajas rurales, MN & \% (tasa efectiva anual) & Mensual & PN07880NM \\
+\texttt{ipc} & Índice de precios al consumidor de Lima Metropolitana (dic. 2021 = 100) & índice & Mensual & PN38705PM \\
+\bottomrule
+\end{longtable}
+}
