@@ -1,0 +1,162 @@
+% Diego Sebastián Aliaga Damián
+% 2024200481M
+% Tema 96: Fintech y financiamiento participativo (crowdfunding) en el Perú: oferta y condiciones
+% Plantilla de los pósteres en español de los artículos del estado del arte (Carpeta N.º 1 y N.º 2, Unidad II)
+%
+% Diseño académico de tres columnas: encabezado institucional, título grande, ficha del estudio, conclusión
+% destacada, figura propia (datos de la SMV y del BCRP) y referencia APA con código QR.
+% El contenido de cada artículo está en articulos/<clave>.tex; las imágenes institucionales en img/:
+%   img/logo_uncp.png       logo de la Universidad Nacional del Centro del Perú (obligatorio para el encabezado)
+%   img/logo_facultad.png   logo de la Facultad de Economía (opcional)
+%   img/foto_autor.jpg      foto del autor (opcional; si no existe, no se muestra)
+% Compilación: python ../../herramientas/posteres/generar_posteres.py  (o con una clave: ... generar_posteres.py ran2025)
+\documentclass[fontsize=26pt,parskip=half-]{scrartcl}
+\usepackage[paperwidth=594mm,paperheight=841mm,left=24mm,right=24mm,top=20mm,bottom=18mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands,es-nodecimaldot,es-tabla]{babel}
+\usepackage{tgheros}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{anyfontsize,xcolor,graphicx,booktabs,tabularx,multicol,enumitem,qrcode,ragged2e,csquotes}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage[most]{tcolorbox}
+\usepackage{caption}
+\usepackage[style=apa,backend=biber]{biblatex}
+\addbibresource{../../articulo/referencias.bib}
+\usepackage{xurl}
+\urlstyle{same}
+
+% Cifras y títulos de figuras del artículo propio: no se transcriben a mano
+\input{../../articulo/generado/cifras.tex}
+\graphicspath{{../../salidas/figuras/}{img/}}
+\newcommand{\pendiente}[1]{\textcolor{red}{[PENDIENTE: #1]}}
+
+% ---------- Colores ----------
+% Verde y oro de la UNCP, muestreados del logo (#006800 y #F8D008); el verde se oscurece un poco para texto
+\definecolor{primario}{HTML}{0A5C1F}
+\definecolor{primarioclaro}{HTML}{E5F1E2}
+\definecolor{ola}{HTML}{7DB878}
+\definecolor{oro}{HTML}{F8D008}
+\definecolor{acento}{HTML}{B8900A}
+\definecolor{tinta}{HTML}{1B1B1B}
+\definecolor{gris}{HTML}{9A9A9A}
+\color{tinta}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{18mm}
+\setlist[itemize]{label={\color{acento}\textbullet}, leftmargin=1.1em, itemsep=0.35em, topsep=0.3em}
+\captionsetup{font=small, labelfont=bf, labelsep=colon, justification=centering, skip=6pt}
+
+% ---------- Secciones numeradas con filete superior ----------
+\newcounter{seccion}
+\newcommand{\singuiones}{\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}  % títulos sin cortes de palabra
+\newcommand{\seccion}[1]{\par\vspace{0.9em}{\color{gris}\hrule height 1pt}\vspace{0.8em}%
+  \refstepcounter{seccion}{\singuiones\color{primario}\bfseries\fontsize{40}{47}\selectfont\theseccion.\hspace{0.45em}#1\par}\vspace{0.4em}}
+
+% ---------- Figura propia según el tema del artículo (1-4 = F1-F4 de 04_analisis.py) ----------
+\newcommand{\archivoFigura}[1]{\ifcase#1\or f1_monto_mensual_por_plataforma\or f2_publicados_financiados_colocacion\or
+  f3_tasas_credito_tradicional\or f4_costo_intermediacion_implicito\fi}
+\newcommand{\tituloFigura}[1]{\ifcase#1\or\cifra{tituloF1}\or\cifra{tituloF2}\or\cifra{tituloF3}\or\cifra{tituloF4}\fi}
+\newcommand{\fuenteFigura}[1]{\ifcase#1\or SMV (SIMV)\or SMV (SIMV)\or BCRP (BCRPData)\or SMV (API OData y SIMV)\fi}
+
+% ---------- Contenido del artículo ----------
+\input{articulos/\articulo}
+% Tamaño del título: un artículo con título muy largo puede definir \TituloGrande en su archivo
+\providecommand{\TituloGrande}{\fontsize{74}{88}\selectfont}
+
+\begin{document}
+% Ondas decorativas (arriba a la derecha) y foto del autor, si existe
+\begin{tikzpicture}[remember picture,overlay]
+  \begin{scope}[shift={($(current page.north east)+(-22cm,-27cm)$)}]
+    \foreach \k in {0,...,44}{
+      \draw[ola!85, line width=0.7pt] plot[domain=0:21, samples=140, smooth]
+        (\x, {1.5*sin(\x*24 + \k*6) + 0.8*sin(\x*9 - \k*5) + \k*0.13});
+    }
+  \end{scope}
+  \IfFileExists{img/foto_autor.jpg}{%
+    \node[anchor=north east, inner sep=0pt, draw=white, line width=3pt] at ($(current page.north east)+(-3cm,-31cm)$)
+      {\includegraphics[width=7cm,height=8.5cm,keepaspectratio]{foto_autor.jpg}};}{}
+\end{tikzpicture}%
+% ---------- Encabezado institucional ----------
+\begin{minipage}[c]{0.095\linewidth}
+  \IfFileExists{img/logo_uncp.png}{\includegraphics[width=\linewidth]{logo_uncp.png}}%
+  {\fbox{\parbox[c][6cm][c]{0.9\linewidth}{\centering\small\color{gris} LOGO\\UNCP}}}
+\end{minipage}\hspace{1.2em}%
+\begin{minipage}[c]{0.35\linewidth}
+  {\color{primario}\bfseries\fontsize{46}{53}\selectfont Universidad Nacional\\del Centro del Perú\par}
+\end{minipage}\hspace{1em}%
+\begin{minipage}[c]{0.43\linewidth}
+  {\bfseries\fontsize{32}{38}\selectfont Facultad de Economía\par}
+  {\fontsize{25}{30}\selectfont Escuela Profesional de Economía · Finanzas I (055D)\par}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.08\linewidth}\raggedleft
+  \IfFileExists{img/logo_facultad.png}{\includegraphics[width=\linewidth]{logo_facultad.png}}{}
+\end{minipage}
+
+\vspace{0.8cm}
+{\color{oro}\rule{\linewidth}{6pt}}
+\vspace{2.2cm}
+% ---------- Título ----------
+\begin{minipage}[t]{0.66\linewidth}
+  {\singuiones\color{primario}\bfseries\TituloGrande\TituloEs\par}
+  \vspace{0.9em}
+  {\Large\itshape\singuiones\TituloOriginal\par}
+  \vspace{0.3em}
+  {\large\Autores\ (\Anio). \textit{\Revista}\par}
+  \vspace{0.9em}
+  {\normalsize Síntesis elaborada por Diego Sebastián Aliaga Damián\textsuperscript{1}\par}
+  {\small\textsuperscript{1}Facultad de Economía, Universidad Nacional del Centro del Perú · Unidad II, 2026-II\par}
+\end{minipage}
+
+\vspace{1.6cm}
+{\color{gris}\hrule height 1pt}
+\vspace{0.4cm}
+
+% ---------- Cuerpo en tres columnas ----------
+\begin{multicols}{3}
+\seccion{Problema y objetivo}
+\justifying\Problema\par
+\textbf{Objetivo.} \Objetivo\par
+\vspace{0.6em}
+{\small\centering
+\begin{tabularx}{\linewidth}{@{}>{\bfseries}l>{\RaggedRight\arraybackslash}X@{}}
+  \toprule
+  Revista & \Revista \\
+  Año & \Anio \\
+  Ámbito & \Ambito \\
+  Enfoque & \Enfoque \\
+  \bottomrule
+\end{tabularx}
+\captionof{table}{Ficha del estudio}\par}
+
+\seccion{Datos y método}
+\justifying\Metodo\par
+
+\seccion{Resultados principales}
+\RaggedRight\Resultados\par
+
+\vspace{1em}
+\begin{tcolorbox}[enhanced, colback=primarioclaro, colframe=primarioclaro, boxrule=0pt, arc=0pt, left=12pt, right=12pt, top=10pt, bottom=12pt]
+  \refstepcounter{seccion}{\color{primario}\bfseries\fontsize{40}{47}\selectfont\theseccion.\hspace{0.45em}Conclusión\par}
+  \vspace{0.4em}\justifying\Conclusion
+\end{tcolorbox}
+
+\seccion{Relevancia para el Perú}
+\justifying\Relevancia\par
+\vspace{0.4em}
+{\centering\includegraphics[width=\linewidth]{\archivoFigura{\FiguraPeru}.pdf}\par
+\captionof{figure}{\tituloFigura{\FiguraPeru}. Elaboración del autor con datos de \fuenteFigura{\FiguraPeru}.}\par}
+
+\seccion{Referencia}
+\begin{minipage}[t]{0.68\linewidth}\RaggedRight\small\fullcite{\articulo}\par\vspace{0.5em}
+  \textit{Palabras clave:} \PalabrasClave\end{minipage}\hfill
+\begin{minipage}[t]{0.28\linewidth}\centering\vspace{0pt}\qrcode[height=4.6cm]{https://doi.org/\DOI}\par
+  {\scriptsize Artículo original (DOI)}\end{minipage}
+\end{multicols}
+
+\vfill
+{\color{gris}\hrule height 1pt}
+\vspace{0.3em}
+{\scriptsize\centering Síntesis en español del resumen oficial del artículo, elaborada con apoyo de herramientas de inteligencia artificial. Las cifras del Perú provienen del análisis del autor con datos de la SMV y del BCRP.\par}
+\end{document}

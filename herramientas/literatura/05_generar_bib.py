@@ -21,8 +21,10 @@ RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ / "codigo"))
 from comun import user_agent  # noqa: E402
 
+# 2026-11-12: Ghasemi et al. (2024, 10.1016/j.jbvi.2024.e00508) se reemplazó por Hau et al. (2024): no tiene resumen
+# público y es de acceso cerrado, por lo que no podía resumirse ni leerse para la Carpeta N.º 1.
 DOIS = {  # núcleo del estado del arte (2023-2026) + contexto peruano
-    "nucleo": ["10.1016/j.jfineco.2025.104113", "10.1016/j.jbvi.2024.e00508", "10.1016/j.jeconbus.2026.106307",
+    "nucleo": ["10.1016/j.jfineco.2025.104113", "10.1111/jofi.13384", "10.1016/j.jeconbus.2026.106307",
                "10.1016/j.jbankfin.2024.107338", "10.1017/s0022109023000698", "10.1016/j.jfineco.2025.104040",
                "10.1016/j.bar.2024.101448", "10.1093/rfs/hhaf080", "10.1111/jifm.12242", "10.1016/j.ribaf.2023.102185",
                "10.1016/j.frl.2024.105519", "10.1016/j.jeconbus.2026.106343", "10.1287/mnsc.2023.01538",
@@ -54,8 +56,16 @@ def clave(bib: str, usadas: set) -> str:
 
 
 def corregir_autor_y_anio(bib: str, anio_final: int | None) -> str:
-    """Quita autores vacíos que Crossref deja al inicio y fija el año de la versión final (APA 7)."""
+    """Quita autores vacíos que Crossref deja al inicio, pasa a mayúscula inicial los nombres que la editorial
+    registra todo en mayúsculas (p. ej., «HAU, HARALD») y fija el año de la versión final (APA 7)."""
     bib = re.sub(r"(author\s*=\s*\{)\s*and\s+", r"\1", bib)
+    def mayuscula_inicial(m: re.Match) -> str:
+        nombres = m.group(2).split(" and ")
+        if all(n == n.upper() for n in nombres):  # «HAU, HARALD and HUANG, YI» -> «Hau, Harald and Huang, Yi»
+            nombres = [n.title() for n in nombres]
+        return m.group(1) + " and ".join(nombres) + "}"
+
+    bib = re.sub(r"(author\s*=\s*\{)([^}]*)\}", mayuscula_inicial, bib, count=1)
     if anio_final:
         bib = re.sub(r"year\s*=\s*\{?\d{4}\}?", f"year ={{{anio_final}}}", bib)
     return re.sub(r",\s*month\s*=\s*[^,\n]+", "", bib)

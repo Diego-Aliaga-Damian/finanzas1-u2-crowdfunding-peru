@@ -31,3 +31,32 @@ articulo/*.fdb_latexmk
 articulo/*.synctex.gz
 # Borrador en PDF: se versiona solo la versión final, sin marcas [PENDIENTE]
 articulo/articulo.pdf
+
+# Pósteres de los artículos: intermedios de LaTeX y PDF compilados (se regeneran con herramientas/posteres/)
+productos/posteres_articulos/*.aux
+productos/posteres_articulos/*.log
+productos/posteres_articulos/*.bbl
+productos/posteres_articulos/*.bcf
+productos/posteres_articulos/*.blg
+productos/posteres_articulos/*.run.xml
+productos/posteres_articulos/*.pdf
+productos/posteres_articulos/pdf/
+
+# Copias de los productos enviadas al estudiante (PDF y ZIP): se regeneran, no se versionan
+entregas/
+
+# Beamer y póster del artículo: PDF e intermedios (se regeneran con herramientas/productos/compilar_productos.py)
+productos/beamer/*.pdf
+productos/beamer/*.aux
+productos/beamer/*.log
+productos/beamer/*.nav
+productos/beamer/*.snm
+productos/beamer/*.toc
+productos/beamer/*.out
+productos/poster_articulo/*.pdf
+productos/poster_articulo/*.aux
+productos/poster_articulo/*.log
+productos/poster_articulo/*.bbl
+productos/poster_articulo/*.bcf
+productos/poster_articulo/*.blg
+productos/poster_articulo/*.run.xml

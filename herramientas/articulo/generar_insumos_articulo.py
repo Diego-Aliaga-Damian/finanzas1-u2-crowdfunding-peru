@@ -150,6 +150,9 @@ def cifras() -> dict[str, str]:
     c["solicitudesHTTPok"] = num(sum(x == "200" for x in extraccion))
     c["solicitudesDiagnostico"] = num(sum(1 for f, s, _ in lineas_http if s not in SCRIPTS_EXTRACCION and f in FECHAS_EXTRACCION))
     c.update(cifras_tablas(r))
+    # Títulos de las figuras de 04 (los usan los pósteres: \cifra{tituloF1} ... \cifra{tituloF4})
+    for nombre, titulo in r["titulos_figuras"].items():
+        c[f"titulo{nombre.split('_')[0].upper()}"] = esc(titulo)
     # Versión de cada valor p con su relación, para escribir $p\cifra{xRel}$: «< 0.001» o «= 0.127»
     for k in [k for k in c if k.endswith("P") or k.endswith("PMin") or k.endswith("PMax") or k.startswith("hUnoP")]:
         c[f"{k}Rel"] = c[k] if c[k].startswith("<") else f"= {c[k]}"
