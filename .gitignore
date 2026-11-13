@@ -60,3 +60,9 @@ productos/poster_articulo/*.bbl
 productos/poster_articulo/*.bcf
 productos/poster_articulo/*.blg
 productos/poster_articulo/*.run.xml
+
+# Versión Typst del artículo: el PDF se regenera (la copia publicada está en dashboard/descargas/)
+articulo_typst/articulo.pdf
+
+# Configuración local de la vista previa del dashboard
+.claude/

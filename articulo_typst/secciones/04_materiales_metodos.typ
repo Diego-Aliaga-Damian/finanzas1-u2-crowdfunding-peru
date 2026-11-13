@@ -1,0 +1,70 @@
+// Traducido automáticamente de articulo/secciones/04_materiales_metodos.tex por herramientas/articulo/generar_typst.py.
+// Para cambiar el texto, edita el .tex y vuelve a ejecutar el script (o edita aquí y deja de regenerar).
+#import "../generado/cifras.typ": cifra
+#import "../generado/tablas.typ": *
+#import "../estilo.typ": *
+
+= Materiales y métodos
+
+El estudio es cuantitativo, no experimental y de alcance descriptivo-comparativo: describe la oferta de FPF con datos oficiales y la contrasta con el crédito tradicional en segmentos comparables, sin estimar efectos causales.
+
+== Diseño, población y periodo
+
+La unidad de análisis es la plataforma-mes. La población son las #cifra("plataformasAutorizadas") sociedades administradoras que registran información ante la SMV en el periodo, #cifra("plataformasVigentes") de ellas vigentes al cierre; como se trabaja con todas, el estudio es un censo de la oferta regulada. El periodo va de #cifra("fechaInicio") a #cifra("fechaCorte") (69 periodos mensuales), y ambos límites se fijaron como constantes en el código. El primer mes con proyectos financiados es #cifra("inicioFPF"), de modo que el FPF tiene #cifra("mesesActividadFPF") meses con actividad. Los meses anteriores no son relleno, porque el portal respondió que no había proyectos, y se conservan para mantener el panel balanceado.
+
+== Fuentes de datos y procedimiento de extracción
+
+La base se construyó con dos vías automatizadas, como exige la consigna de la Unidad II: interfaces de programación (API) y rastreo programático (_scraping_) de un portal institucional. El procedimiento completo está en los scripts de Python del repositorio (Anexo).
+
+=== Vía 1: interfaces de programación
+
+De BCRPData, la API del Banco Central de Reserva del Perú @bcrpdata2026, se descargaron diez series mensuales en moneda nacional: la tasa activa promedio de las empresas bancarias (TAMN); las tasas efectivas anuales (TEA) de los préstamos a pequeña y microempresa de bancos, cajas municipales y cajas rurales, y las de consumo de los bancos, en los tramos de hasta 360 días y de más de 360 días, y el índice de precios al consumidor de Lima Metropolitana (diciembre de 2021 = 100). El script compara el nombre oficial de cada serie con palabras clave esperadas y rechaza la respuesta si no coinciden. De la API OData de la SMV @smvodata2026 se descargaron las principales cuentas de los estados financieros de las empresas supervisadas en los 23 trimestres del periodo. Antes de guardar cada respuesta se comprueba que esté completa, y una respuesta vacía nunca reemplaza un archivo con datos.
+
+=== Vía 2: rastreo del portal de la SMV
+
+La actividad de las plataformas proviene de la página «Información de Proyectos» del Sistema de Información del Mercado de Valores @smvsimv2026, que no ofrece archivos descargables: muestra una tabla después de elegir la plataforma, el año y el mes en un formulario. El script reproduce ese procedimiento: recupera los campos ocultos del formulario, envía la consulta para cada plataforma y mes, y lee los proyectos publicados, los financiados y el monto financiado por modalidad y tipo de receptor (empresarial o personal). Una respuesta solo se guarda si contiene la tabla de resultados, aunque diga que no hay proyectos, y si el formulario devuelto confirma la consulta pedida; si no, se reintenta con un formulario nuevo. Entre solicitudes hay una pausa de tres segundos y todas se identifican con un agente de usuario del proyecto. El sitio no publica un `robots.txt` propio, por lo que se aplicó una política conservadora y se guardó la evidencia.
+
+Con las plataformas retiradas, el portal falló de forma intermitente: confirmaba la consulta, pero no mostraba la tabla, aunque en el caso revisado manualmente el dato sí aparecía en un navegador. Tras los reintentos se obtuvieron #cifra("mesesObtenidos") de los #cifra("filasPanel") plataforma-mes (#cifra("coberturaPct")~%); los #cifra("noObtenidos") restantes, todos de plataformas retiradas, quedan marcados como no obtenidos. La incidencia se documentó y el docente estuvo de acuerdo con tratarla sin sustituir la fuente.
+
+=== Integridad y verificación
+
+Las respuestas originales se guardaron sin editar, con su hash SHA-256, la fecha, la hora y el código HTTP en el log de ejecución. Las corridas de extracción del 7 y el 8 de noviembre de 2026 hicieron #cifra("solicitudesHTTP") solicitudes, todas con código 200; el log registra además #cifra("solicitudesDiagnostico") solicitudes de pruebas de diagnóstico. Como control externo, para 2025 la base registra #cifra("proyFin2025") proyectos financiados por S/~#cifra("monto2025") millones, frente a 432 proyectos y S/~120.3 millones según las cifras de la SMV que recogió la prensa @ramirez2026. Una auditoría automatizada vuelve a generar la base y las salidas desde los archivos originales y coteja una muestra aleatoria de filas con las fuentes en vivo; en sus ejecuciones del 11 y el 12 de noviembre de 2026, todos los valores cotejados coincidieron.
+
+== Limpieza e integración
+
+Un tercer script lee solo los archivos crudos, tipifica los datos y usa la fila de totales del portal como control: en todas las consultas con registros coincide con la suma de sus componentes. Los estados financieros se asignan al mes de cierre de cada trimestre, sin interpolar. El portal y la API de la SMV se unen por el RUC de la sociedad administradora y el periodo, con un cruce exacto porque ambas fuentes usan la misma razón social; las series del BCRP, que describen a todo el sistema, se unen solo por el periodo. El resultado es un panel balanceado de #cifra("filasPanel") filas y #cifra("columnasPanel") columnas.
+
+No se imputaron faltantes. Una variable de control distingue los meses con registros, los meses en que el portal respondió que no había proyectos (que cuentan como cero) y los meses no obtenidos (que quedan vacíos), por lo que los agregados del FPF son una cota inferior. Si a cada mes no obtenido se le asigna el mayor monto mensual que su plataforma registró en el periodo, el monto anual podría aumentar como máximo en S/~#cifra("cotaMaxAnual") millones: #cifra("cotaPctMax")~% en el año más afectado y no más de #cifra("cotaPctMaxDesde2024")~% desde 2024.
+
+Los valores atípicos se identificaron con la regla de Tukey (tres veces el rango intercuartílico) y se conservaron, por tratarse de datos oficiales. Además, #cifra("eeffEscala") registros de estados financieros tenían un activo superior a S/~50 millones expresado en miles, una escala inverosímil para estas empresas, que indica un reporte en soles. La base conserva el valor publicado y el análisis distingue dos casos. En #cifra("eeffEscalaCorregida") registros, la misma empresa tiene trimestres con la escala correcta y la división entre mil vuelve continuas sus series, por lo que se dividen entre mil. Los otros #cifra("eeffEscalaExcluida") son de una empresa sin trimestres de referencia: sus saldos no se usan y sus ingresos y utilidad, que son cero, se conservan.
+
+== Variables e indicadores
+
+Las variables se definen en el diccionario del Anexo. Con ellas se calcularon cinco indicadores:
+
+- _Concentración_: $"IHH"_t = sum_i (100 thin s_(i t))^2$, el índice de Herfindahl-Hirschman del monto financiado, donde $s_(i t)$ es la participación de la plataforma $i$ en el año~$t$.
+- _Tasa de colocación_: proyectos financiados entre publicados, sobre sumas anuales, de doce meses o de subperiodos, porque un proyecto puede financiarse en un mes posterior al de su publicación.
+- _Monto medio por proyecto financiado_, por periodo y tipo de receptor.
+- _Ingresos de la plataforma sobre el monto financiado_, como aproximación al costo de intermediación: ingresos del trimestre (en soles) entre el monto financiado en ese trimestre, solo con los tres meses del portal obtenidos y, en el cálculo anual, con al menos S/~1 millón financiado. Mide cuánto retiene la plataforma por cada sol que intermedia; no es un precio para el receptor.
+- _Rentabilidad sobre activos_ (ROA), que la literatura sobre eficiencia de las fintech de crédito considera central @pampurini2024 @onorato2024: $"ROA" = 100 dot 4/n sum_q U_q slash overline(A)$, donde $U_q$ es la utilidad de cada uno de los $n$ trimestres disponibles del año y $overline(A)$, el activo medio; el factor $4/n$ anualiza los años incompletos.
+
+Los dos últimos suponen que la SMV publica los ingresos y la utilidad de cada trimestre y no los acumulados del año. La fuente no lo precisa, pero en las dos plataformas con mayores ingresos estos bajan de un trimestre a otro dentro del mismo año, algo imposible si fueran acumulados; la lectura acumulada se muestra solo como cota.
+
+== Estrategia de comparación con el crédito tradicional
+
+Como la SMV no publica la tasa ni el plazo de cada operación de FPF, su precio no se observa. La comparación se limita entonces a las dimensiones observables y usa, para cada condición de la consigna, una variable sustituta aceptada por el docente (@tab-comparabilidad): la TEA tradicional sirve solo como referencia del sistema, y el sector se aproxima con el tipo de receptor, que ubica los proyectos empresariales frente al crédito a pequeña y microempresa y los personales frente al de consumo. Se usa el tramo de hasta 360 días porque las fintech se especializan en crédito de corto plazo @serfes2025 y la prensa informó plazos promedio de 217 y 201 días para los préstamos de FPF en 2024 y 2025 @ramirez2026; el tramo de más de 360 días es la sensibilidad. La TEA bancaria de pequeña y microempresa de hasta 360 días sube #cifra("saltoTEA") puntos porcentuales entre febrero y marzo de 2025, sin un movimiento parecido en las cajas ni en el consumo; como no se halló una nota metodológica que lo explique, 2025 se reporta dividido en dos subperiodos.
+
+#tabla_apa(t6_comparabilidad,
+  titulo: [Comparabilidad entre el financiamiento participativo financiero y el crédito tradicional],
+  nota: [Elaboración propia a partir del diseño del estudio. La tasa y el plazo del financiamiento participativo no se publican por operación; la tasa efectiva anual del crédito tradicional se usa solo como referencia del sistema.],
+) <tab-comparabilidad>
+
+== Métodos estadísticos
+
+La hipótesis H1 (el monto mensual es mayor después de la modificación del reglamento) compara los #cifra("hUnoNAntes") meses previos con los #cifra("hUnoNDespues") posteriores, desde diciembre de 2025, primer mes completo de vigencia, con la prueba U de Mann-Whitney unilateral y un intervalo de confianza al 95~% de la diferencia de medianas por _bootstrap_ de percentiles con #cifra("bootstrap") réplicas. Es una comparación de niveles que supone meses independientes, aunque el monto está muy autocorrelacionado, y que no separa la modificación del crecimiento previo. Por eso se agregan tres controles: la misma prueba con #cifra("placeboN") cortes ficticios anteriores a la modificación, que deberían salir no significativos si la prueba captara solo el cambio normativo; la comparación del crecimiento interanual antes y después, y la posición de los meses posteriores frente a la tendencia log-lineal previa. La robustez se evalúa con el corte en noviembre de 2025, en soles constantes, con la cota superior de los faltantes y con y sin la plataforma líder.
+
+La hipótesis H2 (la tasa de colocación difiere entre proyectos empresariales y personales) se contrasta con una prueba _z_ de dos proporciones e intervalos de Wilson al 95~%, que suponen proyectos independientes. Como cada tipo de receptor se concentra en una plataforma distinta, el contraste se repite dentro de la plataforma líder con la prueba exacta de Fisher, adecuada cuando un grupo es pequeño. La relación exploratoria E1 examina si los cambios mensuales del monto se asocian con los de las tasas tradicionales mediante la correlación de Spearman en primeras diferencias, con intervalos por _bootstrap_ de bloques móviles de tres meses, para #cifra("eUnoN") comparadores (pequeña y microempresa de bancos, cajas municipales y cajas rurales, y consumo bancario, en ambos tramos). Con unos cincuenta cambios mensuales, un resultado no significativo no equivale a ausencia de asociación. Los procedimientos aleatorios usan la semilla #cifra("semilla"), de los cuatro últimos dígitos de la matrícula del autor, y todas las tablas y figuras se generan con el script de análisis.
+
+== Consideraciones éticas
+
+Solo se usó información pública y agregada, sin datos personales protegidos por la Ley N.#super[o]~29733. Las fuentes con protección contra el acceso automatizado, como el portal de estadísticas de la Superintendencia de Banca, Seguros y AFP, se descartaron en lugar de eludirlas, y las incidencias de la extracción están documentadas en el repositorio.

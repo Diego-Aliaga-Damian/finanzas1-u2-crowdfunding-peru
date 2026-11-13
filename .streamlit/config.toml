@@ -1,0 +1,37 @@
+# Tema del dashboard FinCrowd Perú: modo claro, paleta multicolor (misma que tema.py)
+[theme]
+base = "light"
+primaryColor = "#2563EB"
+backgroundColor = "#FAFBFF"
+secondaryBackgroundColor = "#EEF2FF"
+textColor = "#0F172A"
+borderColor = "#E2E8F0"
+linkColor = "#2563EB"
+font = "Plus Jakarta Sans:https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+headingFontWeights = [800, 700, 700]
+headingFontSizes = ["1.65rem", "1.3rem", "1.08rem"]
+baseRadius = "0.75rem"
+buttonRadius = "0.7rem"
+showWidgetBorder = true
+blueColor = "#2563EB"
+greenColor = "#10B981"
+greenTextColor = "#047857"
+redColor = "#FB7185"
+redTextColor = "#BE123C"
+yellowColor = "#FBBF24"
+yellowTextColor = "#B45309"
+violetColor = "#8B5CF6"
+orangeColor = "#F97316"
+dataframeHeaderBackgroundColor = "#F1F5FF"
+chartCategoricalColors = ["#2563EB", "#10B981", "#FB7185", "#FBBF24", "#8B5CF6", "#06B6D4"]
+
+[theme.sidebar]
+backgroundColor = "#F7F8FF"
+secondaryBackgroundColor = "#FFFFFF"
+borderColor = "#E2E8F0"
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"

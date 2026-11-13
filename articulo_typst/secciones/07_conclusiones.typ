@@ -1,0 +1,11 @@
+// Traducido automáticamente de articulo/secciones/07_conclusiones.tex por herramientas/articulo/generar_typst.py.
+// Para cambiar el texto, edita el .tex y vuelve a ejecutar el script (o edita aquí y deja de regenerar).
+#import "../generado/cifras.typ": cifra
+#import "../generado/tablas.typ": *
+#import "../estilo.typ": *
+
+= Conclusiones
+
+La oferta de financiamiento participativo financiero en el Perú creció con fuerza entre 2022 y 2026, de S/~#cifra("monto2022") a S/~#cifra("monto2025") millones anuales, pero está muy concentrada: solo #cifra("plataformasConFinanciamiento") de #cifra("plataformasAutorizadas") administradoras financiaron proyectos y una reúne el #cifra("participacionLider")~% del monto. Es, sobre todo, un mercado de préstamos a empresas con montos crecientes, en el que solo la plataforma líder es rentable y retiene alrededor de #cifra("costoMediana")~% de lo que financia. Las diferencias de colocación entre receptores reflejan el modelo de negocio de cada plataforma, y el mayor monto tras la modificación de 2025 es coherente con el crecimiento previo, por lo que no puede atribuirse a la norma.
+
+Frente a un crédito tradicional de tasas altas, el FPF no puede compararse en precio: mientras no se publiquen la tasa y el plazo de sus operaciones, no podrá saberse si ofrece mejores condiciones que la banca y las cajas.

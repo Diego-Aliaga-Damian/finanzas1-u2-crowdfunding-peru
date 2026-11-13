@@ -1,0 +1,21 @@
+// Traducido automáticamente de articulo/secciones/01_resumen_abstract.tex por herramientas/articulo/generar_typst.py.
+// Para cambiar el texto, edita el .tex y vuelve a ejecutar el script (o edita aquí y deja de regenerar).
+#import "../generado/cifras.typ": cifra
+#import "../generado/tablas.typ": *
+#import "../estilo.typ": *
+
+= Resumen
+
+Este estudio caracteriza la oferta de financiamiento participativo financiero (FPF) en el Perú entre 2022 y 2026 y la compara con las condiciones del crédito tradicional. Con las interfaces de programación del Banco Central de Reserva del Perú y de la Superintendencia del Mercado de Valores (SMV) y el rastreo del portal de proyectos de la SMV se construyó un panel reproducible de #cifra("filasPanel") observaciones plataforma-mes. De #cifra("plataformasAutorizadas") sociedades administradoras, solo #cifra("plataformasConFinanciamiento") financiaron proyectos y una concentró el #cifra("participacionLider")~% del monto. El monto anual pasó de S/~#cifra("monto2022") millones en 2022 a S/~#cifra("monto2025") millones en 2025, impulsado por proyectos empresariales cada vez más grandes. Los proyectos empresariales se financiaron en el #cifra("colocacionEmp")~% de los casos y los personales en el #cifra("colocacionPer")~%, una diferencia que refleja sobre todo el modelo de negocio de cada plataforma. El monto mensual fue mayor tras la modificación del reglamento de 2025, pero la diferencia es coherente con la tendencia previa. Solo la plataforma líder fue rentable, y sus ingresos equivalen al #cifra("costoMediana")~% del monto que financia. Como la SMV no publica la tasa ni el plazo de las operaciones, el FPF no puede compararse en precio con un crédito tradicional cuyas tasas para pequeña y microempresa no bajaron de #cifra("teaCmacPymeMin")~% anual; el estudio delimita qué condiciones sí son comparables.
+
+_Palabras clave:_ financiamiento participativo financiero, crowdfunding, fintech, crédito a pymes, Perú
+
+#pagebreak()
+
+= Abstract
+
+This study characterizes the supply of lending-based crowdfunding in Peru between 2022 and 2026 and compares it with the terms of traditional credit. A reproducible panel of #cifra("filasPanel") platform-month observations was built from the application programming interfaces of the Central Reserve Bank of Peru and the Superintendency of the Securities Market (SMV) and from web scraping of the SMV project portal. Of #cifra("plataformasAutorizadas") platform operators, only #cifra("plataformasConFinanciamiento") funded projects, and one accounted for #cifra("participacionLider")% of the amount. Annual funding rose from S/~#cifra("monto2022") million in 2022 to S/~#cifra("monto2025") million in 2025, driven by increasingly large business projects. Business projects were funded in #cifra("colocacionEmp")% of cases and personal projects in #cifra("colocacionPer")%, a gap that mainly reflects each platform's business model. Monthly funding was higher after the 2025 regulatory amendment, but the difference is consistent with the prior trend. Only the leading platform was profitable, and its revenue equals #cifra("costoMediana")% of the amount it funds. Because the SMV does not publish the rate or term of each loan, crowdfunding cannot be compared on price with traditional credit, whose rates for small and micro businesses never fell below #cifra("teaCmacPymeMin")% a year; the study identifies which terms can be compared.
+
+_Keywords:_ lending-based crowdfunding, fintech, small business credit, Peru
+
+#pagebreak()
