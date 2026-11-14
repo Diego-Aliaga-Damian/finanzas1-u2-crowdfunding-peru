@@ -69,7 +69,10 @@ def _comparar(plataformas: list[str]) -> None:
                 fig.add_bar(x=orden, y=[pb.get(p, 0) / 1e6 for p in orden], name=f"B ({b[0]} a {b[1]})",
                             marker_color=T.AZUL, hovertemplate="B: S/ %{y:.2f} M<extra></extra>")
                 fig.update_layout(barmode="group", yaxis_title="S/ millones", hovermode="x unified")
-                T.figura(fig, "fincrowd_comparacion_periodos", 330,
+                T.figura(fig, "fincrowd_comparacion_periodos", 330, leer=(
+                    "Para cada plataforma, la barra clara es el periodo A y la oscura el periodo B. La tabla de la "
+                    "izquierda resume ambos periodos; la columna «Variación» indica cuánto cambió B frente a A."),
+                         datos=
                          pd.DataFrame({"A": pa.reindex(orden).fillna(0), "B": pb.reindex(orden).fillna(0)}).rename_axis("plataforma"))
 
 
@@ -129,6 +132,11 @@ def pagina() -> None:
     T.encabezado_pagina("Oferta: crecimiento rápido y muy concentrado",
                         "Proyectos publicados y financiados y monto canalizado por las plataformas autorizadas por la SMV.",
                         "monitoring", T.AZUL, "Módulo 1 · Oferta")
+    r = C.resultados()
+    an = r["anual"]
+    T.respuesta(f"El dinero financiado al año pasó de <b>{C.soles_m(an['2022']['monto_soles'])}</b> en 2022 a "
+                f"<b>{C.soles_m(an['2025']['monto_soles'])}</b> en 2025, con proyectos cada vez más grandes; pero casi todo "
+                f"pasa por <b>{r['plataforma_lider']}</b> ({C.pct(r['participacion_lider_periodo_pct'])} del monto).")
     desde, hasta, plataformas = C.filtros()
     T.chips_filtros(desde, hasta, plataformas, len(D.PLATAFORMAS))
     if not plataformas:

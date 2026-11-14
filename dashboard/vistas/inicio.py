@@ -61,6 +61,12 @@ def _kpis(v: pd.DataFrame, desde: str, hasta: str, plataformas: list[str]) -> di
         return d, (f"{'+' if d > 0 else ''}{C.pct(d)}" if pd.notna(d) else "sin actividad previa")
 
     cota = "cota" if (v.estado_simv == "no_obtenido").any() else "filtros"
+    explica = {"monto": "Dinero que recibieron los proyectos financiados",
+               "financiados": "Proyectos que reunieron el dinero que pedían",
+               "colocacion_pct": "De cada 100 proyectos publicados, cuántos se financiaron",
+               "monto_medio": "Lo que recibió en promedio cada proyecto",
+               "hhi": "Qué tan concentrado está el mercado (10 000 = una sola plataforma)",
+               "participacion_lider_pct": "Parte del monto que reúne la plataforma más grande"}
     items = []
     for clave, etiqueta, valor, ic, color, tipo, sentido, ayuda, ins in (
             ("monto", "Monto financiado", C.soles_m(k["monto"]), "payments", T.AZUL, "pct", "normal",
@@ -77,7 +83,8 @@ def _kpis(v: pd.DataFrame, desde: str, hasta: str, plataformas: list[str]) -> di
              T.AMARILLO, "pp", "neutro", "Porcentaje del monto que reúne la plataforma con mayor monto en la selección.", None)):
         d, txt = var(clave, tipo)
         item = {"etiqueta": etiqueta, "valor": valor, "icono": ic, "color": color, "delta": d, "delta_txt": txt,
-                "delta_ref": ref if pd.notna(d) else "", "sentido": sentido, "ayuda": ayuda, "insignia": ins}
+                "delta_ref": ref if pd.notna(d) else "", "sentido": sentido, "ayuda": ayuda, "insignia": ins,
+                "explica": explica[clave]}
         if clave == "participacion_lider_pct" and k["lider"]:
             item["sub"] = k["lider"]
         if clave == "hhi":
@@ -107,7 +114,10 @@ def _concentracion(v: pd.DataFrame) -> None:
             fig.add_annotation(text=f"<b>{C.num(lider.participacion_pct, 1)} %</b><br><span style='font-size:11px'>{lider.plataforma}</span>",
                                showarrow=False, font=dict(size=20, color=T.TINTA))
             fig.update_layout(legend=dict(orientation="h", y=-0.08, yanchor="top"), margin=dict(t=10, b=10))
-            T.figura(fig, "fincrowd_participacion", 320, part.set_index("plataforma")[["monto", "participacion_pct"]])
+            T.figura(fig, "fincrowd_participacion", 320, part.set_index("plataforma")[["monto", "participacion_pct"]],
+                     leer="Cada color es una plataforma y el tamaño de su porción es su parte del dinero financiado. "
+                          "En el centro está la plataforma más grande. Si casi todo el anillo es de un color, el "
+                          "mercado depende de una sola empresa.")
     with c2, st.container(key="tarjeta-ihh"):
         T.seccion("Concentración por año (IHH)", "stacked_bar_chart", T.VIOLETA,
                   "Índice de Herfindahl-Hirschman del monto: máximo 10 000 (una sola plataforma).")
@@ -126,7 +136,10 @@ def _concentracion(v: pd.DataFrame) -> None:
                                       "Plataformas activas: %{customdata[1]}<extra></extra>")
             fig.update_layout(yaxis=dict(range=[0, 11000], title="IHH"), showlegend=False)
             fig.add_hline(y=10000, line=dict(color=T.TINTA_3, dash="dot", width=1))
-            T.figura(fig, "fincrowd_ihh_anual", 320, a.set_index("anio")[["hhi", "participacion_lider_pct", "plataformas_activas", "monto"]])
+            T.figura(fig, "fincrowd_ihh_anual", 320, a.set_index("anio")[["hhi", "participacion_lider_pct", "plataformas_activas", "monto"]],
+                     leer="Cada barra es un año. Cuanto más alta, más concentrado está el financiamiento en pocas "
+                          "plataformas; la línea punteada (10 000) sería una sola plataforma con todo el monto. "
+                          "Pasa el cursor para ver la participación de la líder y cuántas plataformas financiaron.")
 
 
 def _hallazgos() -> None:
@@ -194,7 +207,10 @@ def _calidad(v: pd.DataFrame) -> None:
             fig.add_bar(y=cuenta.index, x=cuenta[est], name=nombre, orientation="h", marker_color=T.COLOR_ESTADO[est],
                         hovertemplate=f"<b>%{{y}}</b><br>{nombre}: %{{x}} meses<extra></extra>")
         fig.update_layout(barmode="stack", xaxis_title="Meses", legend=dict(y=1.02), margin=dict(l=6, t=30))
-        T.figura(fig, "fincrowd_estado_consulta", 290)
+        T.figura(fig, "fincrowd_estado_consulta", 290,
+                 leer="Cada barra es una plataforma y se divide según lo que respondió el portal de la SMV en cada mes: "
+                      "**verde**, mes con proyectos registrados; **gris**, el portal respondió que no hubo proyectos "
+                      "(cuenta como cero); **coral**, el mes no se pudo leer y no se rellenó con estimaciones.")
 
 
 def _accesos() -> None:
@@ -214,9 +230,28 @@ def _accesos() -> None:
                 st.page_link(C.PAGINAS[clave], label="Abrir", icon=":material/arrow_forward:")
 
 
+def _bienvenida(r: dict) -> None:
+    an = r["anual"]
+    T.respuesta(
+        f"El <b>financiamiento participativo</b> (crowdfunding regulado por la SMV) creció de <b>{C.soles_m(an['2022']['monto_soles'])}</b> "
+        f"en 2022 a <b>{C.soles_m(an['2025']['monto_soles'])}</b> en 2025, pero casi todo pasa por una sola plataforma "
+        f"(<b>{C.pct(r['participacion_lider_periodo_pct'])}</b> del monto). Como la SMV no publica la tasa de cada préstamo, "
+        "su precio no se puede comparar con el de bancos y cajas.",
+        "El estudio en una frase")
+    T.guia_pasos([
+        ("Elige qué mirar", "Usa <b>Periodo rápido</b> y <b>Plataformas</b> aquí abajo, o los filtros de la barra lateral."),
+        ("Lee las tarjetas", "Cada tarjeta dice qué mide y cuánto cambió frente al periodo de comparación."),
+        ("Explora los resultados", "En el menú de la izquierda, cada página responde una pregunta del estudio."),
+        ("¿Una palabra rara?", "Abre el <b>Glosario de términos</b> en la barra lateral."),
+    ])
+    with st.expander("¿Qué significan las etiquetas de colores?", icon=":material/label:"):
+        T.leyenda_insignias()
+
+
 def pagina() -> None:
     r = C.resultados()
     T.encabezado_inicio(C.imagen_b64(str(C.IMG_UNCP)), C.imagen_b64(str(C.IMG_FACULTAD)), C.mes_txt(C.todos_los_periodos()[-1]))
+    _bienvenida(r)
     _barra_filtros()
     desde, hasta, plataformas = C.filtros()
     if not plataformas:

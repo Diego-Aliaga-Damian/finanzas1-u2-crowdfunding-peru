@@ -3,44 +3,96 @@
 % Tema 96: Fintech y financiamiento participativo (crowdfunding) en el Perú: oferta y condiciones
 % Artículo científico (journal), Finanzas I (055D), Unidad II, UNCP, 2026-II
 %
+% Diseño de revista académica a dos columnas (cabecera con logos, recuadro de resumen bilingüe, puntos clave,
+% abreviaturas, letra capital, encabezados corridos, tablas y figuras a todo el ancho) con las normas APA 7:
+% citas y referencias (biblatex-apa), niveles de título, tablas y figuras con número en negrita y título en
+% cursiva arriba y notas debajo, Times de 12 puntos y sangría de 1,27 cm.
+%
 % Compilación (desde esta carpeta):  latexmk -pdf articulo.tex
 % Antes de compilar:                 python ..\herramientas\articulo\generar_insumos_articulo.py
 % Las tablas y figuras se leen de ../salidas (generadas por codigo/04_analisis.py) y las cifras del
 % texto de generado/cifras.tex (derivadas de salidas/resultados_04.json): nada se transcribe a mano.
 
-\documentclass[12pt]{article}
+\documentclass[12pt,twoside,twocolumn]{article}
 
-% ---------- Página y tipografía (APA 7: márgenes de 2,54 cm, Times 12, doble espacio) ----------
-\usepackage[a4paper,margin=2.54cm]{geometry}
+% ---------- Página y tipografía: A4 a dos columnas, Times de 12 puntos ----------
+\usepackage[a4paper,top=2.5cm,bottom=2.6cm,inner=2.0cm,outer=2.0cm,columnsep=0.85cm,headsep=0.8cm,
+            headheight=16pt,footskip=1.2cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish,es-noshorthands,es-tabla,es-nodecimaldot]{babel}
 \usepackage{newtxtext,newtxmath}
 \usepackage{setspace}
-\doublespacing
-\setlength{\parindent}{1.27cm}
+\setstretch{1.5}
+\setlength{\parindent}{1.27cm}  % APA 7: sangría de 1,27 cm en la primera línea de cada párrafo
 \usepackage{csquotes}
 \usepackage[expansion=false]{microtype}  % sin expansión de fuentes: compila igual en cualquier instalación
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{fontawesome5}
+\usepackage{lettrine}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
 
-% ---------- Encabezado: número de página arriba a la derecha ----------
+% ---------- Paleta (azul marino institucional con acento dorado) ----------
+\definecolor{marino}{HTML}{1B3A6B}
+\definecolor{azulmedio}{HTML}{2E6DB4}
+\definecolor{celeste}{HTML}{EEF3FA}
+\definecolor{celestefila}{HTML}{F4F7FC}
+\definecolor{dorado}{HTML}{C9A227}
+\definecolor{grisTexto}{HTML}{4A5568}
+\definecolor{grisLinea}{HTML}{C9D3E1}
+
+% ---------- Encabezados y pies corridos ----------
 \usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[R]{\thepage}
-\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{revista}{%
+  \fancyhf{}%
+  \fancyhead[LE]{{\color{marino}\bfseries\large\thepage}\hspace{0.9em}{\color{grisLinea}\rule[-2pt]{0.6pt}{11pt}}\hspace{0.9em}{\small\itshape\color{grisTexto}D.~S. Aliaga Damián}}%
+  \fancyhead[RO]{{\small\itshape\color{grisTexto}Fintech y financiamiento participativo en el Perú}\hspace{0.9em}{\color{grisLinea}\rule[-2pt]{0.6pt}{11pt}}\hspace{0.9em}{\color{marino}\bfseries\large\thepage}}%
+  \fancyfoot[C]{\footnotesize\color{grisTexto}Finanzas I (055D)\,\textperiodcentered\,Facultad de Economía\,\textperiodcentered\,Universidad Nacional del Centro del Perú\,\textperiodcentered\,2026-II}%
+  \renewcommand{\headrule}{{\color{grisLinea}\hrule height 0.5pt width\headwidth}}%
+  \renewcommand{\footrulewidth}{0pt}}
+\fancypagestyle{primera}{%
+  \fancyhf{}%
+  \fancyhead[L]{\small\color{grisTexto}\textit{Finanzas I (055D), UNCP} (2026) \textbf{Unidad II}, 1--\pageref{LastPage}}%
+  \fancyfoot[C]{\footnotesize\color{grisTexto}Finanzas I (055D)\,\textperiodcentered\,Facultad de Economía\,\textperiodcentered\,Universidad Nacional del Centro del Perú\,\textperiodcentered\,2026-II}%
+  \renewcommand{\headrulewidth}{0pt}\renewcommand{\footrulewidth}{0pt}}
+\pagestyle{revista}
 
-% ---------- Títulos de sección según APA 7 (niveles 1 a 3) ----------
+% ---------- Títulos según APA 7 (nivel 1 centrado en negrita; 2 a la izquierda en negrita; 3 en negrita cursiva) ----------
 \usepackage{titlesec}
-\titleformat{\section}{\centering\bfseries\normalsize}{}{0pt}{}
-\titleformat{\subsection}{\bfseries\normalsize}{}{0pt}{}
-\titleformat{\subsubsection}{\bfseries\itshape\normalsize}{}{0pt}{}
-\titlespacing*{\section}{0pt}{12pt}{0pt}
-\titlespacing*{\subsection}{0pt}{12pt}{0pt}
-\titlespacing*{\subsubsection}{0pt}{12pt}{0pt}
+\titleformat{\section}{\centering\bfseries\large\color{marino}}{}{0pt}{}[{\vspace{3pt}\centering\color{dorado}\rule{1.8cm}{1.1pt}}]
+\titleformat{\subsection}{\bfseries\normalsize\raggedright\color{marino}}{}{0pt}{}
+\titleformat{\subsubsection}{\bfseries\itshape\normalsize\raggedright\color{azulmedio}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{20pt}{10pt}
+\titlespacing*{\subsection}{0pt}{14pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{11pt}{3pt}
 
-% ---------- Tablas y figuras con formato APA 7 ----------
-\usepackage{graphicx,booktabs,array,float,pdflscape,ragged2e,longtable,tabularx}  % 04 escribe las tablas con tabularx
-\usepackage{placeins}  % \FloatBarrier: las tablas y figuras de Resultados no pasan a la Discusión
+% ---------- Recuadros: resumen bilingüe, puntos clave y abreviaturas ----------
+% Resumen y Abstract lado a lado, a todo el ancho, con interlineado sencillo
+\newenvironment{resumen}[1]{\begin{minipage}[t]{0.475\textwidth}\footnotesize\setstretch{1.07}\setlength{\parindent}{0pt}%
+  {\color{marino}\bfseries\MakeUppercase{#1}}\par\vspace{4pt}\ignorespaces}{\par\end{minipage}\hfill}
+\newcommand{\palabrasclave}[2]{\par\vspace{6pt}\noindent{\color{marino}\bfseries #1:}~#2\par}
+\newtcolorbox{cajapuntos}{enhanced,breakable,colback=celeste,colframe=marino,boxrule=0pt,leftrule=3pt,arc=2pt,
+  left=8pt,right=7pt,top=6pt,bottom=6pt,before skip=4pt,after skip=12pt,
+  fontupper=\small\setstretch{1.12},title={\faIcon{lightbulb}\hspace{0.45em}Puntos clave},
+  coltitle=white,colbacktitle=marino,fonttitle=\bfseries\small,toptitle=2pt,bottomtitle=2pt,
+  title after break={Puntos clave (cont.)}}
+\newenvironment{puntosclave}{\begin{cajapuntos}\vspace{2pt}\begin{itemize}[leftmargin=1.1em,itemsep=3pt,topsep=4pt,
+  label={\color{azulmedio}\scriptsize$\blacksquare$}]}{\end{itemize}\end{cajapuntos}}
+\newtcolorbox{cajaabrev}{enhanced,breakable,colback=white,colframe=grisLinea,boxrule=0.6pt,arc=2pt,
+  left=7pt,right=7pt,top=5pt,bottom=5pt,before skip=2pt,after skip=12pt,fontupper=\footnotesize\setstretch{1.08},
+  title={\faIcon{book-open}\hspace{0.45em}Abreviaturas},coltitle=marino,colbacktitle=celeste,fonttitle=\bfseries\small}
+\newenvironment{abreviaturas}{\begin{cajaabrev}\setlength{\parindent}{0pt}}{\end{cajaabrev}}
+\newcommand{\abrev}[2]{\noindent{\color{marino}\bfseries #1}\quad #2\par\vspace{1.5pt}}
+\renewcommand{\LettrineFontHook}{\color{marino}\bfseries}
+\setcounter{DefaultLines}{3}
+\raggedbottom  % sin estirar espacios para igualar el pie de las columnas
+
+% ---------- Tablas y figuras con formato APA 7, a todo el ancho de la página ----------
+\usepackage{booktabs,array,float,pdflscape,ragged2e,longtable,tabularx}  % 04 escribe las tablas con tabularx
+\usepackage{placeins}  % \FloatBarrier: las tablas y figuras no pasan a las Referencias
 \usepackage{newunicodechar}  % símbolos que aparecen en las tablas generadas por 04
 \newunicodechar{≤}{\ensuremath{\leq}}
 \newunicodechar{≥}{\ensuremath{\geq}}
@@ -48,57 +100,66 @@
 \newunicodechar{≈}{\ensuremath{\approx}}
 \newunicodechar{−}{\ensuremath{-}}  % signo menos de los números negativos (U+2212)
 \usepackage{caption}
-\captionsetup{labelfont=bf,textfont=it,labelsep=newline,justification=RaggedRight,singlelinecheck=false,
-              skip=4pt,font={normalsize,singlespacing}}
+\DeclareCaptionLabelFormat{apa}{{\color{marino}#1 #2}}
+\captionsetup{labelfont=bf,textfont=it,labelsep=newline,labelformat=apa,justification=RaggedRight,
+              singlelinecheck=false,skip=5pt,font={normalsize,singlespacing}}
 \captionsetup[table]{position=top}
 \captionsetup[figure]{position=top}
 \graphicspath{{../salidas/figuras/}}
 \newcommand{\tablas}{../salidas/tablas}
-% Interlineado sencillo y letra pequeña dentro de tablas y figuras (APA 7 lo admite). Se agrega a
-% \@floatboxreset porque LaTeX restablece la letra al abrir cada flotante (un \AtBeginEnvironment no basta).
+% Dentro de tablas y figuras: interlineado sencillo, letra pequeña, filas alternadas en celeste y filetes en marino
+% (APA 7 admite filetes horizontales y sombreado discreto). Se agrega a \@floatboxreset porque LaTeX restablece
+% la letra al abrir cada flotante (un \AtBeginEnvironment no basta).
 \makeatletter
-\g@addto@macro\@floatboxreset{\singlespacing\small}
-\setlength{\@fptop}{0pt}  % las páginas solo de tablas o figuras empiezan arriba, no centradas
-\setlength{\@fpsep}{18pt}
-\setlength{\@fpbot}{0pt plus 1fil}
+\g@addto@macro\@floatboxreset{\singlespacing\small\renewcommand{\arraystretch}{1.18}%
+  \rowcolors{2}{white}{celestefila}\arrayrulecolor{marino}}
+\setlength{\@dblfptop}{0pt}  % las páginas solo de tablas o figuras empiezan arriba, no centradas
+\setlength{\@dblfpsep}{22pt}
+\setlength{\@dblfpbot}{0pt plus 1fil}
 \makeatother
-\newcommand{\notaapa}[1]{\par\vspace{4pt}{\small\RaggedRight\textit{Nota.} #1\par}}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\dblfloatpagefraction}{0.75}
+\setcounter{dbltopnumber}{2}
+\setlength{\dbltextfloatsep}{18pt plus 4pt minus 2pt}
+\newcommand{\notaapa}[1]{\par\vspace{5pt}{\small\RaggedRight\textit{Nota.} #1\par}}
+\newcommand{\tablacompacta}{\renewcommand{\arraystretch}{1.02}}  % para tablas muy altas (T8), que deben caber en una página
+\arrayrulecolor{marino}  % filetes de todas las tablas (también las del anexo) en azul marino
 
 % ---------- Referencias en APA 7 (biblatex-apa + biber) ----------
 \usepackage[style=apa,backend=biber]{biblatex}
 \addbibresource{referencias.bib}
 \usepackage{xurl}
-\usepackage[hidelinks]{hyperref}
+\usepackage[colorlinks=true,linkcolor=marino,citecolor=marino,urlcolor=azulmedio]{hyperref}
 \urlstyle{same}  % APA 7: las URL y DOI con la misma letra del texto, no en monoespaciada
 
 % ---------- Cifras del texto generadas desde salidas/resultados_04.json ----------
 \input{generado/cifras.tex}
 
 % ---------- Marca de borrador: debe desaparecer antes de entregar ----------
-\usepackage{xcolor}
 \newcommand{\pendiente}[1]{\textcolor{red}{[PENDIENTE: #1]}}
 
 \begin{document}
 
-\input{secciones/00_portada}
-\input{secciones/01_resumen_abstract}
+\input{secciones/00_portada}  % cabecera, título, autor y recuadro de Resumen/Abstract (incluye 01_resumen_abstract)
+\input{secciones/01_puntos_clave}
 \input{secciones/02_introduccion}
 \input{secciones/03_antecedentes}
 \input{secciones/04_materiales_metodos}
 \input{secciones/05_resultados}
-\FloatBarrier
 \input{secciones/06_discusion}
 \input{secciones/07_conclusiones}
 \input{secciones/08_declaracion_ia}
 
-\clearpage
+\FloatBarrier  % todas las tablas y figuras aparecen antes de las referencias
 \section{Referencias}
 \begingroup
 \setlength{\parindent}{0pt}
+\setstretch{1.12}
 \printbibliography[heading=none]
 \endgroup
 
-\clearpage
+% El anexo usa tablas largas que ocupan varias páginas: va a una columna
+\onecolumn
 \input{secciones/09_anexo_datos_codigo}
 
 \end{document}

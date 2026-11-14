@@ -65,16 +65,24 @@ def registrar_plantilla() -> None:
 
 
 def figura(fig: go.Figure, nombre: str, alto: int = 380, datos: pd.DataFrame | None = None,
-           etiqueta_csv: str = "Datos del gráfico (CSV)") -> None:
-    """Muestra un gráfico con el estilo FinCrowd, descarga en PNG desde la barra del gráfico y, si se pasan
-    datos, un botón para bajarlos en CSV."""
+           etiqueta_csv: str = "Datos del gráfico (CSV)", leer: str | None = None) -> None:
+    """Muestra un gráfico con el estilo FinCrowd, descarga en PNG desde la barra del gráfico, un botón para bajar
+    los datos en CSV (si se pasan) y una explicación desplegable de cómo leerlo (si se pasa `leer`)."""
     fig.update_layout(height=alto)
     config = {"displaylogo": False, "modeBarButtonsToRemove": ["lasso2d", "select2d", "autoScale2d"],
               "toImageButtonOptions": {"format": "png", "filename": nombre, "scale": 2}}
     st.plotly_chart(fig, theme=None, config=config, key=f"fig_{nombre}")
+    if leer:
+        como_leer(leer)
     if datos is not None:
         st.download_button(etiqueta_csv, datos.to_csv(index=True).encode("utf-8-sig"), file_name=f"{nombre}.csv",
                            mime="text/csv", icon=":material/download:", key=f"csv_{nombre}", type="tertiary")
+
+
+def como_leer(texto: str, titulo: str = "¿Cómo leer este gráfico?") -> None:
+    """Explicación en lenguaje simple, plegada para no recargar la página."""
+    with st.expander(titulo, icon=":material/help:"):
+        st.markdown(texto)
 
 
 def eje_meses(fig: go.Figure, periodos: list[str], cada: int = 6, eje: str = "x") -> list[str]:
@@ -247,6 +255,27 @@ h1, h2, h3 {{ letter-spacing: -.02em; }}
 .fc-barra {{ height:8px; border-radius:99px; background:#EEF2F7; overflow:hidden; margin-top:6px; }}
 .fc-barra > div {{ height:100%; border-radius:99px; background: linear-gradient(90deg, {ESMERALDA}, {TURQUESA}); }}
 
+/* ---------- «En pocas palabras»: la conclusión del módulo antes de los gráficos */
+.fc-resp {{ display:flex; gap:14px; align-items:flex-start; padding:14px 18px; border-radius:16px; margin: 4px 0 14px;
+  background: linear-gradient(110deg, #EEF4FF 0%, #F5F0FF 60%, #EFFBFF 100%); border:1px solid #DCE6FB; }}
+.fc-resp-ic {{ width:38px; height:38px; border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  background: linear-gradient(135deg, {AZUL}, {VIOLETA}); color:#fff; box-shadow: 0 6px 14px -6px {AZUL}; }}
+.fc-resp-t {{ font-size:.7rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:{OSCURO[VIOLETA]}; }}
+.fc-resp-x {{ font-size:.98rem; font-weight:600; color:{TINTA}; line-height:1.5; margin-top:2px; }}
+.fc-resp-x b {{ color:{OSCURO[AZUL]}; }}
+
+/* ---------- guía de pasos y leyenda de etiquetas (inicio) */
+.fc-pasos {{ display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin: 2px 0 12px; }}
+.fc-paso {{ display:flex; gap:12px; align-items:flex-start; padding:12px 14px; border-radius:14px; background:#FFFFFF;
+  border:1px solid {BORDE}; }}
+.fc-paso-n {{ width:30px; height:30px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:.9rem; color:#fff; background: var(--a); }}
+.fc-paso-t {{ font-size:.86rem; font-weight:800; color:{TINTA}; }}
+.fc-paso-x {{ font-size:.78rem; color:{TINTA_2}; line-height:1.45; margin-top:1px; }}
+.fc-leyenda {{ display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:8px 16px; }}
+.fc-leyenda div {{ font-size:.8rem; color:{TINTA_2}; line-height:1.45; }}
+.fc-kpi-ex {{ font-size:.72rem; color:{TINTA_3}; line-height:1.35; margin-top:2px; }}
+
 /* ---------- recuadros de aviso */
 .fc-aviso {{ display:flex; gap:12px; align-items:flex-start; padding:12px 16px; border-radius:14px; margin: 6px 0 12px;
   background: var(--s); border:1px solid var(--bd); color:{TINTA_2}; font-size:.86rem; line-height:1.5; }}
@@ -354,10 +383,11 @@ def kpis(items: list[dict]) -> None:
             de = f'<div class="fc-kpi-de {clase}">{icono(flecha)}{e(k["delta_txt"])}</div>{ref}'
         sub = f'<div class="fc-kpi-sub">{e(k["sub"])}</div>' if k.get("sub") else ""
         ins = insignia(k["insignia"]) if k.get("insignia") else ""
+        explica = f'<div class="fc-kpi-ex">{e(k["explica"])}</div>' if k.get("explica") else ""
         tarjetas.append(f"""
 <div class="fc-kpi" title="{e(k.get('ayuda', ''))}" style="--a:{c};--s:{SUAVE.get(c, '#F8FAFC')};--bd:{c}2E">
   <div class="fc-kpi-top"><span class="fc-kpi-ic">{icono(k.get('icono', 'insights'), 21)}</span>{ins}</div>
-  <div class="fc-kpi-et">{e(k['etiqueta'])}</div>
+  <div class="fc-kpi-et">{e(k['etiqueta'])}</div>{explica}
   <div class="fc-kpi-va">{e(k['valor'])}</div>{de}{sub}
 </div>""")
     n = min(len(items), 6)
@@ -398,6 +428,25 @@ def aviso(texto: str, ic: str = "info", color: str = AZUL) -> None:
 
 def nota(texto: str) -> None:
     st.caption(texto)
+
+
+def respuesta(texto: str, titulo: str = "En pocas palabras") -> None:
+    """La conclusión del módulo en lenguaje simple, arriba de todo (HTML permitido: texto propio con cifras)."""
+    st.html(f'<div class="fc-resp"><span class="fc-resp-ic">{icono("tips_and_updates", 22)}</span>'
+            f'<div><div class="fc-resp-t">{e(titulo)}</div><div class="fc-resp-x">{texto}</div></div></div>')
+
+
+def guia_pasos(pasos: list[tuple[str, str]]) -> None:
+    colores = [AZUL, VIOLETA, ESMERALDA, CORAL]
+    tarjetas = "".join(f'<div class="fc-paso" style="--a:{colores[i % 4]}"><span class="fc-paso-n">{i + 1}</span>'
+                       f'<div><div class="fc-paso-t">{e(t)}</div><div class="fc-paso-x">{x}</div></div></div>'
+                       for i, (t, x) in enumerate(pasos))
+    st.html(f'<div class="fc-pasos">{tarjetas}</div>')
+
+
+def leyenda_insignias() -> None:
+    filas = "".join(f"<div>{insignia(k)}<br>{e(v[3])}</div>" for k, v in INSIGNIAS.items())
+    st.html(f'<div class="fc-leyenda">{filas}</div>')
 
 
 def chips_filtros(desde: str, hasta: str, plataformas: list[str], total: int, extra: list[tuple[str, str]] | None = None) -> None:

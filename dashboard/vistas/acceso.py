@@ -21,6 +21,10 @@ def pagina() -> None:
     T.encabezado_pagina("Acceso por tipo de receptor y la reforma de 2025",
                         "¿Se financian más los proyectos empresariales? ¿Creció el monto por la modificación del reglamento?",
                         "balance", T.ESMERALDA, "Módulo 3 · Acceso y reforma")
+    T.respuesta(f"Los proyectos de empresas se financian más que los de personas (<b>{C.pct(h2['colocacion_empresarial_pct'])}</b> "
+                f"frente a <b>{C.pct(h2['colocacion_personal_pct'])}</b>), pero no por ser empresas: casi todos los personales "
+                f"eran de otra plataforma. Y aunque el monto mensual subió tras la reforma de 2025, <b>ya venía creciendo "
+                f"antes</b>, así que el aumento no se le puede atribuir a la norma.")
     desde, hasta, plataformas = C.filtros()
 
     with st.container(key="tarjeta-t4"):
@@ -37,7 +41,10 @@ def pagina() -> None:
                         hovertemplate=f"<b>{tipo}</b>: %{{y:.1f}} %<br>%{{customdata[0]:.0f}} de %{{customdata[1]:.0f}}"
                                       "<br>IC 95 %: [%{customdata[2]:.1f}; %{customdata[3]:.1f}]<extra></extra>")
         fig.update_layout(barmode="group", yaxis=dict(title="Tasa de colocación (%)", range=[0, 105]))
-        T.figura(fig, "fincrowd_colocacion_receptor", 340, t4.set_index(["periodo", "tipo_receptor"]))
+        T.figura(fig, "fincrowd_colocacion_receptor", 340, t4.set_index(["periodo", "tipo_receptor"]),
+                 leer="Cada barra indica qué porcentaje de los proyectos publicados se financió: **azul** para empresas "
+                      "y **coral** para personas. La rayita negra sobre cada barra es el intervalo de confianza: el rango "
+                      "donde probablemente está el valor real. Si las rayitas de dos barras no se tocan, la diferencia es clara.")
         T.nota("Después de la reforma no se publicó ningún proyecto personal. Fuente: SMV (SIMV). Tabla 4 del artículo.")
 
     if plataformas:

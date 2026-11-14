@@ -242,7 +242,7 @@ def anexo_endpoints() -> list[str]:
 def anexo_diccionario() -> list[str]:
     texto = (RAIZ / "diccionario_variables.md").read_text(encoding="utf-8").splitlines()
     filas = [l for l in texto if re.match(r"^\| \d+ \|", l)]
-    lineas = ["{\\scriptsize\\setlength{\\tabcolsep}{4pt}", f"\\begin{{longtable}}{{{col(3.8, 5.0, 2.2, 1.7, 1.9)}}}", "\\toprule",
+    lineas = ["{\\small\\setlength{\\tabcolsep}{4pt}", f"\\begin{{longtable}}{{{col(4.0, 6.0, 2.3, 1.7, 1.9)}}}", "\\toprule",
               "Variable & Definición & Unidad & Frecuencia & Fuente \\\\", "\\midrule", "\\endhead"]
     for f in filas:
         partes = [x.strip() for x in f.strip("|").split("|")]

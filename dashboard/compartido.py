@@ -23,6 +23,36 @@ IMG_ICONO = RAIZ / "dashboard" / "img" / "fincrowd_icono.svg"
 REPOSITORIO = "https://github.com/Diego-Aliaga-Damian/finanzas1-u2-crowdfunding-peru"
 PAGINAS: dict = {}  # app.py registra aquí los objetos st.Page para los accesos directos
 
+# Términos en lenguaje simple (barra lateral). Las definiciones resumen las del artículo.
+GLOSARIO = {
+    "FPF (financiamiento participativo financiero)": "Crowdfunding regulado por la SMV: muchas personas prestan o "
+        "invierten dinero en proyectos de empresas o de personas a través de una plataforma, esperando un retorno.",
+    "Plataforma (sociedad administradora)": "Empresa autorizada por la SMV que publica los proyectos y pone en "
+        "contacto a quienes piden dinero con quienes lo prestan.",
+    "Receptor": "Empresa (proyecto empresarial) o persona (proyecto personal) que busca financiamiento en la plataforma.",
+    "Proyecto publicado / financiado": "Publicado: aparece en la plataforma buscando fondos. Financiado: logró reunir "
+        "el dinero que pedía.",
+    "Tasa de colocación": "De cada 100 proyectos publicados, cuántos se financiaron (financiados ÷ publicados × 100).",
+    "IHH (índice de Herfindahl-Hirschman)": "Mide la concentración del mercado: suma de las participaciones al "
+        "cuadrado. 10 000 significa que una sola plataforma lo financia todo.",
+    "TEA (tasa efectiva anual)": "Costo anual de un préstamo, con los intereses capitalizados. Las del dashboard son "
+        "promedios de bancos y cajas publicados por el BCRP: no son tasas del FPF.",
+    "TAMN": "Tasa activa promedio en moneda nacional de todo el crédito bancario (BCRP).",
+    "Cota inferior": "El valor real puede ser algo mayor: hay meses que el portal de la SMV no devolvió y no se "
+        "rellenaron con estimaciones.",
+    "ROA (rentabilidad sobre activos)": "Utilidad neta entre el activo medio de la empresa. Negativo = pérdidas.",
+    "Ingresos / monto financiado": "Cuánto ingresó la plataforma por cada sol que ayudó a financiar. Es lo que "
+        "retiene la plataforma, no la tasa que paga el receptor.",
+    "Valor p": "Probabilidad de ver una diferencia así por azar si en realidad no hubiera diferencia. Si es menor "
+        "que 0.05, la diferencia se considera estadísticamente significativa.",
+    "Reforma de 2025": "Res. SMV N.º 019-2025-SMV/01 (14-11-2025), que modificó el reglamento del FPF. Diciembre de "
+        "2025 es el primer mes completo con la nueva norma.",
+    "Prueba placebo": "Repetir la comparación con fechas ficticias anteriores a la reforma: si también sale "
+        "significativa, la diferencia no se debe a la norma.",
+    "API y scraping": "Las dos formas automáticas de obtener los datos: pedirlos a un servicio oficial (API) o "
+        "leerlos de una página web con un programa (scraping).",
+}
+
 ATAJOS = {"Todo": None, "2024": ("2024-01", "2024-12"), "2025": ("2025-01", "2025-12"), "2026": ("2026-01", None),
           "Últimos 12 m": "ult12", "Tras la reforma": (D.REFORMA, None)}
 

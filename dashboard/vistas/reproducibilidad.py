@@ -14,6 +14,9 @@ import tema as T
 def pagina() -> None:
     T.encabezado_pagina("Reproducibilidad y verificación", "Cualquier persona puede volver a generar la base, las tablas y el artículo.",
                         "sync_alt", T.ESMERALDA, "Evidencia · Reproducibilidad")
+    T.respuesta("Con los comandos de abajo, cualquier persona puede descargar el código, volver a generar la base, las "
+                "tablas y el artículo, y <b>comprobar que todo coincide</b> con lo que se presenta aquí.",
+                "Para qué sirve esta página")
     r, aud = C.resultados(), C.auditoria()
     ok_hash, h = C.integridad()
     c1, c2 = st.columns([1.15, 1], gap="medium")

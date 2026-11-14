@@ -25,6 +25,9 @@ def pagina() -> None:
     T.encabezado_pagina("Simulador de financiamiento",
                         "Cuota y costo de un préstamo con una tasa supuesta del FPF frente a la TEA observada de un segmento del crédito tradicional.",
                         "calculate", T.CORAL, "Herramienta · Simulador")
+    T.respuesta("Elige un <b>monto</b>, un <b>plazo</b> y una <b>tasa supuesta</b> para el FPF: el simulador calcula la "
+                "cuota mensual y el costo total, y los compara con la tasa promedio real de bancos o cajas para el mismo "
+                "tipo de préstamo.", "Cómo usarlo")
     T.aviso("<b>La tasa del FPF es un supuesto tuyo, no un dato.</b> La SMV no publica la tasa de interés de las operaciones "
             "de financiamiento participativo, así que aquí no hay una tasa observada del FPF. La TEA de referencia sí es "
             "observada (BCRP), pero es el promedio de un segmento del crédito tradicional, no la oferta de una entidad concreta.",
@@ -99,7 +102,9 @@ def pagina() -> None:
                             line=dict(color=T.CORAL, width=2.4, dash="dash"),
                             hovertemplate="Mes %{x}: S/ %{y:,.0f}<extra>Hipotética</extra>")
             fig.update_layout(xaxis_title="Mes", yaxis_title="S/", hovermode="x unified")
-            T.figura(fig, "fincrowd_sim_saldo", 300)
+            T.figura(fig, "fincrowd_sim_saldo", 300,
+                     leer="Muestra cuánto se debe todavía al final de cada mes. Con cuota fija, la deuda baja más lento "
+                          "al inicio (se paga más interés) y más rápido al final.")
         with c2, st.container(key="tarjeta-sim-sens"):
             T.seccion("Costo total según la TEA supuesta", "insights", T.VIOLETA)
             teas = np.linspace(0, max(80.0, tea_fpf, tea_ref) * 1.05, 120)
@@ -114,7 +119,10 @@ def pagina() -> None:
                             marker=dict(size=12, color=T.CORAL, line=dict(color="white", width=2)),
                             hovertemplate="Tu supuesto: S/ %{y:,.0f}<extra></extra>")
             fig.update_layout(xaxis_title="TEA hipotética del FPF (%)", yaxis_title="S/", showlegend=False)
-            T.figura(fig, "fincrowd_sim_sensibilidad", 300)
+            T.figura(fig, "fincrowd_sim_sensibilidad", 300,
+                     leer="La curva violeta indica cuánto pagarías en intereses y comisión según la tasa que supongas para "
+                          "el FPF; la línea verde punteada es el costo con la tasa real de la referencia. **Donde se cruzan, "
+                          "ambos préstamos cuestan lo mismo**; a la izquierda el FPF sería más barato y a la derecha, más caro.")
 
         with st.expander("Cronograma de pagos", icon=":material/table_rows:"):
             tabla = pd.DataFrame({"Mes": crono_f.mes, "Cuota FPF (hipotética)": crono_f.cuota.round(2),

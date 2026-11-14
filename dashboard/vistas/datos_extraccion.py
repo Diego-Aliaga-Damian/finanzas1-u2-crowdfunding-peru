@@ -29,7 +29,10 @@ def _mapa_cobertura(v: pd.DataFrame) -> None:
     for est, nombre in D.ESTADOS.items():  # leyenda manual
         fig.add_scatter(x=[None], y=[None], mode="markers", name=nombre, marker=dict(size=11, symbol="square", color=T.COLOR_ESTADO[est] if est != "sin_registros" else "#E2E8F0"))
     fig.update_layout(yaxis=dict(showgrid=False), margin=dict(l=6, t=34))
-    T.figura(fig, "fincrowd_cobertura_portal", 300, cob)
+    T.figura(fig, "fincrowd_cobertura_portal", 300, cob,
+             leer="Cada fila es una plataforma y cada cuadrito, un mes. **Verde**: el portal devolvió proyectos; **gris**: "
+                  "respondió que no hubo proyectos (se cuenta como cero); **coral**: el mes no se pudo leer y no se "
+                  "rellenó con estimaciones. Pasa el cursor sobre un cuadrito para ver el detalle.")
 
 
 def pagina() -> None:
@@ -37,6 +40,10 @@ def pagina() -> None:
     T.encabezado_pagina("Datos y extracción automatizada",
                         "Dos vías automatizadas: interfaces de programación (API) y rastreo programático de un portal institucional.",
                         "database", T.TURQUESA, "Evidencia · Datos")
+    k0 = D.resumen(C.base())
+    T.respuesta("Los datos vienen de <b>tres fuentes oficiales</b> obtenidas con programas: el BCRP (tasas de bancos y "
+                "cajas), la SMV (estados financieros de las plataformas) y el portal de proyectos de la SMV. Del portal se "
+                f"pudo leer el <b>{C.pct(k0['cobertura_pct'])}</b> de los meses; nada se copió a mano.")
     T.hallazgos([
         {"titulo": "BCRP · BCRPData (API)", "icono": "api", "color": T.AZUL, "insignia": "observado",
          "texto": "10 series mensuales: TEA de pequeña y microempresa y de consumo por tipo de entidad y plazo, TAMN e IPC.<br>"

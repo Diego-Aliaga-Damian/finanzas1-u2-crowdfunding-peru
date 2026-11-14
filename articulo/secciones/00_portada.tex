@@ -1,18 +1,46 @@
-% Portada de trabajo estudiantil (APA 7) con título en español e inglés (consigna 2.2, ítems 1 y 2).
-% APA 7 numera también la portada (página 1, arriba a la derecha).
-\thispagestyle{fancy}
-\begin{center}
-\vspace*{3cm}
-{\bfseries Fintech y financiamiento participativo (crowdfunding) en el Perú: oferta y condiciones, 2022-2026\par}
-\vspace{12pt}
-{\bfseries\itshape Fintech and Crowdfunding in Peru: Supply and Financing Terms, 2022-2026\par}
-\vspace{2cm}
-Diego Sebastián Aliaga Damián\par
-Código de matrícula 2024200481M\par
-\vspace{12pt}
-Facultad de Economía, Universidad Nacional del Centro del Perú\par
-Finanzas I (055D), Unidad II, tema N.\textsuperscript{o}~96\par
-Dr. Ciro Iván Machacuay Meza\par
-6 de diciembre de 2026\par
-\end{center}
-\clearpage
+% Bloque de título a todo el ancho, al estilo de las revistas académicas (consigna 2.2, ítems 1 a 4):
+% cabecera con logos, título en español e inglés, autor y filiación, datos del trabajo y el recuadro con el
+% Resumen y el Abstract (01_resumen_abstract.tex).
+\twocolumn[{%
+\thispagestyle{primera}%
+\setstretch{1}%
+% Cabecera con los logos de la universidad y de la facultad
+\noindent\begin{minipage}[c]{0.13\textwidth}
+\includegraphics[height=1.55cm]{../productos/posteres_articulos/img/logo_uncp.png}
+\end{minipage}%
+\begin{minipage}[c]{0.74\textwidth}\centering
+{\color{marino}\bfseries\large Universidad Nacional del Centro del Perú\par}
+\vspace{2pt}
+{\color{grisTexto}\small Facultad de Economía\,\textperiodcentered\,Finanzas I (055D)\,\textperiodcentered\,Unidad II\,\textperiodcentered\,Semestre 2026-II\par}
+\end{minipage}%
+\begin{minipage}[c]{0.13\textwidth}\raggedleft
+\includegraphics[height=1.55cm]{../productos/posteres_articulos/img/logo_facultad.png}
+\end{minipage}\par
+\vspace{6pt}
+{\color{marino}\rule{\textwidth}{2pt}}\par\vspace{-9.4pt}
+{\color{dorado}\rule{\textwidth}{0.8pt}}\par
+\vspace{14pt}
+\begin{flushleft}
+{\small\color{azulmedio}\bfseries\MakeUppercase{Artículo de investigación}\par}
+\vspace{6pt}
+{\fontsize{20}{24.5}\selectfont\bfseries\color{marino}Fintech y financiamiento participativo (crowdfunding) en el Perú: oferta y condiciones, 2022-2026\par}
+\vspace{7pt}
+{\large\itshape\color{grisTexto}Fintech and Crowdfunding in Peru: Supply and Financing Terms, 2022-2026\par}
+\vspace{13pt}
+{\fontsize{14}{17}\selectfont Diego Sebastián Aliaga Damián\textsuperscript{\color{azulmedio}1}\par}
+\vspace{3pt}
+{\footnotesize\textsuperscript{1}\,\textit{Facultad de Economía, Universidad Nacional del Centro del Perú, Huancayo, Perú}\par}
+\vspace{9pt}
+{\footnotesize\color{grisTexto}%
+{\color{azulmedio}\faIcon{id-card}}~Código de matrícula 2024200481M\hspace{1.5em}%
+{\color{azulmedio}\faIcon{book}}~Tema N.\textsuperscript{o}~96\hspace{1.5em}%
+{\color{azulmedio}\faIcon[regular]{calendar-alt}}~Fecha de entrega: 6 de diciembre de 2026\par\vspace{2pt}
+{\color{azulmedio}\faIcon{chalkboard-teacher}}~Docente: Dr. Ciro Iván Machacuay Meza\par}
+\end{flushleft}
+\vspace{10pt}
+\begin{tcolorbox}[enhanced,colback=celeste,colframe=celeste,boxrule=0pt,arc=3pt,left=10pt,right=10pt,top=9pt,bottom=9pt,
+  borderline west={3pt}{0pt}{marino}]
+\noindent\input{secciones/01_resumen_abstract}\par
+\end{tcolorbox}
+\vspace{14pt}
+}]

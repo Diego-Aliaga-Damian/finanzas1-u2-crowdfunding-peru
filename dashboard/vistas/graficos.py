@@ -47,7 +47,19 @@ def monto_por_plataforma(v: pd.DataFrame, desde: str, hasta: str, clave: str, pe
         if nivel == "Mensual" and desde <= D.REFORMA <= hasta:
             T.marcar_mes(fig, D.etiqueta_mes(D.REFORMA), "Reforma 2025", T.VIOLETA, "left")
         datos = (g * 1e6).round(0).rename_axis("periodo")
-        T.figura(fig, f"fincrowd_monto_{clave}", 390, datos)
+        total = g.sum(axis=1)
+        pico = total.idxmax()
+        nombre_pico = D.etiqueta_mes(pico) if nivel == "Mensual" else pico
+        unidad_txt = {"Mensual": "mes", "Trimestral": "trimestre", "Anual": "año"}[nivel]
+        mayor = g.sum().idxmax()
+        T.aviso(f"En tu selección, el {unidad_txt} con más financiamiento fue <b>{nombre_pico}</b> "
+                f"(S/ {total.max():.2f} millones) y la plataforma con más monto es <b>{mayor}</b> "
+                f"({100 * g[mayor].sum() / g.to_numpy().sum():.1f} % del total).", "insights", T.TURQUESA)
+        T.figura(fig, f"fincrowd_monto_{clave}", 390, datos,
+                 leer="Cada barra es un periodo y sus colores son las plataformas: la altura total es todo lo que se "
+                      "financió en ese periodo. Usa los botones de arriba para agrupar por mes, trimestre o año. "
+                      "Pasa el cursor sobre una barra para ver los montos; haz clic en un nombre de la leyenda para "
+                      "ocultarlo o mostrar la línea del total.")
         T.nota(f"{unidad.capitalize()}. Solo meses con registros en el portal de la SMV (los no obtenidos no se imputan). "
                "Fuente: SMV (SIMV).")
 
@@ -70,4 +82,7 @@ def publicados_financiados(v: pd.DataFrame, desde: str, hasta: str, clave: str) 
     if desde <= D.REFORMA <= hasta:
         T.marcar_mes(fig, D.etiqueta_mes(D.REFORMA), "Reforma 2025", T.VIOLETA, "left")
     T.figura(fig, f"fincrowd_publicados_financiados_{clave}", 380,
-             s[["proy_publicados_total", "proy_financiados_total", "colocacion_12m_pct"]])
+             s[["proy_publicados_total", "proy_financiados_total", "colocacion_12m_pct"]],
+             leer="La línea **azul** cuenta los proyectos que se publicaron cada mes y la **coral**, los que se "
+                  "financiaron. La línea **verde punteada** (eje derecho) es la tasa de colocación de los últimos 12 "
+                  "meses: si sube, una mayor parte de los proyectos publicados consigue financiarse.")

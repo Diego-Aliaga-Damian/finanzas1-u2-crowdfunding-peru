@@ -12,9 +12,9 @@ import tema as T
 
 PRODUCTOS = [
     ("Artículo (LaTeX)", "Aliaga_Damian_articulo_FPF_Peru.pdf", "article", T.AZUL,
-     "Versión principal del artículo en formato APA, compilada con pdflatex y biber."),
+     "Versión principal: diseño de revista a dos columnas con normas APA 7 (pdflatex y biber)."),
     ("Artículo (Typst)", "Aliaga_Damian_articulo_FPF_Peru_typst.pdf", "description", T.VIOLETA,
-     "El mismo artículo generado con Typst a partir de las mismas cifras, tablas y referencias."),
+     "El mismo artículo y diseño, generado con Typst a partir de las mismas cifras, tablas y referencias."),
     ("Beamer para proyectar", "Aliaga_Damian_beamer.pdf", "slideshow", T.CORAL,
      "Diapositivas 16:9 para la exposición."),
     ("Beamer para imprimir", "Aliaga_Damian_beamer_para_imprimir.pdf", "print", T.AMARILLO,
@@ -29,6 +29,9 @@ PRODUCTOS = [
 def pagina() -> None:
     T.encabezado_pagina("Productos y descargas", "Todo se genera con el código del repositorio a partir de los mismos datos.",
                         "download", T.CORAL, "Evidencia · Productos")
+    T.respuesta("Aquí están todos los entregables del trabajo listos para descargar: el <b>artículo</b> (en LaTeX y en "
+                "Typst), el <b>Beamer</b>, el <b>póster</b> del artículo y los <b>20 pósteres</b> del estado del arte.",
+                "Qué encontrarás")
     for fila in (PRODUCTOS[:3], PRODUCTOS[3:]):
         cols = st.columns(3, gap="medium")
         for col, (titulo, archivo, ic, color, texto) in zip(cols, fila):

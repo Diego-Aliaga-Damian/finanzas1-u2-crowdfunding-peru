@@ -20,6 +20,12 @@ def pagina() -> None:
     T.encabezado_pagina("Sociedades administradoras: pequeñas y solo una rentable",
                         "Estados financieros trimestrales publicados por la SMV (API OData).", "domain", T.VIOLETA,
                         "Módulo 2 · Plataformas")
+    t3_todo = t["t3_plataformas_financieros"]
+    roa25 = t3_todo[(t3_todo.plataforma == lider) & (t3_todo.anio == 2025)].roa_pct
+    T.respuesta(f"Las plataformas son empresas pequeñas y <b>solo la líder gana dinero</b>: {lider} tuvo un ROA de "
+                f"<b>{C.pct(roa25.iloc[0]) if len(roa25) else '—'}</b> en 2025, mientras las demás pierden en casi todos los "
+                f"años. Sus ingresos equivalen a cerca del <b>{C.num(r['costo_intermediacion_lider']['mediana_trimestral_pct'], 2)} %</b> "
+                "de lo que ayuda a financiar (no es la tasa que paga quien recibe el préstamo).")
     desde, hasta, plataformas = C.filtros()
     T.chips_filtros(desde, hasta, plataformas, len(D.PLATAFORMAS), [("info", "Años completos de los EEFF dentro del periodo")])
     if not plataformas:
@@ -62,7 +68,9 @@ def pagina() -> None:
                             customdata=g.trimestres, hovertemplate=f"{p}: %{{y:.1f}} % (%{{customdata}} trim.)<extra></extra>")
             fig.add_hline(y=0, line=dict(color=T.TINTA_3, width=1))
             fig.update_layout(barmode="group", yaxis_title="ROA (%)", hovermode="x unified")
-            T.figura(fig, "fincrowd_roa", 360, roa.set_index(["plataforma", "anio"])[["trimestres", "roa_pct"]])
+            T.figura(fig, "fincrowd_roa", 360, roa.set_index(["plataforma", "anio"])[["trimestres", "roa_pct"]],
+                     leer="Cada barra es la rentabilidad de una plataforma en un año: **sobre la línea de cero gana "
+                          "dinero, debajo pierde**. Por ejemplo, 30 % significa que ganó 30 soles por cada 100 de activos.")
     with c2, st.container(key="tarjeta-f4"):
         T.seccion(f"Ingresos de {lider} / monto financiado", "percent", T.TURQUESA,
                   "Por trimestre (%). Es lo que retiene la plataforma, no la tasa que paga el receptor.",
@@ -77,7 +85,10 @@ def pagina() -> None:
                       annotation_text=f"mediana {C.num(ci['mediana_trimestral_pct'], 2)} %", annotation_position="top left",
                       annotation_font=dict(color=T.OSCURO[T.VIOLETA], size=11))
         fig.update_layout(yaxis_title="%", showlegend=False)
-        T.figura(fig, "fincrowd_ingresos_monto", 360, f4.set_index("trimestre"))
+        T.figura(fig, "fincrowd_ingresos_monto", 360, f4.set_index("trimestre"),
+                 leer="Cada punto es un trimestre: cuántos soles ingresó la plataforma por cada 100 soles que ayudó a "
+                      "financiar. La línea punteada es la mediana. Es lo que retiene la plataforma, **no** la tasa de "
+                      "interés que paga quien recibe el préstamo.")
 
     with st.container(key="tarjeta-activo"):
         T.seccion("Tamaño de las sociedades: activo total por trimestre", "account_balance_wallet", T.AZUL,
@@ -95,7 +106,12 @@ def pagina() -> None:
             fig.update_layout(yaxis_title="S/ miles", hovermode="x unified",
                               xaxis=dict(type="category", categoryorder="category ascending"))
             T.figura(fig, "fincrowd_activo_trimestral", 360,
-                     act.pivot_table(index="trimestre", columns="plataforma", values="activo_miles"))
+                     act.pivot_table(index="trimestre", columns="plataforma", values="activo_miles"),
+                     leer="Cada línea es una plataforma y muestra el tamaño de la empresa (sus activos, en miles de "
+                          "soles) al cierre de cada trimestre. Sirve para comparar su tamaño con lo que financian"
+                          + (f": en 2025, {lider} financió {C.soles_m(fila25.monto_financiado_soles.iloc[0])} con activos "
+                             f"de S/ {C.num(fila25.activo_cierre_miles.iloc[0])} mil al cierre del año."
+                             if len(fila25 := t3[(t3.plataforma == lider) & (t3.anio == 2025)]) else "."))
 
     with st.container(key="tarjeta-t3"):
         T.seccion("Indicadores financieros por año", "table_chart", T.VIOLETA, extra=T.insignia("articulo"))

@@ -21,6 +21,9 @@ def pagina() -> None:
     T.encabezado_pagina("Frente al crédito tradicional",
                         "Tasas activas promedio en moneda nacional por segmento, publicadas por el BCRP.",
                         "account_balance", T.AMARILLO, "Módulo 4 · Comparación financiera")
+    T.respuesta("Pedir prestado a bancos y cajas para una pequeña o microempresa es caro: la tasa promedio más baja del "
+                f"periodo fue <b>{C.cifras().get('teaCmacPymeMin', '—')} % anual</b> (cajas municipales). Pero <b>no se puede decir "
+                "si el FPF es más barato o más caro</b>, porque la SMV no publica la tasa de cada préstamo del FPF.")
     T.aviso("<b>Estas son tasas del crédito tradicional (bancos y cajas), no del financiamiento participativo.</b> La SMV no "
             "publica la tasa ni el plazo de cada operación de FPF, por lo que su precio no se observa y no se compara con "
             "estas series. Sirven solo como referencia del costo del crédito en el mismo periodo.", "warning", T.AMARILLO)
@@ -54,7 +57,10 @@ def pagina() -> None:
                              T.OSCURO[T.AMARILLO], "left")
             if desde <= D.REFORMA <= hasta:
                 T.marcar_mes(fig, D.etiqueta_mes(D.REFORMA), "Reforma FPF", T.VIOLETA)
-            T.figura(fig, "fincrowd_tasas_bcrp", 420, v[elegidas])
+            T.figura(fig, "fincrowd_tasas_bcrp", 420, v[elegidas],
+                     leer="Cada línea es la tasa de interés anual promedio que cobró un tipo de entidad (bancos, cajas "
+                          "municipales o cajas rurales) en un segmento de crédito. Más arriba = crédito más caro. "
+                          "Agrega o quita series con el selector de arriba. Son tasas del crédito tradicional, **no** del FPF.")
         T.nota(f"La serie bancaria de pequeña y microempresa de hasta 360 días sube {C.num(r['salto_tea_bcos_pyme_2025_03_pp'], 1)} "
                "puntos porcentuales en marzo de 2025, sin un movimiento parecido en las cajas ni en el consumo; el BCRP no "
                "publica la causa. Fuente: BCRP (BCRPData).")
@@ -82,7 +88,10 @@ def pagina() -> None:
         fig.add_vline(x=0, line=dict(color=T.TINTA_3, dash="dot", width=1))
         fig.update_layout(xaxis=dict(title="rho de Spearman", range=[-0.6, 0.4], showgrid=True, gridcolor=T.GRILLA),
                           yaxis=dict(showgrid=False), showlegend=False, margin=dict(l=6, t=10))
-        T.figura(fig, "fincrowd_e1_spearman", 340, e1.set_index("serie")[["valor", "lo", "hi", "p_valor"]])
+        T.figura(fig, "fincrowd_e1_spearman", 340, e1.set_index("serie")[["valor", "lo", "hi", "p_valor"]],
+                 leer="Cada punto mide si, en los meses en que una tasa subía, el monto del FPF también cambiaba "
+                      "(correlación: de −1 a 1). La línea horizontal es su rango probable. **Si la línea cruza el cero, "
+                      "no hay una relación clara**: es lo que pasa con las 8 tasas.")
         e1r = r["e1"]
         T.nota(f"Ninguna de las {len(e1r)} correlaciones es significativa (menor p = "
                f"{min(x['p_valor'] for x in e1r.values()):.3f}). Asociación no implica causalidad.")

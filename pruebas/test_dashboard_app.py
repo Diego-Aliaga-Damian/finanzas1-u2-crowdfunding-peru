@@ -33,7 +33,7 @@ def _render(dir_dashboard: str, modulo: str) -> None:
 
 def _kpis(at) -> dict[str, tuple[str, str]]:
     html = " ".join(h.proto.body for h in at.get("html") if "fc-kpis" in h.proto.body)
-    patron = (r'fc-kpi-et">([^<]+)</div>\s*<div class="fc-kpi-va">([^<]+)</div>'
+    patron = (r'fc-kpi-et">([^<]+)</div>(?:<div class="fc-kpi-ex">[^<]*</div>)?\s*<div class="fc-kpi-va">([^<]+)</div>'
               r'(?:<div class="fc-kpi-de [a-z]+"><span class="fc-ic"[^>]*>[a-z_]+</span>([^<]+))?')
     return {et: (va.replace(" ", " "), (de or "").replace(" ", " ")) for et, va, de in re.findall(patron, html)}
 

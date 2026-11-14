@@ -83,12 +83,12 @@ def tabla_desde_latex(ruta: Path) -> str:
     nombre = ruta.stem
     partes = [f"#let {nombre.replace('-', '_')} = table(",
               f"  columns: ({columnas}),", f"  align: ({alinea}),",
-              "  stroke: none, inset: (x: 3pt, y: 2.6pt),",
-              "  table.hline(stroke: 0.8pt),",
+              "  stroke: none, inset: (x: 3.5pt, y: 3.3pt),",
+              "  table.hline(stroke: 0.8pt + rgb(\"#1B3A6B\")),",
               "  table.header(" + ", ".join(cadena(c) for c in encabezado) + "),",
-              "  table.hline(stroke: 0.5pt),"]
+              "  table.hline(stroke: 0.5pt + rgb(\"#1B3A6B\")),"]
     partes += ["  " + ", ".join(cadena(c) for c in fila) + "," for fila in cuerpo]
-    partes += ["  table.hline(stroke: 0.8pt),", ")"]
+    partes += ["  table.hline(stroke: 0.8pt + rgb(\"#1B3A6B\")),", ")"]
     return "\n".join(partes)
 
 
@@ -101,10 +101,10 @@ def tablas_typ() -> str:
 # ----------------------------------------------------------------------------- anexo
 def tabla_simple(nombre: str, columnas: str, encabezado: list[str], filas: list[list[str]]) -> str:
     partes = [f"#let {nombre} = table(", f"  columns: ({columnas}),", "  align: left,",
-              "  stroke: none, inset: (x: 3pt, y: 2.4pt),", "  table.hline(stroke: 0.8pt),",
-              "  table.header(" + ", ".join(cadena(c) for c in encabezado) + "),", "  table.hline(stroke: 0.5pt),"]
+              "  stroke: none, inset: (x: 3pt, y: 2.4pt),", "  table.hline(stroke: 0.8pt + rgb(\"#1B3A6B\")),",
+              "  table.header(" + ", ".join(cadena(c) for c in encabezado) + "),", "  table.hline(stroke: 0.5pt + rgb(\"#1B3A6B\")),"]
     partes += ["  " + ", ".join(c if c.startswith(("raw(", "link(")) else cadena(c) for c in f) + "," for f in filas]
-    partes += ["  table.hline(stroke: 0.8pt),", ")"]
+    partes += ["  table.hline(stroke: 0.8pt + rgb(\"#1B3A6B\")),", ")"]
     return "\n".join(partes)
 
 
@@ -147,7 +147,7 @@ def anexo_typ() -> str:
     partes = ["// Generado por herramientas/articulo/generar_typst.py; no editar a mano.",
               tabla_simple("anexo_reproducibilidad", "3.8fr, 11.3fr", ["Elemento", "Detalle"], repro),
               tabla_simple("anexo_endpoints", "1.6fr, 2.8fr, 5.8fr, 3.9fr", ["Vía", "Fuente", "Endpoint o URL", "Parámetros"], endpoints),
-              tabla_simple("anexo_diccionario", "3.8fr, 5fr, 2.2fr, 1.7fr, 1.9fr",
+              tabla_simple("anexo_diccionario", "4.7fr, 5fr, 2.2fr, 1.7fr, 1.9fr",
                            ["Variable", "Definición", "Unidad", "Frecuencia", "Fuente"], dicc)]
     return "\n\n".join(partes) + "\n"
 
@@ -265,7 +265,16 @@ def convertir(s: str, tablas_usadas: set) -> str:
         elif cmd == "ref":
             t, i = argumento(s, i)
             salida.append(f"@{t.replace(':', '-')}")
-        elif cmd in ("noindent", "FloatBarrier", "small", "footnotesize", "centering", "par", "medskip", "smallskip"):
+        elif cmd == "lettrine":
+            letra, i = argumento(s, i)
+            resto, i = argumento(s, i)
+            salida.append(f'#letra_capital("{letra}", [{convertir(resto, tablas_usadas).strip()}])')
+        elif cmd == "palabrasclave":
+            etiqueta, i = argumento(s, i)
+            palabras, i = argumento(s, i)
+            salida.append(f"\n#palabras_clave([{etiqueta}], [{convertir(palabras, tablas_usadas).strip()}])\n")
+        elif cmd in ("noindent", "FloatBarrier", "small", "footnotesize", "centering", "par", "medskip", "smallskip",
+                     "tablacompacta"):
             pass
         elif cmd == "clearpage":
             salida.append("\n#pagebreak()\n")
@@ -286,6 +295,13 @@ def entorno_typst(entorno: str, cuerpo: str, tablas_usadas: set) -> str:
         marca = "-" if entorno == "itemize" else "+"
         items = [x.strip() for x in cuerpo.split(r"\item")[1:]]
         return "\n" + "\n".join(f"{marca} {convertir(x, tablas_usadas).strip()}" for x in items) + "\n"
+    if entorno == "puntosclave":
+        items = [convertir(x, tablas_usadas).strip() for x in cuerpo.split(r"\item")[1:]]
+        return "\n#puntos_clave((\n" + "".join(f"  [{x}],\n" for x in items) + "))\n"
+    if entorno == "abreviaturas":
+        pares = re.findall(r"\\abrev\{([^}]*)\}\{([^}]*)\}", cuerpo)
+        return "\n#abreviaturas((\n" + "".join(f'  ("{a}", [{convertir(b, tablas_usadas).strip()}]),\n' for a, b in pares) + "))\n"
+    entorno = entorno.rstrip("*")  # table* y figure* (a todo el ancho) se tratan igual: Typst los ubica a todo el ancho
     if entorno in ("table", "figure"):
         cuerpo = re.sub(r"^\[[^\]]*\]", "", cuerpo.lstrip())  # opción de ubicación [!htbp]
         titulo = etiqueta = nota = contenido = None
@@ -315,8 +331,19 @@ def secciones() -> None:
     tablas_usadas: set = set()
     for f in sorted((RAIZ / "articulo" / "secciones").glob("0[0-8]_*.tex")):
         if f.stem == "00_portada":
-            continue  # la portada se arma en la plantilla Typst
-        texto = convertir(f.read_text(encoding="utf-8"), tablas_usadas)
+            continue  # el bloque de título se arma en la plantilla Typst
+        if f.stem == "01_resumen_abstract":
+            # Los dos recuadros (Resumen y Abstract) se exportan como una lista para ubicarlos lado a lado en el
+            # bloque de título de la primera página, igual que en la versión LaTeX
+            fuente = re.sub(r"(?m)^\s*%.*$\n?", "", f.read_text(encoding="utf-8"))
+            bloques = []
+            for m in re.finditer(r"\\begin\{resumen\}(.*?)\\end\{resumen\}", fuente, flags=re.S):
+                titulo, k = argumento(m.group(1), 0)
+                cuerpo = convertir(m.group(1)[k:], tablas_usadas).strip()
+                bloques.append(f"  resumen_bloque(titulo: [{titulo}])[\n{cuerpo}\n  ],")
+            texto = "#let resumenes = (\n" + "\n".join(bloques) + "\n)\n"
+        else:
+            texto = convertir(f.read_text(encoding="utf-8"), tablas_usadas)
         texto = re.sub(r"\n{3,}", "\n\n", texto).strip() + "\n"
         encabezado = (f"// Traducido automáticamente de articulo/secciones/{f.name} por herramientas/articulo/generar_typst.py.\n"
                       "// Para cambiar el texto, edita el .tex y vuelve a ejecutar el script (o edita aquí y deja de regenerar).\n"

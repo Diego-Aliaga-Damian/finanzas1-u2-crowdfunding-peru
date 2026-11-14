@@ -19,6 +19,9 @@ def pagina() -> None:
     ht = r["h1_tendencia"]
     T.encabezado_pagina("Análisis de sensibilidad", "¿Se sostienen los resultados si cambian los supuestos?",
                         "tune", T.VIOLETA, "Módulo 5 · Robustez")
+    T.respuesta("Se repitió el análisis cambiando los supuestos. El monto mensual sigue siendo mayor después de la reforma "
+                "en casi todas las versiones, <b>salvo cuando se quita a la plataforma líder</b>; y como la prueba también "
+                "«detecta» cambios en fechas ficticias anteriores, <b>el aumento no se debe a la reforma</b>.")
     st.html(T.chips([("verified", "Resultados fijos del artículo (no dependen de los filtros)")]))
 
     T.kpis([
@@ -56,7 +59,10 @@ def pagina() -> None:
         fig.add_vline(x=0, line=dict(color=T.TINTA_3, dash="dot", width=1))
         fig.update_layout(xaxis=dict(title="Diferencia de medianas (S/ millones)", showgrid=True, gridcolor=T.GRILLA),
                           yaxis=dict(showgrid=False), showlegend=False, margin=dict(l=6, t=10))
-        T.figura(fig, "fincrowd_sensibilidad_h1", 330, h.set_index("nombre")[["dif", "lo", "hi", "valor", "p_valor"]])
+        T.figura(fig, "fincrowd_sensibilidad_h1", 330, h.set_index("nombre")[["dif", "lo", "hi", "valor", "p_valor"]],
+                 leer="Cada fila es una versión del análisis. El punto indica cuántos millones más se financiaron por mes "
+                      "después de la reforma y la línea gris, su rango probable. **Verde**: diferencia significativa; "
+                      "**coral**: no significativa. Solo la versión sin la plataforma líder queda cerca de cero.")
         T.aviso("El resultado de H1 se sostiene con otro corte, en soles constantes y con la cota de los meses no obtenidos, "
                 "pero <b>desaparece sin la plataforma líder</b>, y los cortes placebo y el control de tendencia muestran que "
                 "la diferencia no es atribuible a la reforma.", "lightbulb", T.VIOLETA)
