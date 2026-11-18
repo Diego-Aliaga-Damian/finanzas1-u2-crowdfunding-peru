@@ -1,7 +1,7 @@
 # Reporte de auditoría automatizada
 
-- Fecha y hora: 2026-11-12 17:23:43
-- Commit de referencia: `0a69dc1` (los cambios no confirmados también se auditan)
+- Fecha y hora: 2026-11-17 21:50:21
+- Commit de referencia: `b9f7ef1` (los cambios no confirmados también se auditan)
 - Modo: local + cotejo en vivo
 - Resultado: ✅ 48 cumplen · ❌ 0 no cumplen · ⏳ 0 no ejecutados
 
@@ -15,7 +15,7 @@
 | ✅ | Script `02_scraping_web.py` | 2.4.2 | presente |
 | ✅ | Script `03_limpieza_datos.py` | 2.4.2 | presente |
 | ✅ | Script `04_analisis.py` | 2.4.2 | presente |
-| ✅ | Archivo `README.md` | 2.4.2 | 7,988 bytes |
+| ✅ | Archivo `README.md` | 2.4.2 | 8,548 bytes |
 | ✅ | Archivo `requirements.txt` | 2.4.2 | 841 bytes |
 | ✅ | Archivo `.env.example` | 2.4.2 | 424 bytes |
 | ✅ | Archivo `log_ejecucion.txt` | 2.4.2 | 509,609 bytes |

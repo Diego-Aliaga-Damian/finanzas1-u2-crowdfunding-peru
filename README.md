@@ -10,7 +10,7 @@
 | Docente | Dr. Ciro Iván Machacuay Meza |
 | Repositorio | https://github.com/Diego-Aliaga-Damian/finanzas1-u2-crowdfunding-peru |
 
-> **Estado: en construcción.** Ya están la extracción (01 y 02), la limpieza (03), el análisis (04), las pruebas y la auditoría. Faltan el artículo, el Beamer y el póster.
+> **Estado: completo.** Extracción (01 y 02), limpieza (03), análisis (04), pruebas y auditoría; artículo en LaTeX (y su versión Typst), Beamer, póster del artículo, 20 pósteres del estado del arte y dashboard interactivo: https://fincrowd-peru-diego-aliaga.streamlit.app/
 
 ## Objetivo
 
@@ -94,8 +94,13 @@ datos_crudos/            respuestas originales (JSON/HTML), robots.txt y CSV cru
 datos_procesados/        datos_procesados_2024200481M.csv
 salidas/                 tablas/ y figuras/ de 04, resultados_04.json, manifiesto_salidas.csv y reportes
 pruebas/                 pruebas pytest con respuestas simuladas (fixtures/ = recortes de respuestas reales)
-docs/                    matriz de cumplimiento, diagnóstico, diseño, antecedentes y evidencias
-herramientas/            búsqueda bibliográfica reproducible (no forma parte de la base)
+articulo/                artículo en LaTeX (articulo.tex, secciones/, generado/ con las cifras automáticas)
+articulo_typst/          el mismo artículo en Typst
+productos/               Beamer, póster del artículo y los 20 pósteres del estado del arte (fuentes LaTeX)
+dashboard/               dashboard interactivo en Streamlit (streamlit run dashboard/app.py)
+docs/                    matriz de cumplimiento, diagnóstico, diseño, antecedentes, evidencias y guía del proyecto
+herramientas/            bibliografía, generación del artículo, pósteres, productos y carpeta de entrega
+                         (no forman parte de la base)
 diccionario_variables.md definición, unidad, frecuencia y fuente de cada variable
 incidencias_fuente.md    incidencias de las fuentes (numeral 2.4.3)
 log_ejecucion.txt        fecha y hora, código HTTP, filas y SHA-256 de cada extracción
