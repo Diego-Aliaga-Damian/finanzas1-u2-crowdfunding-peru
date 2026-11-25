@@ -1,7 +1,7 @@
 # Diego Sebastián Aliaga Damián
 # 2024200481M
 # Tema 96: Fintech y financiamiento participativo (crowdfunding) en el Perú: oferta y condiciones
-# Fecha: 2026-11-13
+# Fecha: 2026-11-24
 """FinCrowd Perú: dashboard interactivo del proyecto (entrega por enlace autorizada por el docente).
 
 Lee solo archivos del repositorio (base procesada, salidas de 04_analisis.py y productos en PDF); no consulta las
@@ -20,18 +20,19 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import streamlit as st  # noqa: E402
 
 st.set_page_config(page_title="FinCrowd Perú · Financiamiento participativo 2022-2026", page_icon=":material/insights:",
-                   layout="wide", initial_sidebar_state="expanded")
+                   layout="wide", initial_sidebar_state="auto")
 
 import compartido as C  # noqa: E402
 import datos as D  # noqa: E402
 import tema as T  # noqa: E402
-from vistas import (acceso, credito, datos_extraccion, inicio, oferta, plataformas, productos,  # noqa: E402
+from vistas import (acceso, centro, credito, datos_extraccion, inicio, oferta, plataformas, productos,  # noqa: E402
                     reproducibilidad, sensibilidad, simulador)
 
 T.aplicar_tema()
 C.iniciar_filtros()
 
 P = {"inicio": st.Page(inicio.pagina, title="Inicio", icon=":material/space_dashboard:", default=True),
+     "centro": st.Page(centro.pagina, title="Centro de mando 3D", icon=":material/deployed_code:", url_path="centro"),
      "oferta": st.Page(oferta.pagina, title="Oferta y crecimiento", icon=":material/monitoring:", url_path="oferta"),
      "plataformas": st.Page(plataformas.pagina, title="Plataformas y rentabilidad", icon=":material/domain:",
                             url_path="plataformas"),
@@ -47,7 +48,7 @@ P = {"inicio": st.Page(inicio.pagina, title="Inicio", icon=":material/space_dash
                                  url_path="reproducibilidad")}
 C.PAGINAS.update(P)
 
-navegacion = st.navigation({"Empieza aquí": [P["inicio"]],
+navegacion = st.navigation({"Empieza aquí": [P["inicio"], P["centro"]],
                             "Resultados del estudio": [P["oferta"], P["plataformas"], P["acceso"], P["credito"],
                                                        P["sensibilidad"]],
                             "Pruébalo tú": [P["simulador"]],

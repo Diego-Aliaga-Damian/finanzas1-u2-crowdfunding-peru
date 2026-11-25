@@ -23,11 +23,11 @@ def _mapa_cobertura(v: pd.DataFrame) -> None:
     texto = cob.apply(lambda c: c.map(D.ESTADOS))
     fig = go.Figure(go.Heatmap(
         z=z.to_numpy(), x=[D.etiqueta_mes(p) for p in cob.columns], y=cob.index, text=texto.to_numpy(), xgap=1.5, ygap=3,
-        colorscale=[[0, T.CORAL], [0.333, T.CORAL], [0.333, "#E2E8F0"], [0.666, "#E2E8F0"], [0.666, T.ESMERALDA], [1, T.ESMERALDA]],
+        colorscale=[[0, T.CORAL], [0.333, T.CORAL], [0.333, T.NEUTRO], [0.666, T.NEUTRO], [0.666, T.ESMERALDA], [1, T.ESMERALDA]],
         zmin=-0.5, zmax=2.5, showscale=False, hovertemplate="<b>%{y}</b> · %{x}<br>%{text}<extra></extra>"))
     T.eje_meses(fig, list(cob.columns))
     for est, nombre in D.ESTADOS.items():  # leyenda manual
-        fig.add_scatter(x=[None], y=[None], mode="markers", name=nombre, marker=dict(size=11, symbol="square", color=T.COLOR_ESTADO[est] if est != "sin_registros" else "#E2E8F0"))
+        fig.add_scatter(x=[None], y=[None], mode="markers", name=nombre, marker=dict(size=11, symbol="square", color=T.COLOR_ESTADO[est]))
     fig.update_layout(yaxis=dict(showgrid=False), margin=dict(l=6, t=34))
     T.figura(fig, "fincrowd_cobertura_portal", 300, cob,
              leer="Cada fila es una plataforma y cada cuadrito, un mes. **Verde**: el portal devolvió proyectos; **gris**: "

@@ -116,7 +116,7 @@ def pagina() -> None:
                           annotation_text="costo con la TEA observada", annotation_position="top left",
                           annotation_font=dict(color=T.OSCURO[T.ESMERALDA], size=11))
             fig.add_scatter(x=[tea_fpf], y=[costo_f], mode="markers", name="Tu supuesto",
-                            marker=dict(size=12, color=T.CORAL, line=dict(color="white", width=2)),
+                            marker=dict(size=12, color=T.CORAL, line=dict(color=T.PAPEL, width=2)),
                             hovertemplate="Tu supuesto: S/ %{y:,.0f}<extra></extra>")
             fig.update_layout(xaxis_title="TEA hipotética del FPF (%)", yaxis_title="S/", showlegend=False)
             T.figura(fig, "fincrowd_sim_sensibilidad", 300,

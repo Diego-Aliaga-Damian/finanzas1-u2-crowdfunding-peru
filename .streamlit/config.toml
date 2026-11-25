@@ -1,18 +1,41 @@
-# Tema del dashboard FinCrowd Perú: modo claro, paleta multicolor (misma que tema.py)
+# Tema del dashboard FinCrowd Perú: noche y día, con la misma paleta de dashboard/tema.py. Al abrir sigue el tema del
+# sistema del visitante; se cambia en el menú de los tres puntos (System, Light, Dark).
 [theme]
-base = "light"
-primaryColor = "#2563EB"
-backgroundColor = "#FAFBFF"
-secondaryBackgroundColor = "#EEF2FF"
-textColor = "#0F172A"
-borderColor = "#E2E8F0"
-linkColor = "#2563EB"
 font = "Plus Jakarta Sans:https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
 headingFontWeights = [800, 700, 700]
 headingFontSizes = ["1.65rem", "1.3rem", "1.08rem"]
 baseRadius = "0.75rem"
 buttonRadius = "0.7rem"
 showWidgetBorder = true
+
+[theme.dark]
+primaryColor = "#4F8CFF"
+backgroundColor = "#070B17"
+secondaryBackgroundColor = "#141D38"
+textColor = "#E8EEFC"
+borderColor = "#1E2A49"
+linkColor = "#7DB0FF"
+blueColor = "#4F8CFF"
+greenColor = "#34D399"
+redColor = "#FB7185"
+yellowColor = "#FBBF24"
+violetColor = "#A78BFA"
+orangeColor = "#FB923C"
+dataframeHeaderBackgroundColor = "#111A35"
+chartCategoricalColors = ["#4F8CFF", "#34D399", "#FB7185", "#FBBF24", "#A78BFA", "#22D3EE"]
+
+[theme.dark.sidebar]
+backgroundColor = "#0A1022"
+secondaryBackgroundColor = "#141D38"
+borderColor = "#1E2A49"
+
+[theme.light]
+primaryColor = "#2563EB"
+backgroundColor = "#FAFBFF"
+secondaryBackgroundColor = "#EEF2FF"
+textColor = "#0F172A"
+borderColor = "#E2E8F0"
+linkColor = "#2563EB"
 blueColor = "#2563EB"
 greenColor = "#10B981"
 greenTextColor = "#047857"
@@ -25,7 +48,7 @@ orangeColor = "#F97316"
 dataframeHeaderBackgroundColor = "#F1F5FF"
 chartCategoricalColors = ["#2563EB", "#10B981", "#FB7185", "#FBBF24", "#8B5CF6", "#06B6D4"]
 
-[theme.sidebar]
+[theme.light.sidebar]
 backgroundColor = "#F7F8FF"
 secondaryBackgroundColor = "#FFFFFF"
 borderColor = "#E2E8F0"
@@ -34,4 +57,4 @@ borderColor = "#E2E8F0"
 gatherUsageStats = false
 
 [client]
-toolbarMode = "minimal"
+toolbarMode = "viewer"

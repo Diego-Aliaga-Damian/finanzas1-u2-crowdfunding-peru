@@ -124,7 +124,7 @@ def _plataformas() -> None:
             "Monto (S/ M)": (t1.monto_financiado_soles / 1e6).map(lambda x: C.num(x, 2)),
             "Participación (%)": t1.participacion_monto_pct}), hide_index=True,
             column_config={"Participación (%)": st.column_config.ProgressColumn("Participación (%)", format="%.1f %%",
-                                                                                min_value=0, max_value=100, color="#2563EB")})
+                                                                                min_value=0, max_value=100, color=T.AZUL)})
         T.nota("Fuente: SMV (SIMV). Tabla 1 del artículo.")
 
 

@@ -67,6 +67,12 @@ def _kpis(v: pd.DataFrame, desde: str, hasta: str, plataformas: list[str]) -> di
                "monto_medio": "Lo que recibió en promedio cada proyecto",
                "hhi": "Qué tan concentrado está el mercado (10 000 = una sola plataforma)",
                "participacion_lider_pct": "Parte del monto que reúne la plataforma más grande"}
+    # Forma mensual de cada indicador en la selección (minigráfico de la tarjeta)
+    ms, mp = D.mensual_sistema(v), D.mensual_por_plataforma(v)
+    reparto = mp.div(mp.sum(axis=1).where(lambda x: x > 0), axis=0)
+    series = {"monto": ms.monto_financiado_total, "financiados": ms.proy_financiados_total, "colocacion_pct": ms.colocacion_12m_pct,
+              "monto_medio": ms.monto_financiado_total / ms.proy_financiados_total.where(lambda x: x > 0),
+              "hhi": ((100 * reparto) ** 2).sum(axis=1, min_count=1), "participacion_lider_pct": 100 * reparto.max(axis=1)}
     items = []
     for clave, etiqueta, valor, ic, color, tipo, sentido, ayuda, ins in (
             ("monto", "Monto financiado", C.soles_m(k["monto"]), "payments", T.AZUL, "pct", "normal",
@@ -84,7 +90,7 @@ def _kpis(v: pd.DataFrame, desde: str, hasta: str, plataformas: list[str]) -> di
         d, txt = var(clave, tipo)
         item = {"etiqueta": etiqueta, "valor": valor, "icono": ic, "color": color, "delta": d, "delta_txt": txt,
                 "delta_ref": ref if pd.notna(d) else "", "sentido": sentido, "ayuda": ayuda, "insignia": ins,
-                "explica": explica[clave]}
+                "explica": explica[clave], "serie": list(series[clave])}
         if clave == "participacion_lider_pct" and k["lider"]:
             item["sub"] = k["lider"]
         if clave == "hhi":
@@ -108,7 +114,7 @@ def _concentracion(v: pd.DataFrame) -> None:
             T.aviso("Sin montos en la selección.", "info", T.AZUL)
         else:
             fig = go.Figure(go.Pie(labels=part.plataforma, values=part.monto, hole=0.64, sort=False,
-                                   marker=dict(colors=[T.COLOR_PLATAFORMA[p] for p in part.plataforma], line=dict(color="white", width=2)),
+                                   marker=dict(colors=[T.COLOR_PLATAFORMA[p] for p in part.plataforma], line=dict(color=T.PAPEL, width=2)),
                                    textinfo="none", hovertemplate="<b>%{label}</b><br>S/ %{value:,.0f}<br>%{percent}<extra></extra>"))
             lider = part.iloc[0]
             fig.add_annotation(text=f"<b>{C.num(lider.participacion_pct, 1)} %</b><br><span style='font-size:11px'>{lider.plataforma}</span>",
@@ -224,7 +230,7 @@ def _accesos() -> None:
     cols = st.columns(3, gap="medium")
     for col, (clave, titulo, ic, color, texto) in zip(cols, destinos):
         with col, st.container(key=f"tarjeta-acceso-{clave}"):
-            st.html(f'<div class="fc-hall-top" style="--s:{T.SUAVE[color]};--o:{T.OSCURO[color]}"><span class="fc-hall-ic">'
+            st.html(f'<div class="fc-hall-top" style="--s:{T.suave(color)};--o:{T.oscuro(color)}"><span class="fc-hall-ic">'
                     f'{T.icono(ic)}</span></div><div class="fc-hall-t">{T.e(titulo)}</div><div class="fc-hall-x">{T.e(texto)}</div>')
             if clave in C.PAGINAS:
                 st.page_link(C.PAGINAS[clave], label="Abrir", icon=":material/arrow_forward:")
@@ -238,6 +244,11 @@ def _bienvenida(r: dict) -> None:
         f"(<b>{C.pct(r['participacion_lider_periodo_pct'])}</b> del monto). Como la SMV no publica la tasa de cada préstamo, "
         "su precio no se puede comparar con el de bancos y cajas.",
         "El estudio en una frase")
+    trimestres = D.agrupar(D.mensual_por_plataforma(C.base(), "2022-01"), "Trimestral").sum(axis=1)
+    T.portada_centro(D.meses_entre("2022-01", C.todos_los_periodos()[-1]), trimestres)
+    if "centro" in C.PAGINAS:
+        with st.container(key="abrir-centro"):
+            st.page_link(C.PAGINAS["centro"], label="Abrir el Centro de mando 3D", icon=":material/rocket_launch:")
     T.guia_pasos([
         ("Elige qué mirar", "Usa <b>Periodo rápido</b> y <b>Plataformas</b> aquí abajo, o los filtros de la barra lateral."),
         ("Lee las tarjetas", "Cada tarjeta dice qué mide y cuánto cambió frente al periodo de comparación."),

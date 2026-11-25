@@ -38,7 +38,7 @@ def pagina() -> None:
             ruta = C.DESCARGAS / archivo
             with col, st.container(key=f"tarjeta-prod-{archivo.split('.')[0]}"):
                 tam = f"{ruta.stat().st_size / 1e6:.1f} MB" if ruta.exists() else "no disponible"
-                st.html(f'<div class="fc-hall-top" style="--s:{T.SUAVE[color]};--o:{T.OSCURO[color]}"><span class="fc-hall-ic">'
+                st.html(f'<div class="fc-hall-top" style="--s:{T.suave(color)};--o:{T.oscuro(color)}"><span class="fc-hall-ic">'
                         f'{T.icono(ic)}</span><span class="fc-chip">{T.icono("draft")}{T.e(tam)}</span></div>'
                         f'<div class="fc-hall-t">{T.e(titulo)}</div><div class="fc-hall-x">{T.e(texto)}</div>')
                 if ruta.exists():

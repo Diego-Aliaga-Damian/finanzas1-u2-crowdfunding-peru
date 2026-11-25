@@ -1,0 +1,85 @@
+<!doctype html>
+<!-- Diego Sebastián Aliaga Damián -->
+<!-- 2024200481M -->
+<!-- Tema 96: Fintech y financiamiento participativo (crowdfunding) en el Perú: oferta y condiciones -->
+<!-- Fecha: 2026-11-24 -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FinCrowd Terminal</title>
+<link rel="stylesheet" href="terminal.css">
+</head>
+<body>
+<div id="t" class="t" hidden>
+  <header class="barra">
+    <div class="marca"><i class="foco"></i><b>FINCROWD</b> TERMINAL</div>
+    <div class="etq obs" title="Repite datos históricos mes a mes: no es una transmisión en vivo">REPLAY HISTÓRICO</div>
+    <div class="etq" id="rango"></div>
+    <div class="etq" id="sha"></div>
+    <div class="espacio"></div>
+    <button id="relato" class="bt oro" title="Recorre los momentos clave con explicación (tecla R)">▶ Contar la historia</button>
+    <button id="pantalla" class="bt" title="Pantalla completa (tecla F)">⛶ Pantalla completa</button>
+  </header>
+  <div class="cinta" aria-hidden="true"><div id="cinta"></div></div>
+
+  <div class="transporte">
+    <span class="reloj" id="reloj"></span>
+    <button id="atras" class="bt mini" title="Mes anterior (←)">◀</button>
+    <button id="play" class="bt play" title="Reproducir o pausar (espacio)">❚❚</button>
+    <button id="adelante" class="bt mini" title="Mes siguiente (→)">▶</button>
+    <input id="linea" type="range" min="0" step="1" aria-label="Mes del replay">
+    <div class="vel" id="vel" role="group" aria-label="Velocidad"><button data-v="1.2">1×</button><button data-v="2.6" class="on">2×</button><button data-v="6">4×</button></div>
+  </div>
+
+  <main class="rejilla">
+    <section class="p p-replay">
+      <div class="pt"><b>Monto financiado por mes</b><span class="ins obs">Observado · SMV</span><span class="der" id="leyenda"></span></div>
+      <div class="lienzo"><canvas id="c-replay"></canvas></div>
+      <p class="ex">Cada barra es un mes y cada color una plataforma. La franja es lo normal según los <b>12 meses anteriores</b>
+        (media ± 1 desviación): describe el pasado, no predice ni recomienda.</p>
+    </section>
+
+    <section class="p p-estado">
+      <div class="pt"><b>Tablero del mes</b><span class="ins obs">Observado</span></div>
+      <div class="mes" id="e-mes"></div>
+      <div class="sit" id="e-sit"></div>
+      <dl id="e-filas"></dl>
+      <p class="ex" id="e-ex"></p>
+    </section>
+
+    <section class="p p-consola">
+      <div class="pt"><i class="pto r"></i><i class="pto a"></i><i class="pto v"></i><b>log_ejecucion.txt</b><span class="ins obs">Registro real</span></div>
+      <div class="consola" id="consola"></div>
+      <p class="ex" id="c-ex"></p>
+    </section>
+
+    <section class="p p-sup">
+      <div class="pt"><b id="s-tit"></b><span class="ins" id="s-ins"></span><span class="der tabs" id="tabs"></span></div>
+      <div class="escena" id="escena">
+        <canvas id="gl"></canvas><canvas id="capa"></canvas>
+        <div class="formula" id="s-for"></div>
+        <div class="series" id="s-series"></div>
+        <div class="ayuda">arrastra para girar · pasa el cursor para leer · doble clic para recentrar</div>
+      <div class="aviso" id="aviso" role="status" aria-live="polite"><b></b><span></span><i></i></div>
+        <div class="zoom"><button id="zmas" class="bt mini" title="Acercar">＋</button><button id="zmen" class="bt mini" title="Alejar">－</button></div>
+      </div>
+      <p class="ex" id="s-ex"></p>
+    </section>
+
+    <section class="p p-flujo">
+      <div class="pt"><b>¿Por dónde pasa el dinero?</b><span class="ins obs">Observado · SMV</span></div>
+      <div class="lienzo"><canvas id="c-flujo"></canvas></div>
+      <p class="ex">Cada punto equivale a <b>S/ 500 mil</b> de los últimos 12 meses (mínimo un punto por ruta). Cuantos más puntos
+        viajan por una plataforma, más depende el mercado de ella.</p>
+    </section>
+  </main>
+
+</div>
+<div id="espera" class="espera">Cargando la terminal…</div>
+<script src="util.js"></script>
+<script src="superficie.js"></script>
+<script src="paneles.js"></script>
+<script src="principal.js"></script>
+</body>
+</html>

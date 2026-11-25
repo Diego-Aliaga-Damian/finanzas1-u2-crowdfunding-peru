@@ -97,7 +97,8 @@ pruebas/                 pruebas pytest con respuestas simuladas (fixtures/ = re
 articulo/                artículo en LaTeX (articulo.tex, secciones/, generado/ con las cifras automáticas)
 articulo_typst/          el mismo artículo en Typst
 productos/               Beamer, póster del artículo y los 20 pósteres del estado del arte (fuentes LaTeX)
-dashboard/               dashboard interactivo en Streamlit (streamlit run dashboard/app.py)
+dashboard/               dashboard interactivo en Streamlit (streamlit run dashboard/app.py); incluye
+                         el Centro de mando 3D (dashboard/terminal/, motor propio en WebGL)
 docs/                    matriz de cumplimiento, diagnóstico, diseño, antecedentes, evidencias y guía del proyecto
 herramientas/            bibliografía, generación del artículo, pósteres, productos y carpeta de entrega
                          (no forman parte de la base)

@@ -50,9 +50,9 @@ def pagina() -> None:
         h = h.iloc[::-1]
         colores = [T.ESMERALDA if p < 0.05 else T.CORAL for p in h.p_valor]
         fig = go.Figure()
-        fig.add_scatter(x=h.dif, y=h.nombre, mode="markers", marker=dict(size=12, color=colores, line=dict(color="white", width=1.5)),
+        fig.add_scatter(x=h.dif, y=h.nombre, mode="markers", marker=dict(size=12, color=colores, line=dict(color=T.PAPEL, width=1.5)),
                         error_x=dict(type="data", symmetric=False, array=h.hi - h.dif, arrayminus=h.dif - h.lo,
-                                     color="#CBD5E1", thickness=3, width=0),
+                                     color=T.NEUTRO, thickness=3, width=0),
                         customdata=h[["p_valor", "lo", "hi", "valor"]].to_numpy(),
                         hovertemplate="<b>%{y}</b><br>Diferencia: S/ %{x:.2f} M<br>IC 95 %: [%{customdata[1]:.2f}; "
                                       "%{customdata[2]:.2f}]<br>U = %{customdata[3]:.0f}, p = %{customdata[0]:.2g}<extra></extra>")

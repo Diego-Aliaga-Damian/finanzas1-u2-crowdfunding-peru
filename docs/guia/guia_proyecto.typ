@@ -138,7 +138,7 @@ Y dos hipótesis, más una relación exploratoria:
   [Beamer de 10 diapositivas y su versión para imprimir], [`productos/beamer/`],
   [Póster del artículo (A0)], [`productos/poster_articulo/`],
   [20 pósteres en español de los artículos del estado del arte (A1)], [`productos/posteres_articulos/pdf/`],
-  [Dashboard interactivo FinCrowd Perú (10 páginas)], [fincrowd-peru-diego-aliaga.streamlit.app],
+  [Dashboard interactivo FinCrowd Perú (11 páginas)], [fincrowd-peru-diego-aliaga.streamlit.app],
   [Carpeta de entrega con la estructura de la consigna], [`entregas/DIEGO_SEBASTIAN_ALIAGA_DAMIAN/`],
   [16 de los 20 artículos en inglés (PDF)], [`entregas/Carpeta_1_articulos/1_originales_ingles/`],
 )
@@ -358,8 +358,8 @@ Lee solo la base procesada y genera en `salidas/` las 8 tablas y 4 figuras del a
 == Pruebas automáticas (pytest)
 Se ejecutan con `python -m pytest` y no necesitan internet: usan recortes de respuestas reales guardados en `pruebas/fixtures/`.
 - *37 pruebas del núcleo:* extracción por API, scraping, limpieza y base procesada, y análisis. Una de ellas vuelve a ejecutar `04_analisis.py` y comprueba que todas las salidas son idénticas.
-- *21 pruebas del dashboard:* que sus cálculos sin filtros reproduzcan las tablas del artículo, que los filtros funcionen y que cada página cargue sin errores.
-- *Total: 58 pruebas, todas aprobadas.*
+- *33 pruebas del dashboard:* que sus cálculos sin filtros reproduzcan las tablas del artículo, que los filtros funcionen, que cada página cargue sin errores y que el Centro de mando 3D muestre exactamente los datos de la base.
+- *Total: 70 pruebas, todas aprobadas.*
 
 == Auditoría automatizada (`codigo/auditoria.py`)
 Revisa los requisitos de la consigna (numerales 2.4.1, 2.4.2, 2.4.5, 2.4.6 y 2.4.8) y escribe `salidas/reporte_auditoria.md`. Cada control sale como cumple, no cumple o no ejecutado; un control no ejecutado nunca cuenta como cumplido. Con `--en-vivo` además coteja 10 filas al azar con el BCRP y la SMV. Último resultado: *48 controles cumplidos, 0 incumplidos*.
@@ -466,10 +466,11 @@ Tamaño A0, con los elementos que pide la consigna, los dos logos, el código QR
 == Qué es
 Una página web interactiva hecha con Streamlit que reúne los datos, los resultados y todos los productos. El docente permitió entregarlo como enlace. Está publicado gratis en Streamlit Community Cloud: #link("https://fincrowd-peru-diego-aliaga.streamlit.app/")[fincrowd-peru-diego-aliaga.streamlit.app].
 
-== Las 10 páginas
+== Las 11 páginas
 #table(columns: (1.3fr, 2.4fr),
   [Página], [Qué muestra],
-  [Inicio], [El estudio en una frase, guía de 4 pasos, filtros, 6 tarjetas KPI con variación, evolución del monto, participación e IHH, hallazgos, calidad de los datos y accesos.],
+  [Inicio], [El estudio en una frase, guía de 4 pasos, filtros, 6 tarjetas KPI con variación y minigráfico, evolución del monto, participación e IHH, hallazgos, calidad de los datos y accesos.],
+  [Centro de mando 3D], [Terminal animada: superficie 3D, replay mes a mes, flujo del dinero, tablero del mes y el registro real de la extracción.],
   [Oferta y crecimiento], [Monto por plataforma (mensual, trimestral o anual; soles corrientes o reales), comparación de dos periodos, oferta anual y las 6 plataformas.],
   [Plataformas y rentabilidad], [ROA por año, ingresos ÷ monto de la líder, activo por trimestre y la tabla de indicadores.],
   [¿A quién se financia?], [Colocación por tipo de receptor con intervalos, H1 y H2 y la serie de publicados y financiados.],
@@ -487,6 +488,20 @@ Una página web interactiva hecha con Streamlit que reúne los datos, los result
 - Cada página empieza con un recuadro "En pocas palabras" y cada gráfico tiene "¿Cómo leer este gráfico?". En la barra lateral hay un *glosario* de 15 términos.
 - Cada gráfico se puede descargar como imagen (PNG) y sus datos como CSV.
 
+== El Centro de mando 3D
+Es una página con estilo de terminal financiera. *Repite* los datos históricos mes a mes (enero de 2022 a septiembre de 2026); no es una transmisión en vivo. Todos los paneles se mueven juntos con la misma línea de tiempo.
+- *Superficie "Costo del crédito":* cuánto interés se paga por cada S/ 100 según la TEA y el plazo. Es la fórmula del simulador evaluada en 41 tasas × 30 plazos; se rotula *Cálculo*. Las líneas de colores son las TEA *observadas* de bancos y cajas (BCRP) en el mes del replay.
+- *"Monto del crowdfunding":* una columna por mes observado (SMV). Donde no hay dato, no hay columna.
+- *"Tasas de bancos y cajas":* una cinta por cada una de las 9 series del BCRP. No se unen entre sí porque son categorías distintas.
+- *Replay:* barras por plataforma y una franja descriptiva (media ± 1 desviación de los 12 meses *anteriores*). No es un pronóstico ni una señal de inversión.
+- *¿Por dónde pasa el dinero?:* cada punto equivale a S/ 500 mil de los últimos 12 meses.
+- *Consola:* una muestra de 150 líneas reales de `log_ejecucion.txt`, con su número de línea para comprobarlas.
+- *Contar la historia:* recorrido guiado de 6 momentos, con cifras calculadas de la base y de `resultados_04.json`.
+- *Atajos:* espacio (reproducir o pausar), flechas (mes), 1 a 3 (superficie), R (historia), F (pantalla completa).
+El motor 3D no usa librerías externas. Si el navegador no tiene WebGL2, dibuja la misma escena en líneas.
+
+El dashboard tiene modo *noche y día*: sigue el tema del sistema de quien lo abre y se cambia en el menú de los tres puntos (arriba a la derecha).
+
 == El simulador, con sus fórmulas
 - Tasa mensual equivalente: TEM = (1 + TEA)^(1/12) − 1.
 - Cuota fija (sistema francés): cuota = monto × TEM ÷ (1 − (1 + TEM)^(−n)), con n meses.
@@ -496,10 +511,12 @@ Una página web interactiva hecha con Streamlit que reúne los datos, los result
 == Cómo está construido
 #table(columns: (auto, 1fr),
   [Archivo], [Función],
-  [`dashboard/app.py`], [Configuración, menú de 10 páginas y filtros de la barra lateral.],
+  [`dashboard/app.py`], [Configuración, menú de 11 páginas y filtros de la barra lateral.],
   [`dashboard/datos.py`], [Cálculos sin Streamlit, con las mismas reglas que `04_analisis.py`: sin filtros reproduce exactamente las tablas del artículo.],
   [`dashboard/compartido.py`], [Carga de datos en memoria, estado de los filtros, glosario y formatos numéricos.],
-  [`dashboard/tema.py`], [Diseño: colores, tipografía, tarjetas, etiquetas, recuadros y estilo de los gráficos.],
+  [`dashboard/tema.py`], [Diseño: paletas de noche y día, tipografía, tarjetas, etiquetas, recuadros y estilo de los gráficos.],
+  [`dashboard/terminal_datos.py`], [Prepara los datos del Centro de mando (sin Streamlit, con pruebas).],
+  [`dashboard/terminal/`], [La terminal en HTML, CSS y JavaScript: `superficie.js` (motor 3D en WebGL), `paneles.js` (replay, flujo, tablero y consola), `principal.js` (coordina todo) y `util.js`.],
   [`dashboard/vistas/*.py`], [Una página por archivo.],
 )
 El dashboard solo *lee* archivos del repositorio: no modifica la base ni consulta las fuentes en vivo.
