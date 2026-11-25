@@ -78,6 +78,29 @@
   }),
 )
 
+// Tabla del anexo (página a una columna): en su lugar, sin flotar
+#let tabla_apa_fija(cuerpo, titulo: [], nota: none) = figure(
+  kind: table,
+  supplement: [Tabla],
+  caption: figure.caption(position: top, titulo),
+  block(width: 100%, {
+    set text(size: 8.6pt, hyphenate: true)
+    set par(leading: 0.45em, first-line-indent: 0pt, justify: false)
+    set table(fill: (_, y) => if y > 0 and calc.even(y) { celestefila }, inset: (x: 3.5pt, y: 2.8pt))
+    set table.hline(stroke: marino)
+    cuerpo
+    if nota != none { nota_apa(nota) }
+  }),
+)
+
+// Resultado en una frase al cierre de cada apartado de Resultados
+#let resultado(cuerpo) = block(width: 100%, fill: celeste, radius: 2pt, inset: (x: 8pt, y: 6pt), stroke: (left: 3pt + dorado),
+  above: 0.9em, below: 1.1em, {
+  set text(size: 10.5pt)
+  set par(leading: 0.62em, first-line-indent: 0pt, justify: true)
+  [#text(fill: marino, weight: "bold")[Resultado.] #cuerpo]
+})
+
 #let figura_apa(imagen, titulo: [], nota: none) = figure(
   kind: image,
   supplement: [Figura],

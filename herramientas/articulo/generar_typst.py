@@ -6,7 +6,7 @@
 
 Produce en articulo_typst/:
     generado/cifras.typ        las mismas cifras que articulo/generado/cifras.tex (#cifra("clave"))
-    generado/tablas.typ        T1-T8 de salidas/tablas/*.tex convertidas a tablas de Typst
+    generado/tablas.typ        T1-T15 de salidas/tablas/*.tex convertidas a tablas de Typst
     generado/anexo.typ         repositorio, endpoints y diccionario de variables
     generado/referencias.bib   articulo/referencias.bib sin comandos de LaTeX (Typst no los interpreta)
     secciones/*.typ            traducción automática de articulo/secciones/*.tex
@@ -119,7 +119,7 @@ def anexo_typ() -> str:
     log = (RAIZ / "log_ejecucion.txt").read_text(encoding="utf-8")
     fechas = sorted(set(re.findall(r"^(\d{4}-\d{2}-\d{2}) [\d:]+ \| \S+ \| INFO \| HTTP", log, re.M)))
     req = {l.split("==")[0]: l.split("==")[1] for l in (RAIZ / "requirements.txt").read_text(encoding="utf-8").splitlines() if "==" in l}
-    versiones = ", ".join(f"{k} {req[k]}" for k in ("requests", "beautifulsoup4", "pandas", "numpy", "scipy", "matplotlib", "pandera", "pytest") if k in req)
+    versiones = ", ".join(f"{k} {req[k]}" for k in ("requests", "beautifulsoup4", "pandas", "numpy", "scipy", "statsmodels", "matplotlib", "pandera", "pytest") if k in req)
     csv = LATEX.CSV_PROCESADO
     import pandas as pd
     panel = pd.read_csv(csv)
@@ -128,6 +128,7 @@ def anexo_typ() -> str:
              ["Periodo consultado", f"{s01.FECHA_INICIO} a {s01.FECHA_CORTE} (constantes FECHA_INICIO y FECHA_CORTE)"],
              ["Fechas de extracción", ", ".join(fechas) + " (según log_ejecucion.txt)"],
              ["Archivo procesado", f"datos_procesados/{csv.name}: {len(panel)} filas, {panel.shape[1]} columnas"],
+             ["Base complementaria", f"datos_procesados/{LATEX.CSV_EMPRESAS.name}: {len(pd.read_csv(LATEX.CSV_EMPRESAS))} empresa-trimestre"],
              ["SHA-256 del archivo procesado", f"raw({cadena(h[:32] + ' ' + h[32:])})"],
              ["Orden de ejecución", "01_extraccion_api.py → 02_scraping_web.py → 03_limpieza_datos.py → 04_analisis.py"],
              ["Verificación", "python -m pytest y python codigo/auditoria.py (con --en-vivo para cotejar con las fuentes)"],
@@ -197,10 +198,22 @@ MATEMATICA = [(r"\mathit{IHH}", ' "IHH"'), (r"\mathit{ROA}", ' "ROA"'), (r"\math
               (r"_{it}", "_(i t)"), (r"\bar{A}", " overline(A) "), (r"\frac{4}{n}", " 4/n ")]
 
 
+# Ecuaciones numeradas del artículo, por etiqueta (LaTeX usa amsmath; aquí, la sintaxis de Typst)
+ECUACIONES = {
+    "eq:corto": "Delta f_t = &alpha + phi.alt Delta f_(t-1) + sum_k beta_k Delta r_(k,t) \\\n &+ lambda pi_t + delta D_t + epsilon.alt_t",
+    "eq:segmentada": "f_t = &alpha + beta_1 tau_t + beta_2 D_t \\\n &+ beta_3 (t - t_0) D_t + epsilon.alt_t",
+    "eq:logit": "Pr(F_i = 1) = Lambda(alpha + beta E_i + gamma L_i + theta a_i)",
+    "eq:panel": "R_(i t) = alpha + beta P_i + gamma ln A_(i t) + mu_t + epsilon.alt_(i t)",
+}
+GRIEGAS = {"varphi": "phi.alt", "varepsilon": "epsilon.alt"}
+
+
 def matematica(m: str) -> str:
     m = re.sub(r"\\cifra\{(\w+)\}", lambda x: f' #cifra("{x.group(1)}") ', m)
     for a, b in MATEMATICA:
         m = m.replace(a, b)
+    m = re.sub(r"_\{([^{}]*)\}", r"_(\1)", m)
+    m = re.sub(r"\\(alpha|beta|gamma|delta|tau|pi|mu|lambda|theta|varphi|varepsilon|Delta|Lambda|ln)(?![A-Za-z])", lambda x: " " + GRIEGAS.get(x.group(1), x.group(1)) + " ", m)
     m = m.replace("=", " = ")
     return "$" + re.sub(r"\s+", " ", m).strip() + "$"
 
@@ -210,7 +223,7 @@ def convertir(s: str, tablas_usadas: set) -> str:
     s = re.sub(r"(?m)^\s*%.*$\n?", "", s)                # comentarios de línea completa
     s = re.sub(r"(?<!\\)%.*$", "", s, flags=re.M)        # comentarios al final de línea
     # Typst antepone «Tabla»/«Figura» a la referencia: «Tabla~\ref{x}» pasa a ser solo «@x»
-    s = re.sub(r"(Tabla|Figura)~\\ref\{", r"\\ref{", s)
+    s = re.sub(r"(Tabla|Figura|Ecuación)~\\ref\{", r"\\ref{", s)
     salida, i = [], 0
     while i < len(s):
         c = s[i]
@@ -241,6 +254,9 @@ def convertir(s: str, tablas_usadas: set) -> str:
         elif cmd == "cifra":
             clave, i = argumento(s, i)
             salida.append(f'#cifra("{clave}")')
+            if s[i:i + 1] == ";":      # en Typst, «;» justo después de #cifra(...) cierra el código y no se imprime
+                salida.append("\\;")
+                i += 1
         elif cmd == "parencite":
             claves, i = argumento(s, i)
             salida.append(" ".join(f"@{k.strip()}" for k in claves.split(",")))
@@ -273,6 +289,9 @@ def convertir(s: str, tablas_usadas: set) -> str:
             etiqueta, i = argumento(s, i)
             palabras, i = argumento(s, i)
             salida.append(f"\n#palabras_clave([{etiqueta}], [{convertir(palabras, tablas_usadas).strip()}])\n")
+        elif cmd == "resultado":
+            t, i = argumento(s, i)
+            salida.append(f"\n#resultado[{convertir(t, tablas_usadas).strip()}]\n")
         elif cmd in ("noindent", "FloatBarrier", "small", "footnotesize", "centering", "par", "medskip", "smallskip",
                      "tablacompacta"):
             pass
@@ -291,6 +310,9 @@ def convertir(s: str, tablas_usadas: set) -> str:
 
 
 def entorno_typst(entorno: str, cuerpo: str, tablas_usadas: set) -> str:
+    if entorno == "equation":
+        etiqueta = re.search(r"\\label\{([^}]*)\}", cuerpo).group(1)
+        return f"\n$ {ECUACIONES[etiqueta]} $ <{etiqueta.replace(':', '-')}>\n"
     if entorno in ("itemize", "enumerate"):
         marca = "-" if entorno == "itemize" else "+"
         items = [x.strip() for x in cuerpo.split(r"\item")[1:]]
@@ -303,6 +325,7 @@ def entorno_typst(entorno: str, cuerpo: str, tablas_usadas: set) -> str:
         return "\n#abreviaturas((\n" + "".join(f'  ("{a}", [{convertir(b, tablas_usadas).strip()}]),\n' for a, b in pares) + "))\n"
     entorno = entorno.rstrip("*")  # table* y figure* (a todo el ancho) se tratan igual: Typst los ubica a todo el ancho
     if entorno in ("table", "figure"):
+        cuerpo_original = cuerpo
         cuerpo = re.sub(r"^\[[^\]]*\]", "", cuerpo.lstrip())  # opción de ubicación [!htbp]
         titulo = etiqueta = nota = contenido = None
         k = cuerpo.index(r"\caption")
@@ -319,6 +342,8 @@ def entorno_typst(entorno: str, cuerpo: str, tablas_usadas: set) -> str:
             ancho, archivo = re.search(r"\\includegraphics\[width=([\d.]*)\\linewidth\]\{(\w+)\.pdf\}", cuerpo).groups()
             contenido = f'image("/salidas/figuras/{archivo}.png", width: {float(ancho or 1) * 100:.0f}%)'
         funcion = "tabla_apa" if entorno == "table" else "figura_apa"
+        if "[H]" in cuerpo_original[:8]:
+            funcion += "_fija"      # anexo: en su lugar y no flotante
         partes = [f"\n#{funcion}({contenido},", f"  titulo: [{convertir(titulo, tablas_usadas).strip()}],"]
         if nota:
             partes.append(f"  nota: [{convertir(nota, tablas_usadas).strip()}],")
@@ -329,7 +354,8 @@ def entorno_typst(entorno: str, cuerpo: str, tablas_usadas: set) -> str:
 
 def secciones() -> None:
     tablas_usadas: set = set()
-    for f in sorted((RAIZ / "articulo" / "secciones").glob("0[0-8]_*.tex")):
+    carpeta = RAIZ / "articulo" / "secciones"
+    for f in sorted([*carpeta.glob("0[0-8]_*.tex"), *carpeta.glob("10_*.tex")]):
         if f.stem == "00_portada":
             continue  # el bloque de título se arma en la plantilla Typst
         if f.stem == "01_resumen_abstract":

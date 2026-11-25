@@ -5,7 +5,7 @@
 % problema, objetivo, metodología, resultados, conclusiones, fuente de datos y QR del repositorio de extracción).
 % Mismo diseño que los pósteres de los artículos del estado del arte (verde y oro de la UNCP), en A0.
 % Las cifras usan \cifra{...} (articulo/generado/cifras.tex) y las figuras salen de salidas/figuras (04_analisis.py).
-% BORRADOR ASISTIDO POR IA (2026-11-12): revisar y ajustar el texto con tus palabras.
+% BORRADOR ASISTIDO POR IA (2026-11-12; pruebas econométricas, 2026-11-25): revisar y ajustar el texto con tus palabras.
 % Compilación: python ../../herramientas/productos/compilar_productos.py
 \documentclass[fontsize=27pt,parskip=half-]{scrartcl}
 \usepackage[paperwidth=841mm,paperheight=1189mm,left=32mm,right=32mm,top=28mm,bottom=24mm]{geometry}
@@ -14,6 +14,7 @@
 \usepackage[spanish,es-noshorthands,es-nodecimaldot,es-tabla]{babel}
 \usepackage{tgheros}
 \renewcommand{\familydefault}{\sfdefault}
+\usepackage[helvet]{sfmath}
 \usepackage{anyfontsize,xcolor,graphicx,booktabs,tabularx,multicol,enumitem,qrcode,ragged2e,csquotes}
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -21,6 +22,7 @@
 \usepackage{caption}
 \usepackage{newunicodechar}
 \newunicodechar{≤}{\ensuremath{\leq}}
+\newunicodechar{≥}{\ensuremath{\geq}}
 \newunicodechar{−}{\ensuremath{-}}
 \usepackage[style=apa,backend=biber]{biblatex}
 \addbibresource{../../articulo/referencias.bib}
@@ -44,7 +46,7 @@
 \setlength{\columnsep}{24mm}
 \setlist[itemize]{label={\color{acento}\textbullet}, leftmargin=1.1em, itemsep=0.3em, topsep=0.3em}
 \setlist[enumerate]{leftmargin=1.4em, itemsep=0.3em, topsep=0.3em}
-\captionsetup{font=small, labelfont=bf, labelsep=colon, justification=centering, skip=6pt}
+\captionsetup{font=small, labelfont=bf, labelsep=colon, justification=centering, skip=6pt, format=plain}
 \newcommand{\singuiones}{\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}
 \newcounter{seccion}
 \newcommand{\seccion}[1]{\par\vspace{0.8em}{\color{gris}\hrule height 1.2pt}\vspace{0.7em}%
@@ -54,7 +56,7 @@
 \begin{document}
 % Ondas decorativas junto al título
 \begin{tikzpicture}[remember picture,overlay]
-  \begin{scope}[shift={($(current page.north east)+(-30cm,-38cm)$)}]
+  \begin{scope}[shift={($(current page.north east)+(-30cm,-31.2cm)$)}]
     \foreach \k in {0,...,48}{
       \draw[ola!85, line width=0.8pt] plot[domain=0:29, samples=150, smooth]
         (\x, {2.0*sin(\x*20 + \k*6) + 1.0*sin(\x*8 - \k*5) + \k*0.16});
@@ -91,6 +93,7 @@
 {\color{gris}\hrule height 1.2pt}
 \vspace{0.3cm}
 
+\raggedcolumns
 \begin{multicols}{3}
 % ---------------------------------------------------------------- Contexto
 \seccion{Contexto}
@@ -109,12 +112,12 @@ Mientras tanto, el crédito tradicional es caro: la TEA bancaria a la pequeña y
   \item Evolución y estructura de la oferta.
   \item Situación financiera de las sociedades administradoras.
   \item Acceso y monto por tipo de receptor, antes y después de 2025 (H1 y H2).
-  \item Condiciones frente al crédito tradicional y límites de la comparación (E1).
+  \item Relación de largo y corto plazo con las tasas del crédito tradicional (E1).
 \end{enumerate}
 
 % ---------------------------------------------------------------- Metodología
 \seccion{Metodología}
-\justifying Estudio cuantitativo, descriptivo-comparativo y no causal. \textbf{Censo} de las \cifra{plataformasAutorizadas} sociedades administradoras con información en la SMV: panel de \dato{\cifra{filasPanel}} plataforma-mes y \cifra{columnasPanel} variables, de \cifra{fechaInicio} a \cifra{fechaCorte}.
+\justifying Estudio cuantitativo, descriptivo-comparativo y econométrico, no causal. \textbf{Censo} de las \cifra{plataformasAutorizadas} sociedades administradoras con información en la SMV: panel de \dato{\cifra{filasPanel}} plataforma-mes y \cifra{columnasPanel} variables, de \cifra{fechaInicio} a \cifra{fechaCorte}.
 
 {\small\centering
 \begin{tabularx}{\linewidth}{@{}>{\bfseries}l>{\RaggedRight\arraybackslash}X@{}}
@@ -129,9 +132,12 @@ Mientras tanto, el crédito tradicional es caro: la TEA bancaria a la pequeña y
 \begin{itemize}
   \item \cifra{solicitudesHTTP} solicitudes con HTTP 200, pausas de 3 s y crudos sin editar
   \item Cobertura del portal: \cifra{coberturaPct}~\%; SHA-256, pruebas y auditoría con cotejo en vivo
-  \item Indicadores: IHH, tasa de colocación, monto medio, ingresos/monto y ROA anualizado
-  \item Contrastes: U de Mann-Whitney con cortes placebo (H1), prueba \textit{z} y Fisher (H2), Spearman en diferencias (E1); semilla \cifra{semilla}
+  \item Contrastes: U de Mann-Whitney con cortes ficticios (H1), prueba \textit{z} y Fisher (H2), Spearman en diferencias (E1)
 \end{itemize}
+
+\textbf{Muestra por variable.} Cada variable de un modelo tiene al menos 1\,000 observaciones o 60 periodos: \dato{69 meses} en las series de tiempo, \dato{\cifra{logN} proyectos} en el logit y \dato{\cifra{empRoaN} empresas-trimestre} en la rentabilidad.
+
+\textbf{Estrategia econométrica.} (1)~Raíz unitaria: ADF, KPSS y Zivot-Andrews. (2)~Largo plazo: Engle-Granger, Johansen y Granger. (3)~Corto plazo en diferencias con errores HAC, impulsos y diagnósticos. (4)~Reforma: regresión segmentada con cortes ficticios. (5)~Colocación: logit. (6)~Rentabilidad: panel de empresas.
 
 % ---------------------------------------------------------------- Resultados
 \seccion{Resultados}
@@ -156,14 +162,34 @@ Mientras tanto, el crédito tradicional es caro: la TEA bancaria a la pequeña y
 
 \textbf{Plataformas.} La líder cerró 2025 con activos de S/~\cifra{activoLider2025} mil y un ROA anualizado de \dato{\cifra{roaLider2025}~\%}; las demás perdieron en \cifra{aniosOtrasPerdida} de \cifra{aniosOtras} años. Sus ingresos equivalen al \dato{\cifra{costoMediana}~\%} del monto financiado: lo que retiene la plataforma, no la tasa del receptor.
 
-\textbf{Acceso (H2).} Colocación de \cifra{colocacionEmp}~\% en proyectos empresariales y \cifra{colocacionPer}~\% en personales ($z=\cifra{hDosZ}$), pero cada tipo se concentra en una plataforma: dentro de la líder la diferencia no es significativa (Fisher, $p\cifra{hDosFisherPRel}$).
+\textbf{Acceso (H2).} Colocación de \cifra{colocacionEmp}~\% en proyectos empresariales y \cifra{colocacionPer}~\% en personales. En el logit, la razón de momios baja de \dato{\cifra{logUnoOr}} a \dato{\cifra{logTresOr}} ($p\cifra{logTresPRel}$) al controlar la plataforma y el año: buena parte de la ventaja corresponde a ambos.
 
-\textbf{Reforma (H1).} La mediana mensual subió de S/~\cifra{hUnoMedianaAntes} M a S/~\cifra{hUnoMedianaDespues} M ($p\cifra{hUnoPRel}$), pero los \cifra{placeboN} cortes ficticios previos también son significativos y el crecimiento interanual bajó de \cifra{interanualAntes}~\% a \cifra{interanualDespues}~\%: la diferencia no es atribuible a la norma.
+\textbf{Reforma (H1).} La mediana mensual subió de S/~\cifra{hUnoMedianaAntes} M a S/~\cifra{hUnoMedianaDespues} M ($p\cifra{hUnoPRel}$), pero ya venía creciendo: en la regresión segmentada el nivel cae (\cifra{refAsinhNivel}; HAC, $p\cifra{refAsinhNivelPRel}$; AR(1), $p\cifra{refArNivelPRel}$), en S/ millones no cambia y \cifra{refPlacebos} de \cifra{refPlacebosN} cortes ficticios también son significativos. \textbf{No hay evidencia de un efecto positivo.}
 
-{\centering\includegraphics[width=\linewidth]{f3_tasas_credito_tradicional.pdf}\par
-\captionof{figure}{\cifra{tituloF3}. Datos del BCRP (BCRPData).}\par}
+\begin{minipage}{\linewidth}\centering\includegraphics[width=\linewidth]{f5_reforma_segmentada.pdf}\par
+\captionof{figure}{\cifra{tituloF5}. Datos de la SMV (SIMV) y del BCRP.}
+\end{minipage}\par
 
-\textbf{Crédito tradicional (E1).} Las tasas son altas y la bancaria pyme saltó \cifra{saltoTEA} p.~p. en marzo de 2025; los cambios del FPF no se asocian con los de las tasas (\cifra{eUnoN} comparadores, $p_{\min}=\cifra{eUnoPMin}$). Sin tasa ni plazo por operación, \textbf{el precio del FPF no es comparable}.
+\textbf{Crédito tradicional (E1).} Con 69 meses no hay cointegración robusta entre el monto del FPF y las tasas, y en el corto plazo estas \textbf{no son significativas en conjunto}. Con solo los \cifra{mesesActividadFPF} meses activos, Engle-Granger rechaza en bancos pyme ($p\cifra{egBancosActivosPRel}$) y la prueba conjunta también ($p\cifra{cpActivosWaldPRel}$): el resultado depende de la muestra. Sin tasa ni plazo por operación, \textbf{el precio del FPF no es comparable}.
+
+{\small\centering
+\begin{tabularx}{\linewidth}{@{}X>{\raggedleft\arraybackslash}p{7.4cm}>{\raggedright\arraybackslash}p{6.3cm}@{}}
+  \toprule
+  Prueba & Estadístico o $p$ & Resultado \\
+  \midrule
+  ADF, \cifra{raizN} series & $p\geq\cifra{raizNivelIpcP}$ en nivel & Todas I(1) \\
+  Engle-Granger, pares & $p_{\min}=\cifra{egParesPMin}$ & No cointegran \\
+  Johansen, sistema & $\cifra{johSistema}<\cifra{johSistemaVC}$ & No cointegran \\
+  Granger, ambos sentidos & $p_{\min}=\cifra{grangerPMin}$ & No significativa \\
+  Corto plazo, las 4 tasas & $p\cifra{cpConWaldPRel}$ & No significativa \\
+  Reforma, nivel (asinh) & $\cifra{refAsinhNivel}$ ($p\cifra{refAsinhNivelPRel}$) & Sin alza \\
+  Logit, razón de momios & $\cifra{logTresOr}$ ($p\cifra{logTresPRel}$) & Significativa \\
+  ROA frente a otras & $\cifra{empRoa}$ ($p\cifra{empRoaPRel}$) & No significativa \\
+  \bottomrule
+\end{tabularx}
+\captionof{table}{Pruebas econométricas principales}\par}
+
+\textbf{Rentabilidad.} El ROA trimestral mediano es \cifra{empRoaMedFpf}~\% en las plataformas y \cifra{empRoaMedResto}~\% en otros intermediarios supervisados; al controlar el tamaño, la diferencia \textbf{no es significativa} ($p\cifra{empRoaPRel}$). Con \cifra{empRoaFpf} plataformas, la prueba tiene poca potencia.
 
 % ---------------------------------------------------------------- Conclusiones
 \vspace{0.8em}
@@ -172,8 +198,8 @@ Mientras tanto, el crédito tradicional es caro: la TEA bancaria a la pequeña y
   \vspace{0.4em}
   \begin{enumerate}
     \item El FPF creció de S/~\cifra{monto2022} M a S/~\cifra{monto2025} M al año, pero \textbf{una plataforma concentra casi todo}.
-    \item Es un mercado de \textbf{préstamos a empresas} con montos crecientes; solo la plataforma líder es rentable.
-    \item Las diferencias por receptor reflejan el \textbf{modelo de negocio}, y el aumento tras 2025 \textbf{no es atribuible} a la norma.
+    \item Con 69 meses \textbf{no hay una relación robusta} con las tasas del crédito tradicional, ni de largo ni de corto plazo.
+    \item La norma de 2025 \textbf{no muestra un efecto positivo}, y la ventaja de los proyectos empresariales se reduce al controlar la plataforma y el año.
     \item Sin tasa ni plazo por operación \textbf{no puede compararse el precio}: la SMV debería publicarlos.
   \end{enumerate}
 \end{tcolorbox}
@@ -185,7 +211,7 @@ Mientras tanto, el crédito tradicional es caro: la TEA bancaria a la pequeña y
 \fullcite{smvodata2026}\par\vspace{0.4em}
 \fullcite{smvsimv2026}\par}
 \vspace{0.6em}
-\begin{minipage}[c]{0.38\linewidth}\centering\qrcode[height=6.2cm]{\repositorio}\end{minipage}\hfill
+\begin{minipage}[c]{0.38\linewidth}\centering\qrcode[height=7cm]{\repositorio}\end{minipage}\hfill
 \begin{minipage}[c]{0.58\linewidth}\RaggedRight\small
   \textbf{Repositorio de extracción}: código en Python (API y \textit{scraping}), datos crudos y procesados, tablas, figuras y artículo.\par\vspace{0.3em}
   {\footnotesize\url{https://github.com/Diego-Aliaga-Damian/finanzas1-u2-crowdfunding-peru}}

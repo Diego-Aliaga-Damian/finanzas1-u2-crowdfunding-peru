@@ -298,7 +298,7 @@ h1, h2, h3 {{ letter-spacing: -.02em; }}
 .fc-kpi:hover {{ transform: translateY(-3px); box-shadow: var(--fc-sombra-hover); }}
 .fc-kpi:hover::after {{ transform: scale(1.25); }}
 .fc-kpi-top {{ display:flex; justify-content:space-between; align-items:flex-start; gap:6px; }}
-.fc-kpi-ic {{ width:36px; height:36px; border-radius:11px; display:inline-flex; align-items:center; justify-content:center;
+.fc-kpi-ic {{ width:36px; height:36px; flex-shrink:0; border-radius:11px; display:inline-flex; align-items:center; justify-content:center;
   background: var(--a); color:#fff; box-shadow: 0 6px 14px -6px var(--a); }}
 .fc-kpi-et {{ font-size:.78rem; font-weight:600; color:{TINTA_2}; margin-top:10px; line-height:1.25; }}
 .fc-kpi-va {{ font-size:1.5rem; font-weight:800; color:{TINTA}; letter-spacing:-.025em; line-height:1.2; margin-top:2px; }}
@@ -417,8 +417,11 @@ h1, h2, h3 {{ letter-spacing: -.02em; }}
   .fc-hero-chips {{ align-items:flex-start; flex-direction:row; flex-wrap:wrap; }}
   .fc-brand {{ font-size: 1.3rem; }}
   .fc-kpi-va {{ font-size: 1.3rem; }}
-  [data-testid="stMainBlockContainer"] {{ padding-top: 1.6rem; }}
 }}
+/* con el menú cerrado (celular o plegado), el logo y la flecha de Streamlit quedan fijos arriba: se les deja su franja */
+.stApp:has([data-testid="stExpandSidebarButton"]) [data-testid="stMainBlockContainer"] {{ padding-top: 4.6rem; }}
+.stApp:has([data-testid="stExpandSidebarButton"]) [data-testid="stHeader"] {{
+  background: color-mix(in srgb, {FONDO} 84%, transparent); backdrop-filter: blur(10px); }}
 </style>
 """
 

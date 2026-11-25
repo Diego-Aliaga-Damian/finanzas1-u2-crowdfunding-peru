@@ -1,0 +1,7 @@
+bloque,unidad,variables,datos_por_variable,criterio,minimo_por_variable,datos_totales,minimo_total,cumple
+Series mensuales del sistema (pruebas de series de tiempo),mes,7,69,periodos,60,483,420,True
+Celdas del portal SIMV (plataforma-mes-receptor),celda,3,1122,observaciones,1000,3366,3000,True
+Proyectos publicados (logit de colocación),proyecto,4,1519,observaciones,1000,6076,4000,True
+Estados financieros de todas las empresas supervisadas,empresa-trimestre,5,5996,observaciones,1000,29980,5000,True
+Estados financieros de intermediarios comparables,empresa-trimestre,5,1667,observaciones,1000,8335,5000,True
+Estados financieros solo de las plataformas de FPF,plataforma-trimestre,5,47,observaciones,1000,235,5000,False

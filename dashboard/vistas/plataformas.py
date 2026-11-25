@@ -122,6 +122,6 @@ def pagina() -> None:
             "Ingresos (S/ miles)": t3f.ingresos_miles.map(C.num), "Utilidad neta (S/ miles)": t3f.utilidad_miles.map(C.num),
             "ROA anualizado (%)": t3f.roa_pct.map(lambda x: C.num(x, 1)),
             "Ingresos / monto (%)": t3f.costo_intermediacion_pct.map(lambda x: C.num(x, 1))}), hide_index=True)
-        T.nota("Fuente: SMV (API OData y SIMV). Tabla 3 del artículo. En los registros hechos en soles en lugar de miles, la "
+        T.nota("Fuente: SMV (API OData y SIMV). Tabla 11 del artículo. En los registros hechos en soles en lugar de miles, la "
                "escala se corrigió solo si la empresa tenía trimestres de referencia; si no, los saldos se omiten (—). "
                "Ingresos / monto solo se calcula en años con al menos S/ 1 M financiados.")

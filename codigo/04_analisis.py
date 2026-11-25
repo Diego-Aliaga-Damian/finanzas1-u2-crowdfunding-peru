@@ -4,14 +4,14 @@
 # Fecha de extracción: 2026-11-07 (censo) y 2026-11-08 (reanudación)
 """04 — Análisis financiero y estadístico: tablas y figuras del artículo (numeral 2.4.2).
 
-Lee EXCLUSIVAMENTE datos_procesados/datos_procesados_2024200481M.csv y escribe en salidas/:
-    tablas/   T1-T8 en CSV (valores sin redondear) y en LaTeX (para \\input en el artículo)
-    figuras/  F1-F4 en PNG (300 ppp) y PDF (vectorial); cada figura tiene su tabla de datos en CSV
+Lee EXCLUSIVAMENTE datos_procesados/ (datos_procesados_2024200481M.csv y su complemento _empresas.csv) y escribe en salidas/:
+    tablas/   T1-T15 en CSV (valores sin redondear) y en LaTeX (para \\input en el artículo)
+    figuras/  F1-F5 en PNG (300 ppp) y PDF (vectorial); cada figura tiene su tabla de datos en CSV
     resultados_04.json      cifras clave citadas en el texto del artículo
     manifiesto_salidas.csv  SHA-256 de cada salida (la auditoría verifica que se regeneren iguales)
 
 Objetivos (diseño de la Fase II): OE1 oferta · OE2 plataformas · OE3 acceso y reforma (H1, H2)
-· OE4 comparación con el crédito tradicional (E1, exploratoria) · sensibilidad.
+· OE4 comparación con el crédito tradicional (E1, exploratoria) · sensibilidad · pruebas econométricas (econometria.py).
 
 Supuestos declarados (se discuten en el artículo):
     S1. `ingresos_totales_miles` y `utilidad_neta_miles` son flujos del trimestre, no acumulados del año: el
@@ -46,12 +46,14 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
+import econometria as EC
 from comun import CODIGO_MATRICULA, PROCESADOS, SALIDAS, configurar_log, relativa, sha256_archivo
 
 # ============================================================================
 # PARÁMETROS
 # ============================================================================
 CSV_PROCESADO = PROCESADOS / f"datos_procesados_{CODIGO_MATRICULA}.csv"
+CSV_EMPRESAS = PROCESADOS / f"datos_procesados_{CODIGO_MATRICULA}_empresas.csv"
 DIR_TABLAS = SALIDAS / "tablas"
 DIR_FIGURAS = SALIDAS / "figuras"
 ARCHIVO_RESULTADOS = SALIDAS / "resultados_04.json"
@@ -149,7 +151,8 @@ def num(x, dec: int = 0) -> str:
     """Número con punto decimal y espacio fino de miles (recomendación de la RAE); vacío -> '—'."""
     if x is None or (isinstance(x, float) and np.isnan(x)) or pd.isna(x):
         return "—"
-    return f"{x:,.{dec}f}".replace(",", "\u2009")
+    t = f"{x:,.{dec}f}".replace(",", "\u2009")
+    return t.lstrip("-") if re.fullmatch(r"-0\.?0*", t) else t     # sin «−0.000»
 
 
 def columnas_x(alineacion: str, pesos: list[float] | None) -> str:
@@ -225,7 +228,8 @@ TITULOS_FIGURAS = {
     "f1_monto_mensual_por_plataforma": "Monto financiado mensual mediante plataformas de financiamiento participativo financiero, por plataforma (S/ millones corrientes)",
     "f2_publicados_financiados_colocacion": "Proyectos publicados y financiados por mes y tasa de colocación móvil de 12 meses",
     "f3_tasas_credito_tradicional": "Tasas activas promedio del crédito tradicional en moneda nacional por segmento",
-    "f4_costo_intermediacion_implicito": "Ingresos trimestrales de la plataforma líder como porcentaje del monto financiado en el trimestre"}
+    "f4_costo_intermediacion_implicito": "Ingresos trimestrales de la plataforma líder como porcentaje del monto financiado en el trimestre",
+    "f5_reforma_segmentada": "Monto mensual financiado y regresión segmentada en la modificación del reglamento"}
 
 
 # ============================================================================
@@ -729,7 +733,156 @@ def t8_sensibilidad(d: pd.DataFrame, m: pd.DataFrame, log) -> None:
 
 
 # ============================================================================
-# BLOQUE 8 — Resultados, manifiesto y ejecución
+# BLOQUE 8 — Pruebas econométricas (T9-T15 y F5); los cálculos están en econometria.py
+# ============================================================================
+def p_txt(p: float, kpss: bool = False) -> str:
+    """Valor p; el de KPSS está acotado por sus tablas a [0.01; 0.10]."""
+    if pd.isna(p):
+        return "—"
+    if kpss and p <= 0.01:
+        return "≤\u00a00.010"
+    if kpss and p >= 0.10:
+        return "≥\u00a00.100"
+    return "<\u00a00.001" if p < 0.001 else num(p, 3)
+
+
+def redondo(x):
+    """Copia del objeto con los decimales recortados, para resultados_04.json."""
+    if isinstance(x, dict):
+        return {k: redondo(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [redondo(v) for v in x]
+    if isinstance(x, (float, np.floating)):
+        return None if np.isnan(x) else float(f"{float(x):.6g}")
+    return x.item() if isinstance(x, np.generic) else x
+
+
+def filas_modelos(coefs: pd.DataFrame, orden: list[str], dec: int = 3) -> list[list[str]]:
+    """Filas «variable · coef. · p» de varios modelos en columnas; «—» si la variable no está en el modelo."""
+    filas = []
+    for v in orden:
+        g = coefs[coefs.variable == v].set_index("modelo")
+        filas.append([g.nombre.iloc[0]] + [x for k in sorted(coefs.modelo.unique())
+                                           for x in ((num(g.coef[k], dec), p_txt(g.p[k])) if k in g.index else ("—", "—"))])
+    return filas
+
+
+def pruebas_econometricas(d: pd.DataFrame, m: pd.DataFrame, log) -> None:
+    empresas = EC.ajustar_escala_fpf(pd.read_csv(CSV_EMPRESAS, dtype={"rpj": str, "ruc": str}), UMBRAL_ESCALA_EEFF)
+    s = EC.series_mensuales(m)
+    proyectos = EC.proyectos_publicados(d, resultados["plataforma_lider"])
+    ec: dict = {"sha256_base_empresas": sha256_archivo(CSV_EMPRESAS)}
+
+    # T9: verificación del tamaño de muestra por variable
+    t9 = EC.verificacion_muestra(d, s, proyectos, empresas)
+    f = pd.DataFrame({"Bloque de datos": t9.bloque, "Unidad": t9.unidad, "Variables": t9.variables.map(num),
+                      "Datos por variable": t9.datos_por_variable.map(num),
+                      "Mínimo por variable": [f"{num(a)} {'periodos' if b == 'periodos' else 'obs.'}" for a, b in zip(t9.minimo_por_variable, t9.criterio)],
+                      "Datos totales": t9.datos_totales.map(num), "Mínimo total": t9.minimo_total.map(num),
+                      "¿Cumple?": np.where(t9.cumple, "Sí", "No")})
+    guardar_tabla(t9, f, "t9_verificacion_muestra", log, "llrrrrrc", [2.6, 1.3, 0.8, 0.8, 0.9, 0.8, 0.8, 0.7])
+    ec["muestra"] = t9.to_dict("records")
+
+    # T10: raíz unitaria
+    t10 = EC.raiz_unitaria(s)
+    f = pd.DataFrame({"Variable": t10.nombre, "ADF en nivel": t10.adf_nivel.map(lambda x: num(x, 2)), "p": t10.adf_nivel_p.map(p_txt),
+                      "ADF en diferencia": t10.adf_dif.map(lambda x: num(x, 2)), "p ": t10.adf_dif_p.map(p_txt),
+                      "KPSS en nivel: p": t10.kpss_nivel_p.map(lambda p: p_txt(p, True)),
+                      "KPSS en diferencia: p": t10.kpss_dif_p.map(lambda p: p_txt(p, True)),
+                      "Zivot-Andrews: p (quiebre)": [f"{p_txt(p)} ({q})" for p, q in zip(t10.za_p, t10.za_quiebre)],
+                      "Conclusión": t10.conclusion})
+    guardar_tabla(t10, f, "t10_raiz_unitaria", log, "lrrrrrrrl", [1.75, 0.75, 0.8, 0.85, 0.95, 0.95, 0.95, 1.1, 1.2])
+    ec["raiz_unitaria"] = t10.set_index("variable").to_dict("index")
+
+    # T11: cointegración y Granger
+    t11, extra = EC.cointegracion(s)
+    f = pd.DataFrame({"Relación": t11.relacion, "Engle-Granger": t11.engle_granger.map(lambda x: num(x, 2)), "p": t11.engle_granger_p.map(p_txt),
+                      "p con 52 meses": t11.engle_granger_p_52.map(p_txt), "Johansen: traza": t11.johansen_traza.map(lambda x: num(x, 2)),
+                      "Valor crítico 5 %": t11.johansen_vc5.map(lambda x: num(x, 2)), "Granger TEA a FPF: p": t11.granger_tasa_a_fpf_p.map(p_txt),
+                      "Granger FPF a TEA: p": t11.granger_fpf_a_tasa_p.map(p_txt), "Conclusión": t11.conclusion})
+    guardar_tabla(t11, f, "t11_cointegracion", log, "lrrrrrrrl", [1.95, 0.85, 0.75, 0.95, 0.85, 0.8, 0.9, 0.9, 1.2])
+    ec["cointegracion"] = {"relaciones": t11.set_index("relacion").to_dict("index"), **extra}
+
+    # T12: corto plazo con errores HAC
+    c12, g12 = EC.corto_plazo(s, REFORMA)
+    orden = list(dict.fromkeys(c12.variable))
+    g = g12.set_index("modelo")
+    filas = filas_modelos(c12, orden)
+    for etiqueta, col, fmt in (("Observaciones", "n", num), ("R²", "r2", lambda x: num(x, 3)), ("R² ajustado", "r2_ajustado", lambda x: num(x, 3)),
+                               ("Wald conjunta de las cuatro TEA (p)", "wald_tasas_p", p_txt), ("Breusch-Godfrey, 4 rezagos (p)", "breusch_godfrey_p", p_txt),
+                               ("Breusch-Pagan (p)", "breusch_pagan_p", p_txt), ("Jarque-Bera (p)", "jarque_bera_p", p_txt),
+                               ("RESET de Ramsey (p)", "reset_p", p_txt), ("CUSUM (p)", "cusum_p", p_txt)):
+        filas.append([etiqueta] + [x for k in g.index for x in (fmt(g.loc[k, col]), "")])
+    f = pd.DataFrame(filas, columns=["Variable", "(1) Sin impulsos", "p", "(2) Con impulsos", "p ", "(3) Solo meses con actividad", "p  "])
+    raw = c12.merge(g12, on="modelo")
+    guardar_tabla(raw, f, "t12_corto_plazo_hac", log, "lrrrrrr", [2.6, 1.0, 0.75, 1.0, 0.75, 1.0, 0.75])
+    ec["corto_plazo"] = {str(k): {"coef": c12[c12.modelo == k].set_index("variable")[["coef", "ee", "p", "p_mco"]].to_dict("index"), **g.loc[k].to_dict()} for k in g.index}
+
+    # T13 y F5: reforma (regresión segmentada)
+    c13, g13, extra13, ajuste = EC.reforma_segmentada(s, REFORMA, CORTES_PLACEBO)
+    g = g13.set_index("modelo")
+    filas = filas_modelos(c13, list(dict.fromkeys(c13.variable)))
+    for etiqueta, col, fmt in (("Observaciones (meses)", "n", num), ("R²", "r2", lambda x: num(x, 3)),
+                               ("Wald: sin cambio de nivel ni de pendiente (p)", "wald_reforma_p", p_txt)):
+        filas.append([etiqueta] + [x for k in g.index for x in (fmt(g.loc[k, col]), "")])
+    filas.append([f"Cortes ficticios significativos (de {len(CORTES_PLACEBO)})", num(extra13["placebos_significativos"]), "", "—", "", "—", ""])
+    f = pd.DataFrame(filas, columns=["Término", "(1) asinh, HAC", "p", "(2) asinh, MCG AR(1)", "p ", "(3) S/ millones, HAC", "p  "])
+    guardar_tabla(c13.merge(g13.drop(columns="titulo"), on="modelo"), f, "t13_reforma_segmentada", log, "lrrrrrr", [2.4, 1.0, 0.75, 1.0, 0.75, 1.0, 0.75])
+    ec["reforma"] = {**extra13, **{str(k): {"coef": c13[c13.modelo == k].set_index("variable")[["coef", "ee", "p"]].to_dict("index"), **g.loc[k].to_dict()} for k in g.index}}
+    f5_reforma(ajuste, log)
+
+    # T14: logit de colocación
+    c14, g14 = EC.logit_colocacion(proyectos)
+    g = g14.set_index("modelo")
+    filas = []
+    for v in ("empresarial", "lider", "anio"):
+        h = c14[c14.variable == v].set_index("modelo")
+        filas.append([h.nombre.iloc[0]] + [x for k in g.index for x in ((f"{num(h.razon[k], 2)} [{num(h.razon_inf[k], 2)}; {num(h.razon_sup[k], 2)}]", p_txt(h.p[k]))
+                                                                         if k in h.index else ("—", "—"))])
+    for etiqueta, fmt in (("Efecto marginal de ser empresarial (p. p.)", lambda r: f"{num(r.efecto_marginal_pp, 1)} [{num(r.efecto_inf_pp, 1)}; {num(r.efecto_sup_pp, 1)}]"),
+                          ("Observaciones (proyectos)", lambda r: num(r.n)), ("Pseudo R² de McFadden", lambda r: num(r.pseudo_r2, 3)),
+                          ("Razón de verosimilitud (p)", lambda r: p_txt(r.lr_p)), ("Área bajo la curva ROC", lambda r: num(r.auc, 3))):
+        filas.append([etiqueta] + [x for k in g.index for x in (fmt(g.loc[k]), "")])
+    f = pd.DataFrame(filas, columns=["Variable", "(1) Receptor", "p", "(2) + plataforma", "p ", "(3) + plataforma y año", "p  "])
+    guardar_tabla(c14.merge(g14, on="modelo"), f, "t14_logit_colocacion", log, "lrrrrrr", [1.75, 1.6, 0.75, 1.6, 0.7, 1.6, 0.7])
+    ec["logit"] = {str(k): {"coef": c14[c14.modelo == k].set_index("variable")[["coef", "ee", "p", "razon", "razon_inf", "razon_sup"]].to_dict("index"), **g.loc[k].to_dict()} for k in g.index}
+
+    # T15: rentabilidad de las plataformas frente a otras empresas supervisadas
+    c15, g15 = EC.rentabilidad_empresas(empresas)
+    g = g15.set_index("modelo")
+    filas = filas_modelos(c15, list(dict.fromkeys(c15.variable)), 2)
+    for etiqueta, fmt in (("Mediana de las plataformas de FPF (%)", lambda r: num(r.mediana_fpf, 1)), ("Mediana de las demás (%)", lambda r: num(r.mediana_resto, 1)),
+                          ("Observaciones (empresa-trimestre)", lambda r: num(r.n)), ("Empresas (de FPF)", lambda r: f"{num(r.empresas)} ({num(r.empresas_fpf)})"),
+                          ("R²", lambda r: num(r.r2, 3))):
+        filas.append([etiqueta] + [x for k in g.index for x in (fmt(g.loc[k]), "")])
+    f = pd.DataFrame(filas, columns=["Variable", "(1) ROA, intermediarios", "p", "(2) ROA, todas", "p ", "(3) Patrimonio/activo, intermediarios", "p  "])
+    guardar_tabla(c15.merge(g15.drop(columns="titulo"), on="modelo"), f, "t15_rentabilidad_empresas", log, "lrrrrrr", [2.1, 1.1, 0.75, 1.0, 0.7, 1.2, 0.7])
+    ec["empresas"] = {str(k): {"coef": c15[c15.modelo == k].set_index("variable")[["coef", "ee", "p"]].to_dict("index"), **g.loc[k].to_dict()} for k in g.index}
+    resultados["econometria"] = redondo(ec)
+
+
+def f5_reforma(a: pd.DataFrame, log) -> None:
+    periodos = list(a.index)
+    x, corte = np.arange(len(a)), periodos.index(REFORMA)
+    fig, ejes = plt.subplots(1, 2, figsize=(7.2, 2.9), sharey=True)
+    for eje, ajuste, sin, titulo in ((ejes[0], "ajuste_asinh", "sin_reforma_asinh", "A. Escala asinh (modelo 1)"),
+                                     (ejes[1], "ajuste_lineal", "sin_reforma_lineal", "B. Escala lineal (modelo 3)")):
+        eje.plot(x, a.monto_real, "o", color="#8a94a6", markersize=2.6, label="Observado")
+        eje.plot(x[:corte], a[ajuste].iloc[:corte], color="#2a78d6", linewidth=1.8, label="Ajuste antes")
+        eje.plot(x[corte:], a[ajuste].iloc[corte:], color="#1baf7a", linewidth=1.8, label="Ajuste después")
+        eje.plot(x[corte:], a[sin].iloc[corte:], color="#eb6834", linewidth=1.4, linestyle="--", label="Tendencia previa")
+        eje.axvline(corte - 0.5, color=TINTA_2, linewidth=0.8)
+        eje.set_title(titulo)
+        etiquetas_meses(eje, periodos, 12)
+        eje.set_ylim(-0.6, 32)
+    ejes[0].set_ylabel("S/ millones de dic. 2021")
+    ejes[0].legend(loc="upper left", fontsize=7)
+    fig.tight_layout()
+    guardar_figura(fig, "f5_reforma_segmentada", a, log)
+
+
+# ============================================================================
+# BLOQUE 9 — Resultados, manifiesto y ejecución
 # ============================================================================
 def escribir_resultados_y_manifiesto(log) -> None:
     ARCHIVO_RESULTADOS.write_text(json.dumps(resultados, ensure_ascii=False, indent=2, default=str), encoding="utf-8", newline="\n")
@@ -760,6 +913,7 @@ def main() -> int:
     t6_comparabilidad(log)
     t7_comparacion_segmentos(d, m, log)
     t8_sensibilidad(d, m, log)
+    pruebas_econometricas(d, m, log)
     escribir_resultados_y_manifiesto(log)
     log.info("FIN | 04 completado | salidas=%d", len(set(salidas_generadas)))
     return 0

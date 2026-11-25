@@ -2,7 +2,7 @@
 % 2024200481M
 % Tema 96: Fintech y financiamiento participativo (crowdfunding) en el Perú: oferta y condiciones
 % Diapositivas (máximo 10, consigna 2.5). Las cifras usan \cifra{...} y las figuras salen de ../../salidas/figuras.
-% BORRADOR ASISTIDO POR IA (2026-11-12): ensayar la exposición y ajustar el texto con tus palabras.
+% BORRADOR ASISTIDO POR IA (2026-11-12 y 2026-11-25, pruebas econométricas): ensayar la exposición y ajustar el texto con tus palabras.
 
 % ---------------------------------------------------------------- 1. Portada
 % La franja inferior y los logos van en el fondo de la diapositiva (plantilla «background»): así se ubican bien
@@ -43,69 +43,35 @@
 \end{frame}
 }
 
-% ---------------------------------------------------------------- 2. Contexto y problema
-\begin{frame}{Contexto y problema de investigación}
+% ---------------------------------------------------------------- 2. Problema, objetivo e hipótesis
+\begin{frame}{Problema, objetivo e hipótesis}
   \begin{columns}[t]
-    \begin{column}{0.52\textwidth}
-      \rotulo{¿Por qué estudiar el financiamiento participativo?}\par\vspace{0.15cm}
-      \begin{itemize}\small
+    \begin{column}{0.47\textwidth}
+      \rotulo{¿Por qué estudiarlo?}\par\vspace{0.1cm}
+      \begin{itemize}\footnotesize
         \item El \textbf{financiamiento participativo financiero} (FPF) conecta, mediante una plataforma, a quienes buscan financiamiento con inversionistas.
-        \item Está regulado desde el D.~U. N.\textsuperscript{o}~013-2020 y el reglamento de la SMV (2021), modificado en noviembre de 2025.
-        \item El crédito tradicional es caro: la TEA bancaria a la pequeña y microempresa (hasta 360 días) subió de \dato{\cifra{teaBcosPyme2022}~\%} en 2022 a \dato{\cifra{teaBcosPyme2026}~\%} en 2026.
+        \item Regulado por el D.~U. N.\textsuperscript{o}~013-2020 y el reglamento de la SMV, modificado en noviembre de 2025.
+        \item El crédito tradicional es caro: la TEA bancaria a pymes (hasta 360 días) subió de \dato{\cifra{teaBcosPyme2022}~\%} en 2022 a \dato{\cifra{teaBcosPyme2026}~\%} en 2026.
       \end{itemize}
-    \end{column}
-    \begin{column}{0.44\textwidth}
       \begin{tarjeta}{Problema}
-        Solo circulan cifras anuales sueltas de prensa: no hay una caracterización de la oferta con datos oficiales y reproducibles.
+        Solo circulan cifras anuales de prensa: falta una caracterización con datos oficiales y reproducibles.
       \end{tarjeta}
-      \begin{destacada}{Pregunta de investigación}
-        ¿Cómo es la oferta de FPF en el Perú entre 2022 y 2026 y cómo se comparan sus condiciones con las del crédito tradicional?
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \begin{destacada}{Objetivo}
+        Caracterizar la oferta de FPF en el Perú (2022-2026) y compararla con el crédito tradicional.
       \end{destacada}
+      \begin{tarjeta}{Hipótesis}
+        \linea{H1 · Reforma}{El monto mensual es mayor tras la modificación del reglamento.}
+        \linea{H2 · Acceso}{La colocación difiere entre proyectos empresariales y personales.}
+        \linea{E1 · Relación con las tasas}{¿El monto del FPF y las tasas tradicionales comparten una relación de largo o de corto plazo?}
+      \end{tarjeta}
     \end{column}
   \end{columns}
 \end{frame}
 
-% ---------------------------------------------------------------- 3. Objetivos e hipótesis
-\begin{frame}{Objetivos e hipótesis}
-  \begin{destacada}{Objetivo general}
-    Caracterizar la oferta de financiamiento participativo financiero en el Perú (2022-2026) y comparar sus condiciones observables con las del crédito tradicional.
-  \end{destacada}
-  \vspace{-0.1cm}
-  \begin{columns}[t]
-    \begin{column}{0.235\textwidth}\begin{tarjeta}[equal height group=oe, fonttitle=\bfseries\scriptsize]{OE1 · Oferta}\scriptsize Plataformas, proyectos, montos y concentración.\end{tarjeta}\end{column}
-    \begin{column}{0.235\textwidth}\begin{tarjeta}[equal height group=oe, fonttitle=\bfseries\scriptsize]{OE2 · Plataformas}\scriptsize Situación financiera y costo de intermediación.\end{tarjeta}\end{column}
-    \begin{column}{0.235\textwidth}\begin{tarjeta}[equal height group=oe, fonttitle=\bfseries\scriptsize]{OE3 · Acceso}\scriptsize Colocación y monto por receptor, antes y después de 2025.\end{tarjeta}\end{column}
-    \begin{column}{0.235\textwidth}\begin{tarjeta}[equal height group=oe, fonttitle=\bfseries\scriptsize]{OE4 · Comparación}\scriptsize Frente al crédito tradicional y límites de la comparación.\end{tarjeta}\end{column}
-  \end{columns}
-  \vspace{0.12cm}
-  \begin{columns}[t]
-    \begin{column}{0.32\textwidth}\scriptsize\dato{H1}\ El monto mensual es mayor tras la modificación del reglamento.\end{column}
-    \begin{column}{0.32\textwidth}\scriptsize\dato{H2}\ La colocación difiere entre proyectos empresariales y personales.\end{column}
-    \begin{column}{0.32\textwidth}\scriptsize\dato{E1}\ ¿Se asocian los cambios del monto con los de las tasas tradicionales?\end{column}
-  \end{columns}
-\end{frame}
-
-% ---------------------------------------------------------------- 4. Fuentes de datos y extracción
-\begin{frame}{Fuentes de datos y extracción automatizada}
-  \begin{columns}[t]
-    \begin{column}{0.315\textwidth}
-      \begin{tarjeta}[equal height group=fu, halign title=center]{BCRP}\centering
-        {\color{rojo}\bfseries BCRPData · API REST}\par\scriptsize 10 series mensuales: TEA pyme y consumo de bancos y cajas, TAMN e IPC\par\vspace{0.05cm}\textbf{JSON}
-      \end{tarjeta}
-    \end{column}
-    \begin{column}{0.315\textwidth}
-      \begin{tarjeta}[equal height group=fu, halign title=center]{SMV}\centering
-        {\color{rojo}\bfseries OData · API}\par\scriptsize Estados financieros de las sociedades administradoras, 23 trimestres\par\vspace{0.05cm}\textbf{JSON}
-      \end{tarjeta}
-    \end{column}
-    \begin{column}{0.315\textwidth}
-      \begin{tarjeta}[equal height group=fu, halign title=center]{SMV}\centering
-        {\color{rojo}\bfseries SIMV · \textit{scraping}}\par\scriptsize Proyectos y montos por plataforma y mes: \cifra{plataformasAutorizadas} plataformas × 69 meses\par\vspace{0.05cm}\textbf{HTML (ASP.NET)}
-      \end{tarjeta}
-    \end{column}
-  \end{columns}
-  \vspace{0.15cm}
-  \rotulo{Flujo de trabajo}\par\vspace{0.1cm}
+% ---------------------------------------------------------------- 3. Datos y verificación de la muestra
+\begin{frame}{Datos, extracción y verificación de la muestra}
   \centering
   \begin{tikzpicture}[
       paso/.style={draw=negro, fill=white, rounded corners=2pt, align=center, font=\tiny, minimum height=0.85cm, text width=2.15cm, inner sep=2pt},
@@ -114,14 +80,37 @@
     \node[clave] (a) {\textbf{Fuentes oficiales}\\BCRP · SMV};
     \node[paso, right=0.32cm of a] (b) {\textbf{01 y 02 · Python}\\API y \textit{scraping}};
     \node[paso, right=0.32cm of b] (c) {\textbf{03 · Limpieza}\\panel \cifra{filasPanel} × \cifra{columnasPanel}};
-    \node[paso, right=0.32cm of c] (d) {\textbf{04 · Análisis}\\8 tablas y 4 figuras};
+    \node[paso, right=0.32cm of c] (d) {\textbf{04 · Análisis}\\15 tablas y 5 figuras};
     \node[clave, fill=rojo, draw=rojo, right=0.32cm of d] (e) {\textbf{Auditoría}\\pruebas y cotejo en vivo};
     \foreach \x/\y in {a/b, b/c, c/d, d/e} \draw[flecha] (\x) -- (\y);
   \end{tikzpicture}\par\vspace{0.12cm}
+  {\scriptsize \textbf{BCRPData} (API): 10 series \enspace·\enspace \textbf{SMV OData} (API): estados financieros \enspace·\enspace \textbf{SMV SIMV} (\textit{scraping}): \cifra{plataformasAutorizadas} plataformas × 69 meses\par}
   {\scriptsize \dato{\cifra{solicitudesHTTP}} solicitudes con HTTP 200 \enspace·\enspace cobertura del portal \dato{\cifra{coberturaPct}~\%} \enspace·\enspace pausas de 3 s \enspace·\enspace SHA-256 y crudos sin editar\par}
+  \vspace{0.18cm}
+  \begin{columns}[c]
+    \begin{column}{0.655\textwidth}
+      \rotulo{Datos por cada variable}\par\vspace{0.06cm}
+      {\scriptsize\setlength{\tabcolsep}{3.4pt}\begin{tabular}{@{}lrrrrc@{}}
+        \toprule
+        Bloque & Var. & Por variable & Mínimo & Total & ¿Cumple? \\
+        \midrule
+        Series mensuales & \cifra{muSeriesVars} & \dato{\cifra{muSeriesObs}} meses & 60 & \cifra{muSeriesDatos} & Sí \\
+        Proyectos (logit) & \cifra{muProyVars} & \dato{\cifra{muProyObs}} & 1\,000 & \cifra{muProyDatos} & Sí \\
+        Intermediarios comparables & \cifra{muCompVars} & \dato{\cifra{muCompObs}} & 1\,000 & \cifra{muCompDatos} & Sí \\
+        Todas las empresas supervisadas & \cifra{muEmpVars} & \dato{\cifra{muEmpObs}} & 1\,000 & \cifra{muEmpDatos} & Sí \\
+        Solo las plataformas & \cifra{muFpfVars} & \cifra{muFpfObs} & 1\,000 & \cifra{muFpfDatos} & No \\
+        \bottomrule
+      \end{tabular}\par}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{destacada}{Criterio}
+        Cada variable de un modelo tiene \textbf{1\,000 observaciones o 60 periodos}. Las plataformas solas no llegan: \textbf{solo describen}.
+      \end{destacada}
+    \end{column}
+  \end{columns}
 \end{frame}
 
-% ---------------------------------------------------------------- 5. Demostración en vivo
+% ---------------------------------------------------------------- 4. Demostración en vivo
 \begin{frame}[fragile]{Demostración en vivo de la extracción (3 minutos)}
   \begin{columns}[t]
     \begin{column}{0.6\textwidth}
@@ -147,7 +136,7 @@
   \end{columns}
 \end{frame}
 
-% ---------------------------------------------------------------- 6. OE1: oferta
+% ---------------------------------------------------------------- 5. Oferta
 \begin{frame}{Oferta: crecimiento rápido y muy concentrado}
   \begin{columns}[c]
     \begin{column}{0.61\textwidth}
@@ -158,70 +147,156 @@
       \begin{tarjeta}[halign title=center]{Lectura}
         \linea{Concentración}{Solo \cifra{plataformasConFinanciamiento} de \cifra{plataformasAutorizadas} sociedades financiaron; \cifra{nombreLider} reúne el \cifra{participacionLider}~\% del monto.}
         \linea{Crecimiento}{S/~\cifra{monto2022} M en 2022 → S/~\cifra{monto2025} M en 2025; IHH de \cifra{hhi2025}.}
-        \linea{2026 (ene-sep)}{S/~\cifra{monto2026} M, \cifra{varMonto2026}~\% más que en 2025.}
-        \linea{Perfil}{Empresarial: \cifra{partEmp2026}~\% del monto en 2026.}
+        \linea{Tamaño}{Monto medio por proyecto: S/~\cifra{montoMedio2022} mil en 2022 → S/~\cifra{montoMedio2025} mil en 2025.}
+        \linea{Rentabilidad}{De las que financiaron, solo la líder gana (ROA de \cifra{roaLider2025}~\% en 2025).}
       \end{tarjeta}
     \end{column}
   \end{columns}
 \end{frame}
 
-% ---------------------------------------------------------------- 7. OE2: plataformas
-\begin{frame}{Plataformas: pequeñas y solo una rentable}
-  \begin{columns}[c]
-    \begin{column}{0.57\textwidth}
-      \includegraphics[width=\linewidth]{f4_costo_intermediacion_implicito.pdf}
-      \fuente{\cifra{tituloF4}. Fuente: SMV (API OData y SIMV).}
-    \end{column}
-    \begin{column}{0.4\textwidth}
-      \begin{tarjeta}[halign title=center]{Lectura}
-        \linea{Escala}{La líder cerró 2025 con activos de S/~\cifra{activoLider2025} mil, mientras su mercado financió S/~\cifra{monto2025} M.}
-        \linea{Rentabilidad}{ROA anualizado de la líder: \cifra{roaLider2025}~\% (2025); las demás perdieron en \cifra{aniosOtrasPerdida} de \cifra{aniosOtras} años.}
-        \linea{Ingresos / monto}{Mediana trimestral de \cifra{costoMediana}~\%.}
+% ---------------------------------------------------------------- 6. Metodología econométrica
+\begin{frame}{Metodología econométrica}
+  \centering
+  \begin{tikzpicture}[
+      caja/.style={draw=negro, fill=grisclaro, rounded corners=2pt, align=center, font=\tiny, minimum height=1.05cm, text width=2.35cm, inner sep=2.5pt},
+      flecha/.style={-{Stealth[length=1.8mm]}, thick, color=rojo}]
+    \node[caja] (a) {{\color{rojo}\bfseries 1. Estacionariedad}\\ADF, KPSS y\\Zivot-Andrews};
+    \node[caja, right=0.4cm of a] (b) {{\color{rojo}\bfseries 2. Largo plazo}\\Engle-Granger,\\Johansen y Granger};
+    \node[caja, right=0.4cm of b] (c) {{\color{rojo}\bfseries 3. Corto plazo}\\Diferencias con\\errores HAC};
+    \node[caja, right=0.4cm of c] (d) {{\color{rojo}\bfseries 4. Robustez}\\Impulsos, AR(1),\\cortes ficticios};
+    \foreach \x/\y in {a/b, b/c, c/d} \draw[flecha] (\x) -- (\y);
+  \end{tikzpicture}\par\vspace{0.05cm}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \begin{tarjeta}{Corto plazo (E1)}
+        {\scriptsize$\displaystyle \Delta f_t=\alpha+\varphi\Delta f_{t-1}+\sum_k\beta_k\Delta r_{k,t}+\lambda\pi_t+\delta D_t+\varepsilon_t$}\par\vspace{0.08cm}
+        {\tiny $f_t$: asinh del monto real del FPF · $r_{k,t}$: cuatro TEA de hasta 360 días · $\pi_t$: inflación · $D_t$: reforma}
       \end{tarjeta}
-      \begin{destacada}{Ojo}
-        Es lo que retiene la plataforma, \textbf{no} la tasa que paga el receptor.
+      \begin{tarjeta}{Reforma (H1): regresión segmentada}
+        {\scriptsize$f_t=\alpha+\beta_1\tau_t+\beta_2D_t+\beta_3(t-t_0)D_t+\varepsilon_t$}\par\vspace{0.08cm}
+        {\tiny $\beta_2$: cambio de nivel · $\beta_3$: cambio de pendiente desde diciembre de 2025}
+      \end{tarjeta}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \begin{tarjeta}{Colocación (H2): logit}
+        {\scriptsize$\Pr(F_i=1)=\Lambda(\alpha+\beta E_i+\gamma L_i+\theta a_i)$}\par\vspace{0.08cm}
+        {\tiny $E_i$: proyecto empresarial · $L_i$: plataforma líder · $a_i$: año}
+      \end{tarjeta}
+      \begin{tarjeta}{Rentabilidad: panel de empresas}
+        {\scriptsize$R_{it}=\alpha+\beta P_i+\gamma\ln A_{it}+\mu_t+\varepsilon_{it}$}\par\vspace{0.08cm}
+        {\tiny $P_i$: plataforma de FPF · $A_{it}$: activo · $\mu_t$: efectos de trimestre}
+      \end{tarjeta}
+    \end{column}
+  \end{columns}
+  \vspace{0.2cm}
+  {\scriptsize Decisión: significancia al \dato{5~\%} \enspace·\enspace especificaciones fijadas antes de estimar \enspace·\enspace asociaciones, no causalidad\par}
+\end{frame}
+
+% ---------------------------------------------------------------- 7. Estacionariedad y largo plazo
+\begin{frame}{Estacionariedad y relación de largo plazo}
+  \begin{columns}[T]
+    \begin{column}{0.44\textwidth}
+      \begin{tarjeta}[halign title=center]{Prueba ADF (valor $p$, 69 meses)}\centering
+        {\scriptsize\setlength{\tabcolsep}{3pt}\begin{tabular}{@{}lrrc@{}}
+          \toprule
+          Variable & Nivel & Dif. & \\
+          \midrule
+          Monto del FPF & \cifra{raizNivelFpfP} & \cifra{raizDifFpfP} & I(1) \\
+          TEA bancos, pyme & \cifra{raizNivelBancosP} & \cifra{raizDifBancosP} & I(1) \\
+          TEA cajas municipales & \cifra{raizNivelCmacP} & \cifra{raizDifCmacP} & I(1) \\
+          TEA cajas rurales & \cifra{raizNivelCracP} & \cifra{raizDifCracP} & I(1) \\
+          TEA bancos, consumo & \cifra{raizNivelConsumoP} & \cifra{raizDifConsumoP} & I(1) \\
+          TAMN & \cifra{raizNivelTamnP} & \cifra{raizDifTamnP} & I(1) \\
+          IPC & \cifra{raizNivelIpcP} & \cifra{raizDifIpcP} & I(1) \\
+          \bottomrule
+        \end{tabular}\par}
+        \vspace{0.05cm}{\tiny\color{gris} KPSS: con reserva en consumo e IPC. Zivot-Andrews: \cifra{zaQuiebres} tasas son estacionarias con quiebre.\par}
+      \end{tarjeta}
+    \end{column}
+    \begin{column}{0.53\textwidth}
+      \begin{tarjeta}[halign title=center]{Cointegración: FPF y cada tasa}\centering
+        {\scriptsize\setlength{\tabcolsep}{3pt}\begin{tabular}{@{}lrrr@{}}
+          \toprule
+          Relación & E-G ($p$) & Traza & Crítico \\
+          \midrule
+          Bancos, pyme & \cifra{egBancosP} & \cifra{johBancos} & \cifra{johBancosVC} \\
+          Cajas municipales & \cifra{egCmacP} & \cifra{johCmac} & \cifra{johCmacVC} \\
+          Cajas rurales & \cifra{egCracP} & \cifra{johCrac} & \cifra{johCracVC} \\
+          Bancos, consumo & \cifra{egConsumoP} & \cifra{johConsumo} & \cifra{johConsumoVC} \\
+          Las cuatro tasas & \cifra{egSistemaP} & \cifra{johSistema} & \cifra{johSistemaVC} \\
+          \bottomrule
+        \end{tabular}\par}
+        \vspace{0.05cm}{\tiny\color{gris} Granger en diferencias: menor $p\cifra{grangerPMinRel}$.\par}
+      \end{tarjeta}
+      \begin{destacada}{Resultado}
+        Con 69 meses \textbf{no hay evidencia robusta de cointegración}. Con los \cifra{mesesActividadFPF} meses activos, Engle-Granger rechaza en bancos pyme ($p\cifra{egBancosActivosPRel}$) y en el sistema.
       \end{destacada}
     \end{column}
   \end{columns}
 \end{frame}
 
-% ---------------------------------------------------------------- 8. OE3: acceso y reforma
-\begin{frame}{Acceso por receptor y la reforma de 2025}
-  \begin{columns}[t]
-    \begin{column}{0.48\textwidth}
-      \begin{tarjeta}[equal height group=hh]{H2 · Colocación por tipo de receptor}
-        Empresariales \dato{\cifra{colocacionEmp}~\%} y personales \dato{\cifra{colocacionPer}~\%} ($z=\cifra{hDosZ}$).\par\smallskip
-        Pero el \cifra{pctEmpresarialPrincipal}~\% de los empresariales es de \cifra{nombreLider} y el \cifra{pctPersonalPrincipal}~\% de los personales, de \cifra{principalPersonal}.\par\smallskip
-        Dentro de la líder: prueba de Fisher, $p\cifra{hDosFisherPRel}$.\par\medskip
-        {\color{rojo}\bfseries → Refleja el modelo de negocio, no el receptor.}
+% ---------------------------------------------------------------- 8. Corto plazo
+\begin{frame}{Relación de corto plazo y diagnósticos}
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \begin{tarjeta}[halign title=center]{Modelo con errores HAC e impulsos}\centering
+        {\scriptsize\setlength{\tabcolsep}{4pt}\begin{tabular}{@{}lrr@{}}
+          \toprule
+          Variable & Coef. & $p$ \\
+          \midrule
+          $\Delta$ FPF del mes anterior & \cifra{cpConPhi} & \cifra{cpConPhiP} \\
+          $\Delta$ TEA bancos, pyme & \cifra{cpConBancos} & \cifra{cpConBancosP} \\
+          $\Delta$ TEA cajas municipales & \cifra{cpConCmac} & \cifra{cpConCmacP} \\
+          $\Delta$ TEA cajas rurales & \cifra{cpConCrac} & \cifra{cpConCracP} \\
+          $\Delta$ TEA bancos, consumo & \cifra{cpConConsumo} & \cifra{cpConConsumoP} \\
+          Inflación mensual & \cifra{cpConInfl} & \cifra{cpConInflP} \\
+          Reforma & \cifra{cpConReforma} & \cifra{cpConReformaP} \\
+          \bottomrule
+        \end{tabular}\par}
+        \vspace{0.05cm}{\tiny\color{gris} $N=\cifra{cpConN}$ · $R^2=\cifra{cpConRDos}$ · impulsos en ene. y feb. 2024 y mar. 2025 (no mostrados)\par}
       \end{tarjeta}
     \end{column}
-    \begin{column}{0.48\textwidth}
-      \begin{tarjeta}[equal height group=hh]{H1 · Monto antes y después de la reforma}
-        Mediana mensual: S/~\cifra{hUnoMedianaAntes} M → \dato{S/~\cifra{hUnoMedianaDespues} M} ($p\cifra{hUnoPRel}$).\par\smallskip
-        Pero \cifra{placeboN} cortes ficticios previos también dan $p\cifra{placeboPMaxRel}$; el crecimiento interanual bajó de \cifra{interanualAntes}~\% a \cifra{interanualDespues}~\%, y \cifra{mesesSobreTendencia} de \cifra{mesesDespues} meses superan la tendencia previa.\par\medskip
-        {\color{rojo}\bfseries → Mayor, pero no atribuible a la norma.}
+    \begin{column}{0.47\textwidth}
+      \begin{destacada}{Resultado principal}
+        Las cuatro tasas \textbf{no son significativas en conjunto}: Wald, $p\cifra{cpConWaldPRel}$.
+      \end{destacada}
+      \begin{tarjeta}{Diagnósticos (valor $p$)}
+        {\scriptsize Breusch-Godfrey \dato{\cifra{cpConBgP}} · Breusch-Pagan \dato{\cifra{cpConBpP}}\\RESET \dato{\cifra{cpConResetP}} · CUSUM \dato{\cifra{cpConCusumP}}\\Jarque-Bera \dato{\cifra{cpConJbP}}: residuos no normales\par}
+      \end{tarjeta}
+      \begin{tarjeta}{Robustez}
+        {\scriptsize Sin impulsos: cajas municipales $p\cifra{cpSinCmacPRel}$, por un solo mes atípico.\\Solo \cifra{mesesActividadFPF} meses activos: conjunta $p\cifra{cpActivosWaldPRel}$, ninguna por separado.\par}
       \end{tarjeta}
     \end{column}
   \end{columns}
 \end{frame}
 
-% ---------------------------------------------------------------- 9. OE4: crédito tradicional
-\begin{frame}{Frente al crédito tradicional}
-  \begin{columns}[c]
-    \begin{column}{0.59\textwidth}
-      \includegraphics[width=\linewidth]{f3_tasas_credito_tradicional.pdf}
-      \fuente{\cifra{tituloF3}. Fuente: BCRP (BCRPData).}
-    \end{column}
-    \begin{column}{0.38\textwidth}
-      \begin{tarjeta}[halign title=center]{Lectura}
-        \linea{Cajas}{Municipales: \cifra{teaCmacPymeMin}-\cifra{teaCmacPymeMax}~\%; rurales: \cifra{teaCracPymeMin}-\cifra{teaCracPymeMax}~\%.}
-        \linea{Bancos pyme}{Salto de \cifra{saltoTEA} p.~p. en marzo de 2025.}
-        \linea{E1}{Sin asociación con el FPF (\cifra{eUnoN} comparadores, $p_{\min}=\cifra{eUnoPMin}$).}
+% ---------------------------------------------------------------- 9. Reforma, acceso y rentabilidad
+\begin{frame}{Reforma (H1), acceso (H2) y rentabilidad}
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \includegraphics[width=\linewidth]{f5_reforma_segmentada.pdf}\par\vspace{0.03cm}
+      \begin{tarjeta}{H1 · Regresión segmentada (asinh)}
+        {\scriptsize Nivel \dato{\cifra{refAsinhNivel}} ($p\cifra{refAsinhNivelPRel}$) y pendiente \dato{\cifra{refAsinhPend}} ($p\cifra{refAsinhPendPRel}$) con HAC; con AR(1), $p=\cifra{refArNivelP}$ y \cifra{refArPendP} (conjunta \cifra{refArWaldP}). En S/ millones no hay cambio ($p\cifra{refLinWaldPRel}$). \cifra{refPlacebos} de \cifra{refPlacebosN} cortes ficticios también son significativos.\par}
+        {\color{rojo}\scriptsize\bfseries → Sin evidencia de un efecto positivo de la reforma.}
       \end{tarjeta}
-      \begin{destacada}{Límite}
-        La SMV no publica la tasa ni el plazo de cada operación: el precio del FPF \textbf{no es comparable}.
-      \end{destacada}
+    \end{column}
+    \begin{column}{0.43\textwidth}
+      \begin{tarjeta}[halign title=center]{H2 · Logit ($N=\cifra{logN}$ proyectos)}\centering
+        {\scriptsize\setlength{\tabcolsep}{3pt}\begin{tabular}{@{}lrr@{}}
+          \toprule
+          Empresarial & Razón & $p$ \\
+          \midrule
+          Solo receptor & \cifra{logUnoOr} & \cifra{logUnoP} \\
+          + plataforma & \cifra{logDosOr} & \cifra{logDosP} \\
+          + plataforma y año & \cifra{logTresOr} & \cifra{logTresP} \\
+          \bottomrule
+        \end{tabular}\par}
+        \vspace{0.04cm}{\color{rojo}\scriptsize\bfseries → La ventaja se reduce con los controles.}
+      \end{tarjeta}
+      \begin{tarjeta}{Rentabilidad (N = \cifra{empRoaN})}
+        {\scriptsize ROA trimestral mediano: \cifra{empRoaMedFpf}~\% en las plataformas y \cifra{empRoaMedResto}~\% en otros intermediarios. Al controlar el tamaño, \cifra{empRoa} puntos ($p\cifra{empRoaPRel}$).\par}
+        {\color{rojo}\scriptsize\bfseries → Diferencia no significativa.}
+      \end{tarjeta}
     \end{column}
   \end{columns}
 \end{frame}
@@ -229,19 +304,20 @@
 % ---------------------------------------------------------------- 10. Conclusiones
 \begin{frame}{Conclusiones e implicancias}
   \begin{destacada}[halign title=center]{¿Qué encontramos?}
-    \centering El FPF creció de S/~\cifra{monto2022} M a S/~\cifra{monto2025} M al año, pero es un mercado \textbf{pequeño en participantes y muy concentrado}, sin información pública sobre su precio.
+    \centering El FPF creció de S/~\cifra{monto2022} M a S/~\cifra{monto2025} M al año, concentrado en una plataforma, y con 69 meses \textbf{no se observa una relación robusta} con las tasas del crédito tradicional.
   \end{destacada}
   \vspace{-0.1cm}
   \begin{columns}[t]
-    \begin{column}{0.235\textwidth}\begin{tarjeta}[equal height group=cc, fonttitle=\bfseries\scriptsize]{1. Oferta}\scriptsize Una plataforma concentra casi todo el monto.\end{tarjeta}\end{column}
-    \begin{column}{0.235\textwidth}\begin{tarjeta}[equal height group=cc, fonttitle=\bfseries\scriptsize]{2. Plataformas}\scriptsize Préstamos a empresas; solo la líder es rentable.\end{tarjeta}\end{column}
-    \begin{column}{0.235\textwidth}\begin{tarjeta}[equal height group=cc, fonttitle=\bfseries\scriptsize]{3. Acceso y reforma}\scriptsize Pesa el modelo de negocio; el aumento tras 2025 no es atribuible a la norma.\end{tarjeta}\end{column}
+    \begin{column}{0.235\textwidth}\begin{tarjeta}[equal height group=cc, fonttitle=\bfseries\scriptsize]{1. Largo plazo}\scriptsize Engle-Granger y Johansen no hallan cointegración con 69 meses.\end{tarjeta}\end{column}
+    \begin{column}{0.235\textwidth}\begin{tarjeta}[equal height group=cc, fonttitle=\bfseries\scriptsize]{2. Corto plazo}\scriptsize Las tasas no son significativas en conjunto.\end{tarjeta}\end{column}
+    \begin{column}{0.235\textwidth}\begin{tarjeta}[equal height group=cc, fonttitle=\bfseries\scriptsize]{3. Reforma y acceso}\scriptsize Sin efecto positivo de 2025; la ventaja empresarial baja con los controles.\end{tarjeta}\end{column}
     \begin{column}{0.235\textwidth}\begin{tarjeta}[equal height group=cc, fonttitle=\bfseries\scriptsize]{4. Precio}\scriptsize Sin tasa ni plazo por operación, no se compara con la banca.\end{tarjeta}\end{column}
   \end{columns}
   \vspace{0.05cm}
   \begin{columns}[c]
     \begin{column}{0.8\textwidth}\footnotesize
-      \rotulo{Implicancia}\par La SMV debería publicar la tasa, el plazo y la morosidad de cada operación para evaluar si el FPF ofrece mejores condiciones que la banca y las cajas.
+      \rotulo{Implicancia}\par La SMV debería publicar la tasa, el plazo y la morosidad de cada operación.\par\vspace{0.08cm}
+      \rotulo{Límites}\par Mercado joven (\cifra{mesesActividadFPF} meses activos), resultados sensibles a la muestra y pruebas asociativas, no causales.
     \end{column}
     \begin{column}{0.16\textwidth}\centering\qrcode[height=1.45cm]{\repositorio}\par{\tiny Repositorio}\end{column}
   \end{columns}

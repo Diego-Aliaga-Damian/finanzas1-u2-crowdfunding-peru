@@ -21,6 +21,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish,es-noshorthands,es-tabla,es-nodecimaldot]{babel}
+\usepackage{amsmath}
 \usepackage{newtxtext,newtxmath}
 \usepackage{setspace}
 \setstretch{1.5}
@@ -86,6 +87,10 @@
   title={\faIcon{book-open}\hspace{0.45em}Abreviaturas},coltitle=marino,colbacktitle=celeste,fonttitle=\bfseries\small}
 \newenvironment{abreviaturas}{\begin{cajaabrev}\setlength{\parindent}{0pt}}{\end{cajaabrev}}
 \newcommand{\abrev}[2]{\noindent{\color{marino}\bfseries #1}\quad #2\par\vspace{1.5pt}}
+% Resultado en una frase al cierre de cada apartado de Resultados
+\newtcolorbox{cajaresultado}{enhanced,colback=celeste,colframe=dorado,boxrule=0pt,leftrule=3pt,arc=2pt,
+  left=7pt,right=7pt,top=4pt,bottom=4pt,before skip=7pt,after skip=9pt,fontupper=\small\setstretch{1.15}}
+\newcommand{\resultado}[1]{\begin{cajaresultado}{\color{marino}\bfseries Resultado.}~#1\end{cajaresultado}}
 \renewcommand{\LettrineFontHook}{\color{marino}\bfseries}
 \setcounter{DefaultLines}{3}
 \raggedbottom  % sin estirar espacios para igualar el pie de las columnas
@@ -160,6 +165,8 @@
 
 % El anexo usa tablas largas que ocupan varias páginas: va a una columna
 \onecolumn
+\AtBeginEnvironment{longtable}{\addtocounter{table}{-1}}  % las tablas largas del anexo no llevan número
 \input{secciones/09_anexo_datos_codigo}
+\input{secciones/10_tablas_complementarias}
 
 \end{document}

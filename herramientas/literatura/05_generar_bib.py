@@ -23,13 +23,15 @@ from comun import user_agent  # noqa: E402
 
 # 2026-11-12: Ghasemi et al. (2024, 10.1016/j.jbvi.2024.e00508) se reemplazó por Hau et al. (2024): no tiene resumen
 # público y es de acceso cerrado, por lo que no podía resumirse ni leerse para la Carpeta N.º 1.
+# 2026-11-25: Larios-Hernandez (2025, 10.1080/08276331.2024.2389505) se reemplazó por Morello (2025), que ya estaba en
+# la reserva: el primero es de acceso cerrado y no se consiguió el texto completo.
 DOIS = {  # núcleo del estado del arte (2023-2026) + contexto peruano
     "nucleo": ["10.1016/j.jfineco.2025.104113", "10.1111/jofi.13384", "10.1016/j.jeconbus.2026.106307",
                "10.1016/j.jbankfin.2024.107338", "10.1017/s0022109023000698", "10.1016/j.jfineco.2025.104040",
                "10.1016/j.bar.2024.101448", "10.1093/rfs/hhaf080", "10.1111/jifm.12242", "10.1016/j.ribaf.2023.102185",
                "10.1016/j.frl.2024.105519", "10.1016/j.jeconbus.2026.106343", "10.1287/mnsc.2023.01538",
                "10.1016/j.techfore.2025.124119", "10.1016/j.jbankfin.2023.106986", "10.1016/j.frl.2024.106642",
-               "10.1080/08276331.2024.2389505", "10.1108/jefas-09-2024-0280", "10.1108/jes-03-2024-0194",
+               "10.54648/cola2025039", "10.1108/jefas-09-2024-0280", "10.1108/jes-03-2024-0194",
                "10.1016/j.gfj.2023.100884"],
     "peru": ["10.18601/16923960.v25n2.09", "10.18178/ijtef.2023.14.4.759"],
 }
@@ -38,7 +40,8 @@ IDIOMA = {"10.18601/16923960.v25n2.09": "spanish"}
 # "Sami Ben Naceur"). Las llaves evitan que biblatex tome "Ben" como nombre de pila.
 AUTOR_CORREGIDO = {"10.1111/jifm.12242": ("Naceur, Sami Ben", "{Ben Naceur}, Sami")}
 PROTEGER = ["Latin America", "Caribbean", "Peruvian", "Peru", "FinTech", "FinTechs", "Fintech", "P2P", "U.S.", "Italian",
-            "LendingClub", "SMEs", "ESG", "UK", "EU"]
+            "LendingClub", "SMEs", "ESG", "UK", "EU",
+            "The Crowdfunding Regulation"]
 SALIDA = RAIZ / "articulo" / "referencias.bib"
 MANUALES = RAIZ / "articulo" / "referencias_manuales.bib"
 
@@ -92,6 +95,7 @@ def limpiar(bib: str, doi: str, k: str) -> str:
         for palabra in sorted(PROTEGER, key=len, reverse=True):
             t = re.sub(rf"(?<![{{\w]){re.escape(palabra)}(?![\w}}])", "{" + palabra + "}", t)
         bib = bib.replace(titulo.group(1), t, 1)
+    bib = re.sub(r"number\s*=\s*\{Issue (\d+)\}", r"number ={\1}", bib)  # Kluwer registra «Issue 2»; en APA 7 va 62(2)
     bib = re.sub(r",\s*url\s*=\s*\{[^}]*\}", "", bib)  # biblatex-apa construye el enlace desde el DOI
     # Crossref registra a veces al editor de la revista; en APA 7 un artículo de revista no lleva editor
     bib = re.sub(r",\s*editor\s*=\s*\{[^}]*\}", "", bib)

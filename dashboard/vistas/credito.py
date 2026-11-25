@@ -68,7 +68,7 @@ def pagina() -> None:
     with st.container(key="tarjeta-t6"):
         T.seccion("¿Qué es comparable?", "rule", T.CORAL, extra=T.insignia("articulo"))
         st.dataframe(t["t6_comparabilidad"], hide_index=True, height=330)
-        T.nota("Tabla 6 del artículo.")
+        T.nota("Tabla 1 del artículo.")
     with st.container(key="tarjeta-e1"):
         T.seccion("E1 · Asociación exploratoria", "scatter_plot", T.VIOLETA,
                   "Spearman entre cambios mensuales del monto FPF y de cada tasa, con IC 95 % por bloques.",
@@ -106,4 +106,4 @@ def pagina() -> None:
             "FPF personal: monto medio (S/ miles)": (t7.fpf_personal_monto_medio_soles / 1e3).map(lambda x: C.num(x, 1)),
             **{f"{D.SERIES_BCRP[c]} (TEA %)": t7[f"{c}_media"].map(lambda x: C.num(x, 1))
                for c in ("tamn", *PRINCIPALES)}}), hide_index=True)
-        T.nota("Tabla 7 del artículo. 2025 se divide en enero-febrero y marzo-diciembre por el salto de la TEA bancaria pyme.")
+        T.nota("Tabla 13 del artículo. 2025 se divide en enero-febrero y marzo-diciembre por el salto de la TEA bancaria pyme.")

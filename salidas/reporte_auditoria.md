@@ -1,9 +1,9 @@
 # Reporte de auditoría automatizada
 
-- Fecha y hora: 2026-11-17 21:50:21
-- Commit de referencia: `b9f7ef1` (los cambios no confirmados también se auditan)
+- Fecha y hora: 2026-11-25 14:25:47
+- Commit de referencia: `a960d5c` (los cambios no confirmados también se auditan)
 - Modo: local + cotejo en vivo
-- Resultado: ✅ 48 cumplen · ❌ 0 no cumplen · ⏳ 0 no ejecutados
+- Resultado: ✅ 50 cumplen · ❌ 0 no cumplen · ⏳ 0 no ejecutados
 
 > Regla de autenticidad: un control marcado ⏳ no se ejecutó y no cuenta como cumplido.
 
@@ -15,19 +15,19 @@
 | ✅ | Script `02_scraping_web.py` | 2.4.2 | presente |
 | ✅ | Script `03_limpieza_datos.py` | 2.4.2 | presente |
 | ✅ | Script `04_analisis.py` | 2.4.2 | presente |
-| ✅ | Archivo `README.md` | 2.4.2 | 8,548 bytes |
-| ✅ | Archivo `requirements.txt` | 2.4.2 | 841 bytes |
+| ✅ | Archivo `README.md` | 2.4.2 | 9,665 bytes |
+| ✅ | Archivo `requirements.txt` | 2.4.2 | 904 bytes |
 | ✅ | Archivo `.env.example` | 2.4.2 | 424 bytes |
-| ✅ | Archivo `log_ejecucion.txt` | 2.4.2 | 509,609 bytes |
-| ✅ | Archivo `diccionario_variables.md` | 2.4.2 | 9,450 bytes |
+| ✅ | Archivo `log_ejecucion.txt` | 2.4.2 | 520,381 bytes |
+| ✅ | Archivo `diccionario_variables.md` | 2.4.2 | 10,243 bytes |
 | ✅ | Archivo `incidencias_fuente.md` | 2.4.2 | 7,382 bytes |
 | ✅ | Crudo `datos_crudos_2024200481M_bcrp.csv` | 2.4.1 | 690 filas |
 | ✅ | Crudo `datos_crudos_2024200481M_smv_odata.csv` | 2.4.1 | 6,001 filas |
 | ✅ | Crudo `datos_crudos_2024200481M_smv_simv.csv` | 2.4.1 | 536 filas |
 | ✅ | Procesado `datos_procesados_2024200481M.csv` | 2.4.1 | presente |
-| ✅ | Encabezado obligatorio de 4 líneas en cada archivo de código | 2.4.2 | 6/6 archivos |
+| ✅ | Encabezado obligatorio de 4 líneas en cada archivo de código | 2.4.2 | 7/7 archivos |
 | ✅ | Sin rutas absolutas del equipo en el código | 2.4.4 | ninguna |
-| ✅ | requirements.txt con versiones exactas | 2.4.2 | 37 librerías con `==` |
+| ✅ | requirements.txt con versiones exactas | 2.4.2 | 43 librerías con `==` |
 | ✅ | .env.example sin claves ni valores reales | 2.4.4 | 2 variables, todas vacías |
 
 ## 2. Mínimos de la base
@@ -35,6 +35,7 @@
 | Estado | Control | Numeral | Evidencia |
 |---|---|---|---|
 | ✅ | Histórico de al menos 60 periodos mensuales | 2.4.1 | 69 meses (2021-01 a 2026-09); 414 filas |
+| ✅ | Cada variable de las pruebas econométricas tiene 1 000 observaciones o 60 periodos | 2.4.1 | Series mensuales del sistema: 69 por variable; Celdas del portal SIMV: 1,122 por variable; Proyectos publicados: 1,519 por variable; Estados financieros de todas las empresas supervisadas: 5,996 por variable; Estados financieros de intermediarios comparables: 1,667 por variable |
 | ✅ | Al menos 6 columnas | 2.4.1 | 35 columnas |
 | ✅ | Al menos 4 variables sustantivas | 2.4.1 | 24 sustantivas |
 | ✅ | Al menos 1 variable de cada fuente | 2.4.1 | SMV-SIMV (scraping): 9; SMV-OData (API): 5; BCRP (API): 10 |
@@ -45,6 +46,7 @@
 | Estado | Control | Numeral | Evidencia |
 |---|---|---|---|
 | ✅ | 03 regenera la base entregada desde los crudos | 2.4.5 / A2 | bytes idénticos: sí; celdas iguales: 100.0 %; columnas =; filas = |
+| ✅ | 03 regenera la base complementaria de empresas | 2.4.5 / A2 | bytes idénticos: sí |
 | ✅ | SHA-256 del README = hash del archivo entregado | 2.4.5 / A3 | declarado cd48b21f2284… · real cd48b21f2284… |
 | ✅ | Cada valor de la base coincide con su crudo (SIMV, EEFF y BCRP) | 2.4.6 / A1-A2 | 1,406/1,406 valores idénticos |
 | ✅ | Sin imputaciones: meses sin registros o no obtenidos quedan vacíos | 2.1 / A2 | 0 celdas con valor donde debería estar vacío |
@@ -89,8 +91,8 @@
 
 | Estado | Control | Numeral | Evidencia |
 |---|---|---|---|
-| ✅ | Las salidas entregadas coinciden con su manifiesto (SHA-256) | 2.4.5 | 30/30 archivos |
-| ✅ | Las tablas y figuras del artículo se regeneran con 04_analisis.py | 2.4.6 / B | 30/30 archivos idénticos byte a byte (csv: 13, json: 1, pdf: 4, png: 4, tex: 8) |
+| ✅ | Las salidas entregadas coinciden con su manifiesto (SHA-256) | 2.4.5 | 47/47 archivos |
+| ✅ | Las tablas y figuras del artículo se regeneran con 04_analisis.py | 2.4.6 / B | 47/47 archivos idénticos byte a byte (csv: 21, json: 1, pdf: 5, png: 5, tex: 15) |
 | ✅ | 04 lee exclusivamente la base procesada | 2.4.2 | solo usa datos_procesados |
 
 ## 9. Cotejo en vivo con la fuente

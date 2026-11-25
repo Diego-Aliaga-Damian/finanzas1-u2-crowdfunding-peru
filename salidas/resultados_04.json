@@ -4,7 +4,8 @@
     "f1_monto_mensual_por_plataforma": "Monto financiado mensual mediante plataformas de financiamiento participativo financiero, por plataforma (S/ millones corrientes)",
     "f2_publicados_financiados_colocacion": "Proyectos publicados y financiados por mes y tasa de colocación móvil de 12 meses",
     "f3_tasas_credito_tradicional": "Tasas activas promedio del crédito tradicional en moneda nacional por segmento",
-    "f4_costo_intermediacion_implicito": "Ingresos trimestrales de la plataforma líder como porcentaje del monto financiado en el trimestre"
+    "f4_costo_intermediacion_implicito": "Ingresos trimestrales de la plataforma líder como porcentaje del monto financiado en el trimestre",
+    "f5_reforma_segmentada": "Monto mensual financiado y regresión segmentada en la modificación del reglamento"
   },
   "eeff_escala_corregida": [
     "Afluenta 2022-T2",
@@ -208,6 +209,786 @@
     "H1: sin Inversiones.io": {
       "U": 223.0,
       "p_valor_unilateral": 0.12420636906804428
+    }
+  },
+  "econometria": {
+    "sha256_base_empresas": "3533cb0282e66be850d5257842f782e797271104f12c017b4de5b2cbbaeaeeaf",
+    "muestra": [
+      {
+        "bloque": "Series mensuales del sistema (pruebas de series de tiempo)",
+        "unidad": "mes",
+        "variables": 7,
+        "datos_por_variable": 69,
+        "criterio": "periodos",
+        "minimo_por_variable": 60,
+        "datos_totales": 483,
+        "minimo_total": 420,
+        "cumple": true
+      },
+      {
+        "bloque": "Celdas del portal SIMV (plataforma-mes-receptor)",
+        "unidad": "celda",
+        "variables": 3,
+        "datos_por_variable": 1122,
+        "criterio": "observaciones",
+        "minimo_por_variable": 1000,
+        "datos_totales": 3366,
+        "minimo_total": 3000,
+        "cumple": true
+      },
+      {
+        "bloque": "Proyectos publicados (logit de colocación)",
+        "unidad": "proyecto",
+        "variables": 4,
+        "datos_por_variable": 1519,
+        "criterio": "observaciones",
+        "minimo_por_variable": 1000,
+        "datos_totales": 6076,
+        "minimo_total": 4000,
+        "cumple": true
+      },
+      {
+        "bloque": "Estados financieros de todas las empresas supervisadas",
+        "unidad": "empresa-trimestre",
+        "variables": 5,
+        "datos_por_variable": 5996,
+        "criterio": "observaciones",
+        "minimo_por_variable": 1000,
+        "datos_totales": 29980,
+        "minimo_total": 5000,
+        "cumple": true
+      },
+      {
+        "bloque": "Estados financieros de intermediarios comparables",
+        "unidad": "empresa-trimestre",
+        "variables": 5,
+        "datos_por_variable": 1667,
+        "criterio": "observaciones",
+        "minimo_por_variable": 1000,
+        "datos_totales": 8335,
+        "minimo_total": 5000,
+        "cumple": true
+      },
+      {
+        "bloque": "Estados financieros solo de las plataformas de FPF",
+        "unidad": "plataforma-trimestre",
+        "variables": 5,
+        "datos_por_variable": 47,
+        "criterio": "observaciones",
+        "minimo_por_variable": 1000,
+        "datos_totales": 235,
+        "minimo_total": 5000,
+        "cumple": false
+      }
+    ],
+    "raiz_unitaria": {
+      "fpf": {
+        "nombre": "Monto del FPF (asinh, S/ reales)",
+        "n": 69,
+        "adf_nivel": -0.348977,
+        "adf_nivel_p": 0.918276,
+        "adf_nivel_rezagos": 2,
+        "adf_dif": -8.24414,
+        "adf_dif_p": 5.61323e-13,
+        "adf_dif_rezagos": 1,
+        "kpss_nivel": 1.20889,
+        "kpss_nivel_p": 0.01,
+        "kpss_dif": 0.082696,
+        "kpss_dif_p": 0.1,
+        "za": -3.97945,
+        "za_p": 0.364369,
+        "za_quiebre": "2024-02",
+        "adf_nivel_p_52": 0.75068,
+        "conclusion": "I(1)"
+      },
+      "tea_bcos_pyme_360": {
+        "nombre": "TEA Bancos, pyme ≤360 d",
+        "n": 69,
+        "adf_nivel": -0.89485,
+        "adf_nivel_p": 0.789664,
+        "adf_nivel_rezagos": 4,
+        "adf_dif": -5.6301,
+        "adf_dif_p": 1.09448e-06,
+        "adf_dif_rezagos": 3,
+        "kpss_nivel": 1.10536,
+        "kpss_nivel_p": 0.01,
+        "kpss_dif": 0.0335973,
+        "kpss_dif_p": 0.1,
+        "za": -7.69476,
+        "za_p": 1e-05,
+        "za_quiebre": "2025-03",
+        "adf_nivel_p_52": 0.536012,
+        "conclusion": "I(1); I(0) con quiebre"
+      },
+      "tea_cmac_pyme_360": {
+        "nombre": "TEA Cajas municipales, pyme ≤360 d",
+        "n": 69,
+        "adf_nivel": -1.57052,
+        "adf_nivel_p": 0.498382,
+        "adf_nivel_rezagos": 2,
+        "adf_dif": -9.86989,
+        "adf_dif_p": 4.02098e-17,
+        "adf_dif_rezagos": 1,
+        "kpss_nivel": 0.571543,
+        "kpss_nivel_p": 0.0255534,
+        "kpss_dif": 0.346028,
+        "kpss_dif_p": 0.1,
+        "za": -3.28702,
+        "za_p": 0.801819,
+        "za_quiebre": "2025-05",
+        "adf_nivel_p_52": 0.233921,
+        "conclusion": "I(1)"
+      },
+      "tea_crac_pyme_360": {
+        "nombre": "TEA Cajas rurales, pyme ≤360 d",
+        "n": 69,
+        "adf_nivel": -0.969121,
+        "adf_nivel_p": 0.76436,
+        "adf_nivel_rezagos": 1,
+        "adf_dif": -6.20326,
+        "adf_dif_p": 5.73852e-08,
+        "adf_dif_rezagos": 0,
+        "kpss_nivel": 0.96334,
+        "kpss_nivel_p": 0.01,
+        "kpss_dif": 0.177984,
+        "kpss_dif_p": 0.1,
+        "za": -5.86958,
+        "za_p": 0.000960856,
+        "za_quiebre": "2023-08",
+        "adf_nivel_p_52": 0.688327,
+        "conclusion": "I(1); I(0) con quiebre"
+      },
+      "tea_bcos_consumo_360": {
+        "nombre": "TEA Bancos, consumo ≤360 d",
+        "n": 69,
+        "adf_nivel": 0.537559,
+        "adf_nivel_p": 0.985971,
+        "adf_nivel_rezagos": 1,
+        "adf_dif": -5.18298,
+        "adf_dif_p": 9.52344e-06,
+        "adf_dif_rezagos": 0,
+        "kpss_nivel": 0.901811,
+        "kpss_nivel_p": 0.01,
+        "kpss_dif": 0.926633,
+        "kpss_dif_p": 0.01,
+        "za": -3.49521,
+        "za_p": 0.682712,
+        "za_quiebre": "2024-11",
+        "adf_nivel_p_52": 0.997922,
+        "conclusion": "I(1), con reserva"
+      },
+      "tamn": {
+        "nombre": "TAMN",
+        "n": 69,
+        "adf_nivel": -2.2884,
+        "adf_nivel_p": 0.175737,
+        "adf_nivel_rezagos": 3,
+        "adf_dif": -2.99332,
+        "adf_dif_p": 0.0355234,
+        "adf_dif_rezagos": 2,
+        "kpss_nivel": 0.966452,
+        "kpss_nivel_p": 0.01,
+        "kpss_dif": 0.137455,
+        "kpss_dif_p": 0.1,
+        "za": -4.90233,
+        "za_p": 0.0397114,
+        "za_quiebre": "2024-06",
+        "adf_nivel_p_52": 0.25674,
+        "conclusion": "I(1); I(0) con quiebre"
+      },
+      "ln_ipc": {
+        "nombre": "IPC (logaritmo)",
+        "n": 69,
+        "adf_nivel": -2.63557,
+        "adf_nivel_p": 0.0858654,
+        "adf_nivel_rezagos": 3,
+        "adf_dif": -3.37197,
+        "adf_dif_p": 0.0119522,
+        "adf_dif_rezagos": 2,
+        "kpss_nivel": 1.15721,
+        "kpss_nivel_p": 0.01,
+        "kpss_dif": 0.502751,
+        "kpss_dif_p": 0.041047,
+        "za": -3.91014,
+        "za_p": 0.406822,
+        "za_quiebre": "2022-03",
+        "adf_nivel_p_52": 0.700339,
+        "conclusion": "I(1), con reserva"
+      }
+    },
+    "cointegracion": {
+      "relaciones": {
+        "FPF y TEA Bancos, pyme ≤360 d": {
+          "engle_granger": -3.1974,
+          "engle_granger_p": 0.0703632,
+          "engle_granger_p_52": 0.0428548,
+          "johansen_rezagos": 1,
+          "johansen_traza": 11.5885,
+          "johansen_vc5": 15.4943,
+          "johansen_rango": 0,
+          "granger_tasa_a_fpf_p": 0.557881,
+          "granger_fpf_a_tasa_p": 0.543593,
+          "conclusion": "Sin cointegración"
+        },
+        "FPF y TEA Cajas municipales, pyme ≤360 d": {
+          "engle_granger": -0.987539,
+          "engle_granger_p": 0.905185,
+          "engle_granger_p_52": 0.904731,
+          "johansen_rezagos": 1,
+          "johansen_traza": 10.2293,
+          "johansen_vc5": 15.4943,
+          "johansen_rango": 0,
+          "granger_tasa_a_fpf_p": 0.159102,
+          "granger_fpf_a_tasa_p": 0.609585,
+          "conclusion": "Sin cointegración"
+        },
+        "FPF y TEA Cajas rurales, pyme ≤360 d": {
+          "engle_granger": -1.5261,
+          "engle_granger_p": 0.751048,
+          "engle_granger_p_52": 0.77939,
+          "johansen_rezagos": 1,
+          "johansen_traza": 12.9323,
+          "johansen_vc5": 15.4943,
+          "johansen_rango": 0,
+          "granger_tasa_a_fpf_p": 0.205737,
+          "granger_fpf_a_tasa_p": 0.0986208,
+          "conclusion": "Sin cointegración"
+        },
+        "FPF y TEA Bancos, consumo ≤360 d": {
+          "engle_granger": -2.63911,
+          "engle_granger_p": 0.222239,
+          "engle_granger_p_52": 0.266477,
+          "johansen_rezagos": 1,
+          "johansen_traza": 15.2264,
+          "johansen_vc5": 15.4943,
+          "johansen_rango": 0,
+          "granger_tasa_a_fpf_p": 0.816866,
+          "granger_fpf_a_tasa_p": 0.519754,
+          "conclusion": "Sin cointegración"
+        },
+        "FPF y las cuatro TEA (sistema)": {
+          "engle_granger": -3.90394,
+          "engle_granger_p": 0.161901,
+          "engle_granger_p_52": 0.00036928,
+          "johansen_rezagos": 1,
+          "johansen_traza": 66.7565,
+          "johansen_vc5": 69.8189,
+          "johansen_rango": 0,
+          "granger_tasa_a_fpf_p": null,
+          "granger_fpf_a_tasa_p": null,
+          "conclusion": "Sin cointegración"
+        }
+      },
+      "rango_con_tamn_y_fpf": 2,
+      "rango_con_tamn_sin_fpf": 1,
+      "granger_min_p": 0.0986208
+    },
+    "corto_plazo": {
+      "1": {
+        "coef": {
+          "const": {
+            "coef": 0.0555935,
+            "ee": 0.0401359,
+            "p": 0.171227,
+            "p_mco": 0.216805
+          },
+          "d_fpf_1": {
+            "coef": -0.516894,
+            "ee": 0.12346,
+            "p": 9.56435e-05,
+            "p_mco": 2.31968e-05
+          },
+          "d_tea_bcos_pyme_360": {
+            "coef": 0.00668557,
+            "ee": 0.00340408,
+            "p": 0.0542486,
+            "p_mco": 0.601296
+          },
+          "d_tea_cmac_pyme_360": {
+            "coef": -0.030296,
+            "ee": 0.0148845,
+            "p": 0.0463089,
+            "p_mco": 0.150741
+          },
+          "d_tea_crac_pyme_360": {
+            "coef": 0.0397892,
+            "ee": 0.0376508,
+            "p": 0.294913,
+            "p_mco": 0.440943
+          },
+          "d_tea_bcos_consumo_360": {
+            "coef": -0.0135471,
+            "ee": 0.0204781,
+            "p": 0.51084,
+            "p_mco": 0.674579
+          },
+          "inflacion": {
+            "coef": 0.0372949,
+            "ee": 0.058659,
+            "p": 0.527371,
+            "p_mco": 0.61281
+          },
+          "reforma": {
+            "coef": -0.000421864,
+            "ee": 0.0885857,
+            "p": 0.996216,
+            "p_mco": 0.996502
+          }
+        },
+        "n": 67.0,
+        "r2": 0.290496,
+        "r2_ajustado": 0.206318,
+        "durbin_watson": 2.09375,
+        "wald_tasas_p": 0.0970797,
+        "breusch_godfrey_p": 0.325746,
+        "breusch_pagan_p": 0.96384,
+        "jarque_bera_p": 5.19199e-15,
+        "reset_p": 0.75788,
+        "cusum_p": 0.79004,
+        "rezagos_hac": 3.0
+      },
+      "2": {
+        "coef": {
+          "const": {
+            "coef": 0.0385687,
+            "ee": 0.0413758,
+            "p": 0.355258,
+            "p_mco": 0.396067
+          },
+          "d_fpf_1": {
+            "coef": -0.504379,
+            "ee": 0.1232,
+            "p": 0.000137602,
+            "p_mco": 4.48227e-05
+          },
+          "d_tea_bcos_pyme_360": {
+            "coef": 0.00784563,
+            "ee": 0.010353,
+            "p": 0.451742,
+            "p_mco": 0.754725
+          },
+          "d_tea_cmac_pyme_360": {
+            "coef": -0.0765706,
+            "ee": 0.0500036,
+            "p": 0.131324,
+            "p_mco": 0.313971
+          },
+          "d_tea_crac_pyme_360": {
+            "coef": 0.0319755,
+            "ee": 0.0436311,
+            "p": 0.466699,
+            "p_mco": 0.535326
+          },
+          "d_tea_bcos_consumo_360": {
+            "coef": -0.00653827,
+            "ee": 0.0188184,
+            "p": 0.729563,
+            "p_mco": 0.840488
+          },
+          "inflacion": {
+            "coef": 0.0458019,
+            "ee": 0.0604642,
+            "p": 0.451924,
+            "p_mco": 0.532345
+          },
+          "reforma": {
+            "coef": 0.0113068,
+            "ee": 0.0909597,
+            "p": 0.901519,
+            "p_mco": 0.906054
+          },
+          "i_2024-01": {
+            "coef": 0.810129,
+            "ee": 0.45612,
+            "p": 0.0811443,
+            "p_mco": 0.271317
+          },
+          "i_2024-02": {
+            "coef": -0.0615064,
+            "ee": 0.439129,
+            "p": 0.889112,
+            "p_mco": 0.931188
+          },
+          "i_2025-03": {
+            "coef": -0.0451604,
+            "ee": 0.21044,
+            "p": 0.830859,
+            "p_mco": 0.934645
+          }
+        },
+        "n": 67.0,
+        "r2": 0.337938,
+        "r2_ajustado": 0.219713,
+        "durbin_watson": 2.12481,
+        "wald_tasas_p": 0.59511,
+        "breusch_godfrey_p": 0.28605,
+        "breusch_pagan_p": 0.974663,
+        "jarque_bera_p": 4.73211e-23,
+        "reset_p": 0.626163,
+        "cusum_p": 0.888364,
+        "rezagos_hac": 3.0
+      },
+      "3": {
+        "coef": {
+          "const": {
+            "coef": 0.0770727,
+            "ee": 0.0546712,
+            "p": 0.166342,
+            "p_mco": 0.203934
+          },
+          "d_fpf_1": {
+            "coef": -0.523875,
+            "ee": 0.125925,
+            "p": 0.000163612,
+            "p_mco": 0.000298205
+          },
+          "d_tea_bcos_pyme_360": {
+            "coef": 0.0101017,
+            "ee": 0.012183,
+            "p": 0.411931,
+            "p_mco": 0.730797
+          },
+          "d_tea_cmac_pyme_360": {
+            "coef": -0.0911903,
+            "ee": 0.0502124,
+            "p": 0.0768565,
+            "p_mco": 0.338006
+          },
+          "d_tea_crac_pyme_360": {
+            "coef": 0.0396119,
+            "ee": 0.0432442,
+            "p": 0.365153,
+            "p_mco": 0.515752
+          },
+          "d_tea_bcos_consumo_360": {
+            "coef": -0.0494862,
+            "ee": 0.0345336,
+            "p": 0.159631,
+            "p_mco": 0.372635
+          },
+          "inflacion": {
+            "coef": 0.10262,
+            "ee": 0.0854987,
+            "p": 0.237101,
+            "p_mco": 0.314597
+          },
+          "reforma": {
+            "coef": -0.0191513,
+            "ee": 0.100141,
+            "p": 0.849303,
+            "p_mco": 0.866343
+          },
+          "i_2024-01": {
+            "coef": 0.895506,
+            "ee": 0.469313,
+            "p": 0.0635712,
+            "p_mco": 0.324881
+          },
+          "i_2024-02": {
+            "coef": -0.267852,
+            "ee": 0.420105,
+            "p": 0.527379,
+            "p_mco": 0.761254
+          },
+          "i_2025-03": {
+            "coef": -0.0847517,
+            "ee": 0.268973,
+            "p": 0.754329,
+            "p_mco": 0.89542
+          }
+        },
+        "n": 51.0,
+        "r2": 0.375971,
+        "r2_ajustado": 0.219964,
+        "durbin_watson": 2.16529,
+        "wald_tasas_p": 0.00934195,
+        "breusch_godfrey_p": 0.149692,
+        "breusch_pagan_p": 0.923537,
+        "jarque_bera_p": 3.78227e-07,
+        "reset_p": 0.401269,
+        "cusum_p": 0.950221,
+        "rezagos_hac": 3.0
+      }
+    },
+    "reforma": {
+      "placebos": [
+        "2023-06",
+        "2023-12",
+        "2024-06",
+        "2024-12",
+        "2025-06"
+      ],
+      "placebo_p": [
+        0.00747252,
+        0.889417,
+        0.383801,
+        0.000126356,
+        2.39255e-11
+      ],
+      "placebos_significativos": 3,
+      "rho_ar1": 0.375089,
+      "1": {
+        "coef": {
+          "const": {
+            "coef": 0.103059,
+            "ee": 0.0770022,
+            "p": 0.185433
+          },
+          "tendencia": {
+            "coef": 0.0739144,
+            "ee": 0.00316306,
+            "p": 2.45088e-33
+          },
+          "nivel": {
+            "coef": -0.396445,
+            "ee": 0.123224,
+            "p": 0.0020189
+          },
+          "pendiente": {
+            "coef": -0.0609014,
+            "ee": 0.0174814,
+            "p": 0.000889977
+          }
+        },
+        "titulo": "asinh, HAC",
+        "n": 69,
+        "r2": 0.948814,
+        "wald_reforma_p": 1.99223e-06,
+        "durbin_watson": 1.27125
+      },
+      "2": {
+        "coef": {
+          "const": {
+            "coef": 0.11543,
+            "ee": 0.0804555,
+            "p": 0.156241
+          },
+          "tendencia": {
+            "coef": 0.0729877,
+            "ee": 0.00373847,
+            "p": 1.18818e-28
+          },
+          "nivel": {
+            "coef": -0.300408,
+            "ee": 0.219241,
+            "p": 0.175407
+          },
+          "pendiente": {
+            "coef": -0.0662284,
+            "ee": 0.0375904,
+            "p": 0.0828716
+          }
+        },
+        "titulo": "asinh, MCG AR(1)",
+        "n": 69,
+        "r2": 0.891278,
+        "wald_reforma_p": 0.00193299,
+        "durbin_watson": 1.25021
+      },
+      "3": {
+        "coef": {
+          "const": {
+            "coef": -0.512461,
+            "ee": 0.26479,
+            "p": 0.0572999
+          },
+          "tendencia": {
+            "coef": 0.215185,
+            "ee": 0.0179903,
+            "p": 4.4687e-18
+          },
+          "nivel": {
+            "coef": 0.224565,
+            "ee": 1.01475,
+            "p": 0.825552
+          },
+          "pendiente": {
+            "coef": -0.0700908,
+            "ee": 0.161848,
+            "p": 0.6664
+          }
+        },
+        "titulo": "S/ millones reales, HAC",
+        "n": 69,
+        "r2": 0.899481,
+        "wald_reforma_p": 0.910065,
+        "durbin_watson": 0.5302
+      }
+    },
+    "logit": {
+      "1": {
+        "coef": {
+          "const": {
+            "coef": 0.0544882,
+            "ee": 0.124803,
+            "p": 0.662406,
+            "razon": 1.056,
+            "razon_inf": 0.826859,
+            "razon_sup": 1.34864
+          },
+          "empresarial": {
+            "coef": 2.09268,
+            "ee": 0.155037,
+            "p": 1.60772e-41,
+            "razon": 8.10663,
+            "razon_inf": 5.98236,
+            "razon_sup": 10.9852
+          }
+        },
+        "n": 1519.0,
+        "pseudo_r2": 0.129814,
+        "lr_p": 6.95104e-41,
+        "auc": 0.690893,
+        "efecto_marginal_pp": 25.1281,
+        "efecto_inf_pp": 22.1279,
+        "efecto_sup_pp": 28.1283
+      },
+      "2": {
+        "coef": {
+          "const": {
+            "coef": 0.0258276,
+            "ee": 0.127099,
+            "p": 0.838973,
+            "razon": 1.02616,
+            "razon_inf": 0.799889,
+            "razon_sup": 1.31645
+          },
+          "empresarial": {
+            "coef": 1.48843,
+            "ee": 0.533985,
+            "p": 0.00531324,
+            "razon": 4.43014,
+            "razon_inf": 1.55557,
+            "razon_sup": 12.6167
+          },
+          "lider": {
+            "coef": 0.636779,
+            "ee": 0.537599,
+            "p": 0.23622,
+            "razon": 1.89038,
+            "razon_inf": 0.65909,
+            "razon_sup": 5.42195
+          }
+        },
+        "n": 1519.0,
+        "pseudo_r2": 0.130834,
+        "lr_p": 5.79717e-40,
+        "auc": 0.690796,
+        "efecto_marginal_pp": 17.8428,
+        "efecto_inf_pp": 5.37147,
+        "efecto_sup_pp": 30.314
+      },
+      "3": {
+        "coef": {
+          "const": {
+            "coef": -0.054544,
+            "ee": 0.130684,
+            "p": 0.676405,
+            "razon": 0.946917,
+            "razon_inf": 0.732948,
+            "razon_sup": 1.22335
+          },
+          "empresarial": {
+            "coef": 1.13094,
+            "ee": 0.575434,
+            "p": 0.0493718,
+            "razon": 3.09856,
+            "razon_inf": 1.00311,
+            "razon_sup": 9.57128
+          },
+          "lider": {
+            "coef": 0.478336,
+            "ee": 0.569043,
+            "p": 0.400573,
+            "razon": 1.61339,
+            "razon_inf": 0.528894,
+            "razon_sup": 4.92163
+          },
+          "anio": {
+            "coef": 0.219924,
+            "ee": 0.0802172,
+            "p": 0.0061139,
+            "razon": 1.24598,
+            "razon_inf": 1.06471,
+            "razon_sup": 1.45812
+          }
+        },
+        "n": 1519.0,
+        "pseudo_r2": 0.136153,
+        "lr_p": 1.61956e-40,
+        "auc": 0.725698,
+        "efecto_marginal_pp": 13.4903,
+        "efecto_inf_pp": 0.0818548,
+        "efecto_sup_pp": 26.8987
+      }
+    },
+    "empresas": {
+      "1": {
+        "coef": {
+          "es_fpf": {
+            "coef": -0.560566,
+            "ee": 3.51244,
+            "p": 0.873584
+          },
+          "ln_activo": {
+            "coef": 1.57894,
+            "ee": 0.347631,
+            "p": 1.84792e-05
+          }
+        },
+        "titulo": "ROA trimestral, intermediarios",
+        "n": 1667,
+        "empresas": 85,
+        "empresas_fpf": 5,
+        "n_fpf": 47,
+        "r2": 0.120774,
+        "mediana_fpf": -5.38721,
+        "mediana_resto": 1.20257
+      },
+      "2": {
+        "coef": {
+          "es_fpf": {
+            "coef": -4.5369,
+            "ee": 3.07471,
+            "p": 0.141119
+          },
+          "ln_activo": {
+            "coef": 0.232419,
+            "ee": 0.0937368,
+            "p": 0.0137101
+          }
+        },
+        "titulo": "ROA trimestral, todas",
+        "n": 5988,
+        "empresas": 299,
+        "empresas_fpf": 5,
+        "n_fpf": 47,
+        "r2": 0.0348669,
+        "mediana_fpf": -5.38721,
+        "mediana_resto": 0.886634
+      },
+      "3": {
+        "coef": {
+          "es_fpf": {
+            "coef": -17.9568,
+            "ee": 9.93503,
+            "p": 0.0742766
+          },
+          "ln_activo": {
+            "coef": -5.51161,
+            "ee": 2.11883,
+            "p": 0.0109746
+          }
+        },
+        "titulo": "Patrimonio/activo, intermediarios",
+        "n": 1667,
+        "empresas": 85,
+        "empresas_fpf": 5,
+        "n_fpf": 47,
+        "r2": 0.121799,
+        "mediana_fpf": 83.1547,
+        "mediana_resto": 78.9673
+      }
     }
   }
 }

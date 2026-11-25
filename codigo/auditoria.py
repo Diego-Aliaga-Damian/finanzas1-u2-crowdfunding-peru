@@ -35,6 +35,7 @@ from comun import CODIGO_MATRICULA, CRUDOS, PROCESADOS, RAIZ, SALIDAS, sha256_ar
 
 CODIGO = RAIZ / "codigo"
 CSV_PROCESADO = PROCESADOS / f"datos_procesados_{CODIGO_MATRICULA}.csv"
+CSV_EMPRESAS = PROCESADOS / f"datos_procesados_{CODIGO_MATRICULA}_empresas.csv"
 ARCHIVO_LOG = RAIZ / "log_ejecucion.txt"
 README = RAIZ / "README.md"
 REPORTE = SALIDAS / "reporte_auditoria.md"
@@ -161,6 +162,7 @@ def reejecutar_03(destino: Path) -> Path:
     s03 = cargar_script("03_limpieza_datos.py")
     s03.PROCESADOS = destino
     s03.CSV_PROCESADO = destino / CSV_PROCESADO.name
+    s03.CSV_EMPRESAS = destino / CSV_EMPRESAS.name
     s03.DICCIONARIO = destino / "diccionario_variables.md"
     s03.REPORTE = destino / "reporte_limpieza.md"
     s03.controles, s03.transformaciones = [], []
@@ -224,6 +226,12 @@ def controles_minimos(panel: pd.DataFrame, http: pd.DataFrame) -> None:
     anotar(S, "Histórico de al menos 60 periodos mensuales", "2.4.1",
            CUMPLE if panel.periodo.nunique() >= 60 else NO_CUMPLE,
            f"{panel.periodo.nunique()} meses ({panel.periodo.min()} a {panel.periodo.max()}); {len(panel)} filas")
+    r04 = SALIDAS / "resultados_04.json"
+    muestra = json.loads(r04.read_text(encoding="utf-8")).get("econometria", {}).get("muestra", []) if r04.exists() else []
+    modelos = [f for f in muestra if not f["bloque"].endswith("solo de las plataformas de FPF")]  # ese bloque es solo descriptivo
+    anotar(S, "Cada variable de las pruebas econométricas tiene 1 000 observaciones o 60 periodos", "2.4.1",
+           NO_EJECUTADO if not muestra else CUMPLE if all(f["cumple"] for f in modelos) else NO_CUMPLE,
+           "; ".join(f"{f['bloque'].split(' (')[0]}: {f['datos_por_variable']:,} por variable" for f in modelos) or "ejecutar 04")
     anotar(S, "Al menos 6 columnas", "2.4.1", CUMPLE if panel.shape[1] >= 6 else NO_CUMPLE, f"{panel.shape[1]} columnas")
     por_fuente = {f: [c for c in panel.columns if p.search(c)] for f, p in FUENTE_COLUMNA.items()}
     sustantivas = sum(len(v) for v in por_fuente.values())
@@ -246,11 +254,15 @@ def controles_autenticidad(panel: pd.DataFrame) -> None:
     with tempfile.TemporaryDirectory() as tmp:
         regenerado = reejecutar_03(Path(tmp))
         identico = regenerado.read_bytes() == CSV_PROCESADO.read_bytes()
+        empresas_igual = (Path(tmp) / CSV_EMPRESAS.name).read_bytes() == CSV_EMPRESAS.read_bytes() if CSV_EMPRESAS.exists() else False
         eq = equivalencia(panel, leer_procesado(regenerado))
     anotar(S, "03 regenera la base entregada desde los crudos", "2.4.5 / A2",
            CUMPLE if identico or eq["pct_celdas_iguales"] >= 95 else NO_CUMPLE,
            f"bytes idénticos: {'sí' if identico else 'no'}; celdas iguales: {eq['pct_celdas_iguales']} %; "
            f"columnas {'=' if eq['mismas_columnas'] else '≠'}; filas {'=' if eq['mismas_filas'] else '≠'}")
+
+    anotar(S, "03 regenera la base complementaria de empresas", "2.4.5 / A2", CUMPLE if empresas_igual else NO_CUMPLE,
+           f"bytes idénticos: {'sí' if empresas_igual else 'no'}")
 
     declarado = re.search(r"SHA-256 del archivo procesado\*\*\s*\|\s*\*\*`([0-9a-f]{64})`", README.read_text(encoding="utf-8"))
     real = sha256_archivo(CSV_PROCESADO)

@@ -1,20 +1,25 @@
 % Puntos clave y abreviaturas (recuadros al inicio del texto, como en las revistas académicas).
 % Los puntos clave solo resumen resultados del artículo; las cifras se generan desde salidas/resultados_04.json.
 \begin{puntosclave}
-\item Panel reproducible de \cifra{filasPanel} observaciones plataforma-mes, construido con las API del BCRP y de la SMV y el rastreo del portal de proyectos de la SMV.
-\item El monto anual del FPF pasó de S/~\cifra{monto2022} millones en 2022 a S/~\cifra{monto2025} millones en 2025, y una sola plataforma reúne el \cifra{participacionLider}~\% del monto.
-\item Los proyectos empresariales se financian más (\cifra{colocacionEmp}~\% frente a \cifra{colocacionPer}~\%), pero la diferencia refleja el modelo de negocio de cada plataforma.
-\item El mayor monto tras la modificación del reglamento de 2025 es coherente con la tendencia previa y no puede atribuirse a la norma.
-\item Sin tasa ni plazo publicados por operación, el precio del FPF no puede compararse con el del crédito tradicional.
+\item Cada variable de las pruebas econométricas cumple el mínimo de la muestra: \cifra{muSeriesObs} meses en las series de tiempo, \cifra{muProyObs} proyectos en el logit y \cifra{muCompObs} empresas-trimestre en la comparación de rentabilidad.
+\item El monto anual del FPF subió de S/~\cifra{monto2022} millones en 2022 a S/~\cifra{monto2025} millones en 2025. Una sola plataforma reúne el \cifra{participacionLider}~\% del monto.
+\item Con \cifra{muSeriesObs} meses no hay cointegración entre el FPF y las tasas de bancos y cajas, y en el corto plazo las tasas no son significativas en conjunto.
+\item La modificación del reglamento de 2025 no muestra un efecto positivo en el monto: este ya venía creciendo y luego se desaceleró.
+\item Los proyectos empresariales se colocan más, pero la ventaja se reduce al controlar la plataforma y el año.
+\item Mientras no se publiquen la tasa y el plazo por operación, el precio del FPF no se puede comparar con el del crédito tradicional.
 \end{puntosclave}
 
 \begin{abreviaturas}
+\abrev{ADF}{Prueba de Dickey-Fuller aumentada}
 \abrev{API}{Interfaz de programación de aplicaciones}
 \abrev{BCRP}{Banco Central de Reserva del Perú}
 \abrev{EEFF}{Estados financieros}
 \abrev{FPF}{Financiamiento participativo financiero}
+\abrev{HAC}{Errores robustos a heterocedasticidad y autocorrelación}
 \abrev{IHH}{Índice de Herfindahl-Hirschman}
 \abrev{IPC}{Índice de precios al consumidor}
+\abrev{KPSS}{Prueba de Kwiatkowski, Phillips, Schmidt y Shin}
+\abrev{MCG}{Mínimos cuadrados generalizados}
 \abrev{ROA}{Rentabilidad sobre activos}
 \abrev{SIMV}{Sistema de Información del Mercado de Valores}
 \abrev{SMV}{Superintendencia del Mercado de Valores}

@@ -12,6 +12,8 @@ Entradas (solo datos_crudos/; este script no se conecta a internet):
 
 Salidas:
     datos_procesados/datos_procesados_2024200481M.csv   panel plataforma × mes (6 × 69 = 414 filas)
+    datos_procesados/datos_procesados_2024200481M_empresas.csv   empresa × trimestre de todas las empresas
+                     supervisadas por la SMV (mismo crudo de la API), para las pruebas econométricas de OE2
     diccionario_variables.md                             generado desde este mismo código
     salidas/reporte_limpieza.md                          controles, faltantes, atípicos y transformaciones
 
@@ -51,6 +53,7 @@ CSV_BCRP = CRUDOS / f"datos_crudos_{CODIGO_MATRICULA}_bcrp.csv"
 LISTAS_SIMV = {"vigentes": CRUDOS / "smv_simv" / "lista_vigentes.html",
                "retiradas": CRUDOS / "smv_simv" / "lista_retiradas.html"}
 CSV_PROCESADO = PROCESADOS / f"datos_procesados_{CODIGO_MATRICULA}.csv"
+CSV_EMPRESAS = PROCESADOS / f"datos_procesados_{CODIGO_MATRICULA}_empresas.csv"
 DICCIONARIO = RAIZ / "diccionario_variables.md"
 REPORTE = SALIDAS / "reporte_limpieza.md"
 
@@ -198,6 +201,29 @@ def preparar_eeff(log) -> pd.DataFrame:
                    f"({o.trimestre_eeff.min()} a {o.trimestre_eeff.max()})")
     columnas = ["RUC", "NombreEmpresa", "periodo", "trimestre_eeff", *VARIABLES_EEFF.values(), "fecha_registro_eeff"]
     return o[columnas].rename(columns={"RUC": "ruc", "NombreEmpresa": "razon_social"})
+
+
+# ----------------------------------------------------------------------------
+# BLOQUE 3b — SMV OData: todas las empresas supervisadas (comparación de rentabilidad de 04)
+# ----------------------------------------------------------------------------
+def preparar_empresas(log) -> pd.DataFrame:
+    """Empresa-trimestre de todas las empresas que informan a la SMV. Solo tipifica y ordena: no filtra, no corrige y no
+    imputa. Las cuentas están en miles de la moneda que reporta cada empresa; 04 usa razones, que no dependen de ella."""
+    o = pd.read_csv(CSV_ODATA, dtype=str)
+    if o.duplicated(["RPJ", "Ejercicio", "Trimestre"]).any():
+        raise ValueError("Empresas duplicadas para un mismo RPJ y trimestre")
+    e = pd.DataFrame({"rpj": o.RPJ, "ruc": o.RUC, "empresa": o.NombreEmpresa, "tipo_empresa": o.TipoEmpresa.str.strip(),
+                      "es_fpf": o.TipoEmpresa.str.contains("PARTICIPATIVO", na=False).astype(int),
+                      "moneda": np.where(o.Moneda.eq("Soles"), "Soles", "Dólares"),
+                      "trimestre": o.Ejercicio + "-T" + o.Trimestre.str[0]})
+    for origen, destino in VARIABLES_EEFF.items():
+        e[destino] = pd.to_numeric(o[origen], errors="raise").astype(float)
+    e = e.sort_values(["trimestre", "rpj"], kind="stable").reset_index(drop=True)
+    registrar(log, f"Empresas supervisadas: {len(e)} empresa-trimestre de {e.rpj.nunique()} empresas en {e.trimestre.nunique()} "
+                   f"trimestres; llave rpj + trimestre única; {int(e.es_fpf.sum())} son de plataformas de FPF")
+    transformaciones.append("Empresas (SMV OData): todas las empresas supervisadas, empresa × trimestre, sin filtrar ni corregir "
+                            "(datos_procesados_2024200481M_empresas.csv).")
+    return e
 
 
 # ============================================================================
@@ -360,6 +386,13 @@ def escribir_diccionario(panel: pd.DataFrame, log) -> None:
               "|---|---|---|---|---|---|"]
     lineas += [f"| {i} | `{d['variable']}` | {d['definicion']} | {d['unidad']} | {d['frecuencia']} | {d['fuente']} |"
                for i, d in enumerate(dic, 1)]
+    lineas += ["", "## Base complementaria: datos_procesados_2024200481M_empresas.csv", "",
+               "Empresa-trimestre de todas las empresas supervisadas por la SMV (mismo crudo de la API OData). Llave: `rpj` + "
+               "`trimestre`. La usa 04 para comparar la rentabilidad de las plataformas. Columnas: `rpj` (código de la empresa en "
+               "la SMV), `ruc` (0 en emisores del exterior), `empresa`, `tipo_empresa`, `es_fpf` (1 = sociedad administradora de "
+               "plataformas de FPF), `moneda`, `trimestre` (AAAA-Tn) y las cinco cuentas `activo_total_miles`, "
+               "`pasivo_total_miles`, `patrimonio_total_miles`, `ingresos_totales_miles` y `utilidad_neta_miles`, en miles de la "
+               f"moneda que reporta cada empresa. Fuente: SMV, API OData ({URL_ODATA})."]
     DICCIONARIO.write_text("\n".join(lineas) + "\n", encoding="utf-8", newline="\n")
     log.info("DICCIONARIO | variables=%d | archivo=%s", len(dic), relativa(DICCIONARIO))
 
@@ -397,6 +430,10 @@ def main() -> int:
     panel.to_csv(CSV_PROCESADO, index=False, encoding="utf-8", lineterminator="\n")
     log.info("PROCESADO | filas=%d | columnas=%d | archivo=%s | sha256=%s", len(panel), panel.shape[1],
              relativa(CSV_PROCESADO), sha256_archivo(CSV_PROCESADO))
+    empresas = preparar_empresas(log)
+    empresas.to_csv(CSV_EMPRESAS, index=False, encoding="utf-8", lineterminator="\n")
+    log.info("PROCESADO | filas=%d | columnas=%d | archivo=%s | sha256=%s", len(empresas), empresas.shape[1],
+             relativa(CSV_EMPRESAS), sha256_archivo(CSV_EMPRESAS))
     escribir_diccionario(panel, log)
     escribir_reporte(panel, atipicos, log)
     log.info("FIN | 03 completado")

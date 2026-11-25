@@ -26,7 +26,7 @@ def monto_por_plataforma(v: pd.DataFrame, desde: str, hasta: str, clave: str, pe
         if permitir_real:
             real = (c3.segmented_control("Unidad", ["Corrientes", "Reales"], default="Corrientes", key=f"w_real_{clave}",
                                          label_visibility="collapsed",
-                                         help="Reales: soles de diciembre de 2021, deflactados con el IPC (como en la Tabla 2).")
+                                         help="Reales: soles de diciembre de 2021, deflactados con el IPC (como en la Tabla 3).")
                     == "Reales")
         m = D.mensual_por_plataforma(v, real=real)
         if m.empty or m.to_numpy().sum() == 0:

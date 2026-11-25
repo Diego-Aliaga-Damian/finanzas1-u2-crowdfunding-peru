@@ -30,6 +30,7 @@ from comun import CODIGO_MATRICULA, PROCESADOS, SALIDAS, sha256_archivo  # noqa:
 
 DESTINO = RAIZ / "articulo" / "generado"
 CSV_PROCESADO = PROCESADOS / f"datos_procesados_{CODIGO_MATRICULA}.csv"
+CSV_EMPRESAS = PROCESADOS / f"datos_procesados_{CODIGO_MATRICULA}_empresas.csv"
 REPOSITORIO = "https://github.com/Diego-Aliaga-Damian/finanzas1-u2-crowdfunding-peru"
 MESES = {1: "enero", 2: "febrero", 3: "marzo", 4: "abril", 5: "mayo", 6: "junio", 7: "julio", 8: "agosto",
          9: "septiembre", 10: "octubre", 11: "noviembre", 12: "diciembre"}
@@ -150,12 +151,70 @@ def cifras() -> dict[str, str]:
     c["solicitudesHTTPok"] = num(sum(x == "200" for x in extraccion))
     c["solicitudesDiagnostico"] = num(sum(1 for f, s, _ in lineas_http if s not in SCRIPTS_EXTRACCION and f in FECHAS_EXTRACCION))
     c.update(cifras_tablas(r))
+    c.update(cifras_econometria(r["econometria"]))
     # Títulos de las figuras de 04 (los usan los pósteres: \cifra{tituloF1} ... \cifra{tituloF4})
     for nombre, titulo in r["titulos_figuras"].items():
         c[f"titulo{nombre.split('_')[0].upper()}"] = esc(titulo)
     # Versión de cada valor p con su relación, para escribir $p\cifra{xRel}$: «< 0.001» o «= 0.127»
     for k in [k for k in c if k.endswith("P") or k.endswith("PMin") or k.endswith("PMax") or k.startswith("hUnoP")]:
         c[f"{k}Rel"] = c[k] if c[k].startswith("<") else f"= {c[k]}"
+    return c
+
+
+def cifras_econometria(ec: dict) -> dict[str, str]:
+    """Cifras de las pruebas econométricas (T9-T15) citadas en el texto, leídas de resultados_04.json."""
+    c: dict[str, str] = {}
+    for clave, inicio in (("Series", "Series mensuales"), ("Celdas", "Celdas del portal"), ("Proy", "Proyectos publicados"),
+                          ("Emp", "Estados financieros de todas"), ("Comp", "Estados financieros de intermediarios"), ("Fpf", "Estados financieros solo")):
+        f = next(x for x in ec["muestra"] if x["bloque"].startswith(inicio))
+        c.update({f"mu{clave}Vars": num(f["variables"]), f"mu{clave}Obs": num(f["datos_por_variable"]), f"mu{clave}Datos": num(f["datos_totales"]),
+                  f"mu{clave}Min": num(f["minimo_total"])})
+    ru = ec["raiz_unitaria"]
+    c.update({"adfFpf": num(ru["fpf"]["adf_nivel"], 2), "adfFpfP": p_texto(ru["fpf"]["adf_nivel_p"]), "adfFpfDif": num(ru["fpf"]["adf_dif"], 2),
+              "adfFpfDifP": p_texto(ru["fpf"]["adf_dif_p"]), "raizN": str(len(ru)), "raizUno": str(sum(v["adf_nivel_p"] >= 0.05 > v["adf_dif_p"] for v in ru.values())),
+              "zaQuiebres": str(sum(v["za_p"] < 0.05 for v in ru.values())), "zaBancosMes": mes_texto(ru["tea_bcos_pyme_360"]["za_quiebre"])})
+    for v, t in (("fpf", "Fpf"), ("tea_bcos_pyme_360", "Bancos"), ("tea_cmac_pyme_360", "Cmac"), ("tea_crac_pyme_360", "Crac"),
+                 ("tea_bcos_consumo_360", "Consumo"), ("tamn", "Tamn"), ("ln_ipc", "Ipc")):
+        c[f"raizNivel{t}P"], c[f"raizDif{t}P"] = p_texto(ru[v]["adf_nivel_p"]), p_texto(ru[v]["adf_dif_p"])
+    for clave, trozo in (("Bancos", "Bancos, pyme"), ("Cmac", "Cajas municipales"), ("Crac", "Cajas rurales"), ("Consumo", "consumo"), ("Sistema", "sistema")):
+        f = next(v for k, v in ec["cointegracion"]["relaciones"].items() if trozo in k)
+        c.update({f"eg{clave}": num(f["engle_granger"], 2), f"eg{clave}P": p_texto(f["engle_granger_p"]), f"eg{clave}ActivosP": p_texto(f["engle_granger_p_52"]),
+                  f"joh{clave}": num(f["johansen_traza"], 2), f"joh{clave}VC": num(f["johansen_vc5"], 2)})
+    rel = ec["cointegracion"]["relaciones"].values()
+    c["egParesPMin"] = p_texto(min(f["engle_granger_p"] for k, f in ec["cointegracion"]["relaciones"].items() if "sistema" not in k))
+    c["johParesMax"] = num(max(f["johansen_traza"] for k, f in ec["cointegracion"]["relaciones"].items() if "sistema" not in k), 2)
+    c["grangerPMin"] = p_texto(ec["cointegracion"]["granger_min_p"])
+    for k, t in (("1", "Sin"), ("2", "Con"), ("3", "Activos")):
+        m = ec["corto_plazo"][k]
+        c.update({f"cp{t}N": num(m["n"]), f"cp{t}RDos": num(m["r2"], 3), f"cp{t}WaldP": p_texto(m["wald_tasas_p"]), f"cp{t}BgP": p_texto(m["breusch_godfrey_p"]),
+                  f"cp{t}BpP": p_texto(m["breusch_pagan_p"]), f"cp{t}JbP": p_texto(m["jarque_bera_p"]), f"cp{t}ResetP": p_texto(m["reset_p"]),
+                  f"cp{t}CusumP": p_texto(m["cusum_p"]), f"cp{t}Phi": num(m["coef"]["d_fpf_1"]["coef"], 2), f"cp{t}PhiP": p_texto(m["coef"]["d_fpf_1"]["p"]),
+                  f"cp{t}Cmac": num(m["coef"]["d_tea_cmac_pyme_360"]["coef"], 3), f"cp{t}CmacP": p_texto(m["coef"]["d_tea_cmac_pyme_360"]["p"]),
+                  f"cp{t}ReformaP": p_texto(m["coef"]["reforma"]["p"]),
+                  f"cp{t}TasasP": p_texto(min(v["p"] for q, v in m["coef"].items() if q.startswith("d_tea")))})
+    for v, t in (("d_tea_bcos_pyme_360", "Bancos"), ("d_tea_crac_pyme_360", "Crac"), ("d_tea_bcos_consumo_360", "Consumo"), ("inflacion", "Infl"),
+                 ("reforma", "Reforma")):
+        x = ec["corto_plazo"]["2"]["coef"][v]
+        c[f"cpCon{t}"], c[f"cpCon{t}P"] = num(x["coef"], 3), p_texto(x["p"])
+    c["cpRezagos"] = str(int(ec["corto_plazo"]["2"]["rezagos_hac"]))
+    for k, t in (("1", "Asinh"), ("2", "Ar"), ("3", "Lin")):
+        m = ec["reforma"][k]
+        for v, q in (("nivel", "Nivel"), ("pendiente", "Pend"), ("tendencia", "Tend")):
+            c[f"ref{t}{q}"], c[f"ref{t}{q}P"] = num(m["coef"][v]["coef"], 3), p_texto(m["coef"][v]["p"])
+        c[f"ref{t}WaldP"], c[f"ref{t}RDos"] = p_texto(m["wald_reforma_p"]), num(m["r2"], 3)
+    c.update({"refPlacebos": str(ec["reforma"]["placebos_significativos"]), "refPlacebosN": str(len(ec["reforma"]["placebos"])), "refRho": num(ec["reforma"]["rho_ar1"], 2)})
+    for k, t in (("1", "Uno"), ("2", "Dos"), ("3", "Tres")):
+        m, e = ec["logit"][k], ec["logit"][k]["coef"]["empresarial"]
+        c.update({f"log{t}Or": num(e["razon"], 2), f"log{t}Inf": num(e["razon_inf"], 2), f"log{t}Sup": num(e["razon_sup"], 2), f"log{t}P": p_texto(e["p"]),
+                  f"log{t}Efecto": num(m["efecto_marginal_pp"], 1), f"log{t}EfectoInf": num(m["efecto_inf_pp"], 1), f"log{t}EfectoSup": num(m["efecto_sup_pp"], 1),
+                  f"log{t}Auc": num(m["auc"], 3)})
+    c.update({"logN": num(ec["logit"]["1"]["n"]), "logLiderP": p_texto(ec["logit"]["3"]["coef"]["lider"]["p"]),
+              "logAnioOr": num(ec["logit"]["3"]["coef"]["anio"]["razon"], 2), "logAnioP": p_texto(ec["logit"]["3"]["coef"]["anio"]["p"])})
+    for k, t in (("1", "Roa"), ("2", "RoaTodas"), ("3", "Cap")):
+        m = ec["empresas"][k]
+        c.update({f"emp{t}": num(m["coef"]["es_fpf"]["coef"], 2), f"emp{t}P": p_texto(m["coef"]["es_fpf"]["p"]), f"emp{t}N": num(m["n"]), f"emp{t}Empresas": num(m["empresas"]),
+                  f"emp{t}Fpf": str(m["empresas_fpf"]), f"emp{t}MedFpf": num(m["mediana_fpf"], 1), f"emp{t}MedResto": num(m["mediana_resto"], 1),
+                  f"emp{t}Tam": num(m["coef"]["ln_activo"]["coef"], 2), f"emp{t}TamP": p_texto(m["coef"]["ln_activo"]["p"])})
     return c
 
 
@@ -242,7 +301,7 @@ def anexo_endpoints() -> list[str]:
 def anexo_diccionario() -> list[str]:
     texto = (RAIZ / "diccionario_variables.md").read_text(encoding="utf-8").splitlines()
     filas = [l for l in texto if re.match(r"^\| \d+ \|", l)]
-    lineas = ["{\\small\\setlength{\\tabcolsep}{4pt}", f"\\begin{{longtable}}{{{col(4.0, 6.0, 2.3, 1.7, 1.9)}}}", "\\toprule",
+    lineas = ["{\\footnotesize\\setlength{\\tabcolsep}{4pt}", f"\\begin{{longtable}}{{{col(4.0, 6.0, 2.3, 1.7, 1.9)}}}", "\\toprule",
               "Variable & Definición & Unidad & Frecuencia & Fuente \\\\", "\\midrule", "\\endhead"]
     for f in filas:
         partes = [x.strip() for x in f.strip("|").split("|")]
@@ -262,13 +321,14 @@ def anexo_reproducibilidad() -> list[str]:
     log = (RAIZ / "log_ejecucion.txt").read_text(encoding="utf-8")
     fechas = sorted(set(re.findall(r"^(\d{4}-\d{2}-\d{2}) [\d:]+ \| \S+ \| INFO \| HTTP", log, re.M)))
     req = {l.split("==")[0]: l.split("==")[1] for l in (RAIZ / "requirements.txt").read_text(encoding="utf-8").splitlines() if "==" in l}
-    versiones = ", ".join(f"{k} {req[k]}" for k in ("requests", "beautifulsoup4", "pandas", "numpy", "scipy", "matplotlib", "pandera", "pytest") if k in req)
+    versiones = ", ".join(f"{k} {req[k]}" for k in ("requests", "beautifulsoup4", "pandas", "numpy", "scipy", "statsmodels", "matplotlib", "pandera", "pytest") if k in req)
     panel = pd.read_csv(CSV_PROCESADO)
     s01 = cargar("01_extraccion_api.py")
     filas = [("Repositorio", f"\\url{{{REPOSITORIO}}}"), ("Commit de referencia", f"\\texttt{{{commit}}}"),
              ("Periodo consultado", f"{s01.FECHA_INICIO} a {s01.FECHA_CORTE} (constantes FECHA\\_INICIO y FECHA\\_CORTE)"),
              ("Fechas de extracción", ", ".join(fechas) + " (según log\\_ejecucion.txt)"),
              ("Archivo procesado", f"\\texttt{{datos\\_procesados/{CSV_PROCESADO.name.replace('_', chr(92) + '_')}}}: {len(panel)} filas, {panel.shape[1]} columnas"),
+             ("Base complementaria", f"\\texttt{{datos\\_procesados/{CSV_EMPRESAS.name.replace('_', chr(92) + '_' + chr(92) + 'allowbreak{}')}}}: {len(pd.read_csv(CSV_EMPRESAS))} empresa-trimestre"),
              ("SHA-256 del archivo procesado", "\\texttt{{{}}}\\newline\\texttt{{{}}}".format(*(lambda h: (h[:32], h[32:]))(sha256_archivo(CSV_PROCESADO)))),
              ("Orden de ejecución", "\\texttt{01\\_extraccion\\_api.py} $\\rightarrow$ \\texttt{02\\_scraping\\_web.py} $\\rightarrow$ "
                                     "\\texttt{03\\_limpieza\\_datos.py} $\\rightarrow$ \\texttt{04\\_analisis.py}"),

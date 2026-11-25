@@ -25,7 +25,7 @@ st.set_page_config(page_title="FinCrowd Perú · Financiamiento participativo 20
 import compartido as C  # noqa: E402
 import datos as D  # noqa: E402
 import tema as T  # noqa: E402
-from vistas import (acceso, centro, credito, datos_extraccion, inicio, oferta, plataformas, productos,  # noqa: E402
+from vistas import (acceso, centro, credito, datos_extraccion, econometria, inicio, oferta, plataformas, productos,  # noqa: E402
                     reproducibilidad, sensibilidad, simulador)
 
 T.aplicar_tema()
@@ -41,6 +41,8 @@ P = {"inicio": st.Page(inicio.pagina, title="Inicio", icon=":material/space_dash
                         url_path="credito-tradicional"),
      "sensibilidad": st.Page(sensibilidad.pagina, title="¿Son sólidos los resultados?", icon=":material/tune:",
                              url_path="sensibilidad"),
+     "econometria": st.Page(econometria.pagina, title="Pruebas econométricas", icon=":material/functions:",
+                            url_path="econometria"),
      "simulador": st.Page(simulador.pagina, title="Simulador de préstamo", icon=":material/calculate:", url_path="simulador"),
      "datos": st.Page(datos_extraccion.pagina, title="Datos y fuentes", icon=":material/database:", url_path="datos"),
      "productos": st.Page(productos.pagina, title="Descargas", icon=":material/download:", url_path="productos"),
@@ -50,7 +52,7 @@ C.PAGINAS.update(P)
 
 navegacion = st.navigation({"Empieza aquí": [P["inicio"], P["centro"]],
                             "Resultados del estudio": [P["oferta"], P["plataformas"], P["acceso"], P["credito"],
-                                                       P["sensibilidad"]],
+                                                       P["econometria"], P["sensibilidad"]],
                             "Pruébalo tú": [P["simulador"]],
                             "Datos y evidencia": [P["datos"], P["productos"], P["reproducibilidad"]]}, expanded=True)
 st.logo(str(C.IMG_MARCA), size="large", icon_image=str(C.IMG_ICONO))

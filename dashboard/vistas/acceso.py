@@ -45,7 +45,7 @@ def pagina() -> None:
                  leer="Cada barra indica qué porcentaje de los proyectos publicados se financió: **azul** para empresas "
                       "y **coral** para personas. La rayita negra sobre cada barra es el intervalo de confianza: el rango "
                       "donde probablemente está el valor real. Si las rayitas de dos barras no se tocan, la diferencia es clara.")
-        T.nota("Después de la reforma no se publicó ningún proyecto personal. Fuente: SMV (SIMV). Tabla 4 del artículo.")
+        T.nota("Después de la reforma no se publicó ningún proyecto personal. Fuente: SMV (SIMV). Tabla 12 del artículo.")
 
     if plataformas:
         v = C.vista_filtrada()

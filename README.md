@@ -44,6 +44,8 @@ Están declarados como constantes al inicio de los scripts 01, 02 y 03, no como 
 | Diccionario | `diccionario_variables.md`, generado por `03_limpieza_datos.py` |
 | Faltantes | No se imputan. `estado_simv` distingue `con_registros`, `sin_registros` y `no_obtenido` |
 | Incidencia | El portal SIMV responde de forma intermitente a las consultas de plataformas retiradas. Cobertura: 374/414 meses; ver `incidencias_fuente.md` |
+| Base complementaria | `datos_procesados/datos_procesados_2024200481M_empresas.csv`: 6 001 empresa-trimestre de todas las empresas supervisadas por la SMV (mismo crudo de la API), para las pruebas de rentabilidad. SHA-256: `3533cb0282e66be850d5257842f782e797271104f12c017b4de5b2cbbaeaeeaf` |
+| Tamaño de muestra | Cada variable de las pruebas econométricas tiene al menos 1 000 observaciones o 60 periodos: 69 meses en las series de tiempo, 1 519 proyectos en el logit y 1 667 o más empresas-trimestre en la rentabilidad (tabla T9) |
 | **SHA-256 del archivo procesado** | **`cd48b21f22844cff650f5257a324b632d5afac7a009dbaceebe7456e9a7e1b8c`** |
 
 ## Requisitos
@@ -66,9 +68,11 @@ python codigo\04_analisis.py            # tablas y figuras del artículo en sali
 
 ## Análisis (04)
 
-`04_analisis.py` lee solo `datos_procesados` y genera en `salidas/` 8 tablas (CSV y LaTeX), 4 figuras (PNG y PDF, cada una con su tabla de datos), `resultados_04.json` con las cifras clave y `manifiesto_salidas.csv` con el SHA-256 de cada salida. Dos ejecuciones producen archivos idénticos byte a byte.
+`04_analisis.py` lee solo `datos_procesados` y genera en `salidas/` 15 tablas (CSV y LaTeX), 5 figuras (PNG y PDF, cada una con su tabla de datos), `resultados_04.json` con las cifras clave y `manifiesto_salidas.csv` con el SHA-256 de cada salida. Dos ejecuciones producen archivos idénticos byte a byte.
 
 Supuestos declarados: (S1) los ingresos y la utilidad de la SMV son flujos trimestrales, no acumulados (los ingresos bajan dentro del año); (S2) los meses no obtenidos no se imputan, los agregados son una cota inferior y T8 acota su efecto; los meses sin registros cuentan como cero; (S3) la tasa de colocación se calcula sobre sumas anuales o de subperiodos; (S4) las asociaciones no implican causalidad: H1 compara niveles, y T8 agrega cortes placebo y el crecimiento interanual porque el monto ya crecía antes de la reforma; (S5) los estados financieros registrados en soles en lugar de miles se dividen entre 1 000 solo si la misma empresa tiene trimestres de referencia (S5a); si no los tiene, sus saldos no se usan (S5b). Bootstrap con semilla `0481`.
+
+**Pruebas econométricas** (`codigo/econometria.py`, llamado por 04): raíz unitaria (ADF, KPSS y Zivot-Andrews), cointegración (Engle-Granger y Johansen) y Granger, modelo de corto plazo con errores HAC y diagnósticos, regresión segmentada de la reforma con cortes ficticios, logit de colocación y panel de rentabilidad. Las decisiones de especificación están fijadas y documentadas al inicio del módulo.
 
 **Demostración en vivo (3 solicitudes, ≈ 15 s; escribe en `salidas/demo/` y no toca los crudos):**
 
@@ -89,9 +93,9 @@ La auditoría reproduce los controles de los numerales 2.4.1, 2.4.2, 2.4.5, 2.4.
 ## Estructura
 
 ```
-codigo/                  scripts 01-04, comun.py (funciones compartidas) y auditoria.py
+codigo/                  scripts 01-04, econometria.py (pruebas de 04), comun.py (funciones compartidas) y auditoria.py
 datos_crudos/            respuestas originales (JSON/HTML), robots.txt y CSV crudos, sin editar
-datos_procesados/        datos_procesados_2024200481M.csv
+datos_procesados/        datos_procesados_2024200481M.csv y su complemento _empresas.csv
 salidas/                 tablas/ y figuras/ de 04, resultados_04.json, manifiesto_salidas.csv y reportes
 pruebas/                 pruebas pytest con respuestas simuladas (fixtures/ = recortes de respuestas reales)
 articulo/                artículo en LaTeX (articulo.tex, secciones/, generado/ con las cifras automáticas)

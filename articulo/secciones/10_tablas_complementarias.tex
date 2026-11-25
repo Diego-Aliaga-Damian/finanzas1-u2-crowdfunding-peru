@@ -1,0 +1,42 @@
+% Tablas complementarias (anexo, a una columna): el detalle que los Resultados resumen.
+\subsection{Tablas complementarias}
+
+\begin{table}[H]
+\caption{Sociedades administradoras de plataformas de financiamiento participativo financiero, 2021-2026}
+\label{tab:plataformas}
+\footnotesize\tablacompacta
+\input{\tablas/t1_plataformas.tex}
+\notaapa{«Meses obtenidos» son las consultas válidas al portal sobre 69 posibles. EEFF = estados financieros presentados a la SMV. Elaboración propia con datos de la \textcite{smvsimv2026} y de la API OData de la SMV \parencite{smvodata2026}.}
+\end{table}
+
+\begin{table}[H]
+\caption{Indicadores financieros de las sociedades administradoras por año}
+\label{tab:financieros}
+\footnotesize\tablacompacta
+\input{\tablas/t3_plataformas_financieros.tex}
+\notaapa{Montos en miles de soles. El ROA anualiza la utilidad de los trimestres disponibles. En los registros reportados en soles, la escala se corrigió solo cuando la empresa tenía trimestres de referencia; si no los tenía, los saldos se omiten (—). Elaboración propia con datos de la API OData de la SMV \parencite{smvodata2026} y de la \textcite{smvsimv2026}.}
+\end{table}
+
+\begin{table}[H]
+\caption{Condiciones de acceso y de monto por tipo de receptor, antes y después de la modificación del reglamento}
+\label{tab:condiciones}
+\footnotesize\tablacompacta
+\input{\tablas/t4_condiciones_por_receptor.tex}
+\notaapa{El periodo empieza en \cifra{inicioFPF}; «después» comprende de diciembre de 2025 a septiembre de 2026. Los intervalos de Wilson suponen proyectos independientes. Elaboración propia con datos de la \textcite{smvsimv2026}.}
+\end{table}
+
+\begin{table}[H]
+\caption{Monto medio de los proyectos de financiamiento participativo y tasas del crédito tradicional por periodo}
+\label{tab:segmentos}
+\footnotesize\tablacompacta
+\input{\tablas/t7_comparacion_segmentos.tex}
+\notaapa{Las tasas son promedios simples de las tasas efectivas anuales mensuales. El año 2025 se divide por el salto de la tasa bancaria de pequeña y microempresa en marzo. Los montos medios del FPF y las tasas no miden el mismo concepto; se presentan juntos como contexto y no como comparación de precios. Elaboración propia con datos de la \textcite{smvsimv2026} y de \textcite{bcrpdata2026}.}
+\end{table}
+
+\begin{table}[H]
+\caption{Contrastes no paramétricos y análisis de sensibilidad}
+\label{tab:sensibilidad}
+\footnotesize\tablacompacta
+\input{\tablas/t8_sensibilidad.tex}
+\notaapa{M = millones de soles. E1 usa primeras diferencias mensuales. Elaboración propia con datos de la SMV \parencite{smvsimv2026,smvodata2026} y del BCRP \parencite{bcrpdata2026}.}
+\end{table}

@@ -16,7 +16,7 @@ testing = pytest.importorskip("streamlit.testing.v1")
 pytest.importorskip("plotly")
 
 DASHBOARD = RAIZ / "dashboard"
-PAGINAS = ["inicio", "centro", "oferta", "plataformas", "acceso", "credito", "sensibilidad", "simulador", "datos_extraccion",
+PAGINAS = ["inicio", "centro", "oferta", "plataformas", "acceso", "credito", "econometria", "sensibilidad", "simulador", "datos_extraccion",
            "productos", "reproducibilidad"]
 
 

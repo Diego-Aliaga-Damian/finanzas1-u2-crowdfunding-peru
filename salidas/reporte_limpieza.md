@@ -15,6 +15,7 @@ Archivo generado: `datos_procesados/datos_procesados_2024200481M.csv` · filas: 
 - ✅ estado_simv: sin_registros=267, con_registros=107, no_obtenido=40
 - ✅ EEFF integrados: 52/52 trimestres
 - ✅ Atípicos (Tukey, 3·RIC, y escala de EEFF): 35 identificados; se conservan (datos oficiales)
+- ✅ Empresas supervisadas: 6001 empresa-trimestre de 300 empresas en 23 trimestres; llave rpj + trimestre única; 52 son de plataformas de FPF
 
 ## Transformaciones aplicadas
 
@@ -23,6 +24,7 @@ Archivo generado: `datos_procesados/datos_procesados_2024200481M.csv` · filas: 
 3. SIMV: préstamos en columnas por tipo de receptor (_emp, _per); valores en columnas _valores (suma de tipos); la fila TOTAL se usa solo como control.
 4. BCRP: periodo 'Ene.2021' -> '2021-01'; 'n.d.' -> vacío; tasas en % (TEA) e IPC (dic. 2021 = 100) como decimales; el valor de cada mes se repite para todas las plataformas.
 5. Integración: panel balanceado plataforma × mes (llave ruc + periodo). SIMV por empresa_id_simv y periodo; EEFF por ruc y periodo; BCRP por periodo. estado_simv = con_registros | sin_registros | no_obtenido.
+6. Empresas (SMV OData): todas las empresas supervisadas, empresa × trimestre, sin filtrar ni corregir (datos_procesados_2024200481M_empresas.csv).
 
 ## Valores faltantes por variable
 

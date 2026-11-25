@@ -68,7 +68,7 @@ def pagina() -> None:
                 "la diferencia no es atribuible a la reforma.", "lightbulb", T.VIOLETA)
 
     with st.container(key="tarjeta-t8"):
-        T.seccion("Tabla 8 completa", "table_chart", T.AZUL, extra=T.insignia("articulo"))
+        T.seccion("Tabla de sensibilidad completa (Tabla 14 del artículo)", "table_chart", T.AZUL, extra=T.insignia("articulo"))
         st.dataframe(pd.DataFrame({"Análisis": t8.contraste, "Estadístico": t8.estadistico,
                                    "Valor": [C.num(v, 0 if e == "meses" else 2) for v, e in zip(t8.valor, t8.estadistico)],
                                    "p": t8.p_valor.map(lambda x: "—" if pd.isna(x) else C.p_txt(x).replace("= ", "")),

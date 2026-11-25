@@ -8,14 +8,15 @@
   table.header("Elemento", "Detalle"),
   table.hline(stroke: 0.5pt + rgb("#1B3A6B")),
   "Repositorio", link("https://github.com/Diego-Aliaga-Damian/finanzas1-u2-crowdfunding-peru"),
-  "Commit de referencia", raw("2bd886b"),
+  "Commit de referencia", raw("a960d5c"),
   "Periodo consultado", "2021-01 a 2026-09 (constantes FECHA_INICIO y FECHA_CORTE)",
   "Fechas de extracción", "2026-11-07, 2026-11-08 (según log_ejecucion.txt)",
   "Archivo procesado", "datos_procesados/datos_procesados_2024200481M.csv: 414 filas, 35 columnas",
+  "Base complementaria", "datos_procesados/datos_procesados_2024200481M_empresas.csv: 6001 empresa-trimestre",
   "SHA-256 del archivo procesado", raw("cd48b21f22844cff650f5257a324b632 d5afac7a009dbaceebe7456e9a7e1b8c"),
   "Orden de ejecución", "01_extraccion_api.py → 02_scraping_web.py → 03_limpieza_datos.py → 04_analisis.py",
   "Verificación", "python -m pytest y python codigo/auditoria.py (con --en-vivo para cotejar con las fuentes)",
-  "Entorno", "Python 3.14.7; requests 2.34.2, beautifulsoup4 4.15.0, pandas 3.1.1, numpy 2.5.4, scipy 1.18.1, matplotlib 3.11.2, pandera 0.35.0, pytest 9.2.0",
+  "Entorno", "Python 3.14.7; requests 2.34.2, beautifulsoup4 4.15.0, pandas 3.1.1, numpy 2.5.4, scipy 1.18.1, statsmodels 0.15.0, matplotlib 3.11.2, pandera 0.35.0, pytest 9.2.0",
   table.hline(stroke: 0.8pt + rgb("#1B3A6B")),
 )
 

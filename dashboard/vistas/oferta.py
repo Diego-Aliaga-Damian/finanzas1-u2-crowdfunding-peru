@@ -96,7 +96,7 @@ def _anual(v: pd.DataFrame) -> None:
             st.dataframe(tabla, hide_index=True)
             st.download_button("Descargar (CSV)", a.to_csv(index=False).encode("utf-8-sig"), "fincrowd_oferta_anual.csv",
                                "text/csv", icon=":material/download:", type="tertiary", key="csv_anual")
-        with st.expander("Tabla 2 del artículo (fija: todas las plataformas, años completos)", icon=":material/verified:"):
+        with st.expander("Tabla 3 del artículo (fija: todas las plataformas, años completos)", icon=":material/verified:"):
             t2 = C.tablas()["t2_oferta_anual"]
             st.dataframe(pd.DataFrame({
                 "Año": [f"{x} (ene-sep)" if m < 12 else str(x) for x, m in zip(t2.anio, t2.meses)],
@@ -125,7 +125,7 @@ def _plataformas() -> None:
             "Participación (%)": t1.participacion_monto_pct}), hide_index=True,
             column_config={"Participación (%)": st.column_config.ProgressColumn("Participación (%)", format="%.1f %%",
                                                                                 min_value=0, max_value=100, color=T.AZUL)})
-        T.nota("Fuente: SMV (SIMV). Tabla 1 del artículo.")
+        T.nota("Fuente: SMV (SIMV). Tabla 10 del artículo.")
 
 
 def pagina() -> None:

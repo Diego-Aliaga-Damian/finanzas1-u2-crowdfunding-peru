@@ -138,7 +138,7 @@ Y dos hipótesis, más una relación exploratoria:
   [Beamer de 10 diapositivas y su versión para imprimir], [`productos/beamer/`],
   [Póster del artículo (A0)], [`productos/poster_articulo/`],
   [20 pósteres en español de los artículos del estado del arte (A1)], [`productos/posteres_articulos/pdf/`],
-  [Dashboard interactivo FinCrowd Perú (11 páginas)], [fincrowd-peru-diego-aliaga.streamlit.app],
+  [Dashboard interactivo FinCrowd Perú (12 páginas)], [fincrowd-peru-diego-aliaga.streamlit.app],
   [Carpeta de entrega con la estructura de la consigna], [`entregas/DIEGO_SEBASTIAN_ALIAGA_DAMIAN/`],
   [16 de los 20 artículos en inglés (PDF)], [`entregas/Carpeta_1_articulos/1_originales_ingles/`],
 )
@@ -312,7 +312,7 @@ Este script no usa internet: lee los tres CSV crudos y construye la base procesa
 
 // ============================================================================ 9
 = Análisis: `04_analisis.py`
-Lee solo la base procesada y genera en `salidas/` las 8 tablas y 4 figuras del artículo, más `resultados_04.json` (todas las cifras clave) y `manifiesto_salidas.csv` (el SHA-256 de cada salida). Dos ejecuciones producen archivos idénticos byte a byte.
+Lee solo la base procesada y genera en `salidas/` las 15 tablas y 5 figuras del artículo, más `resultados_04.json` (todas las cifras clave) y `manifiesto_salidas.csv` (el SHA-256 de cada salida). Dos ejecuciones producen archivos idénticos byte a byte.
 
 == Supuestos declarados
 - *S1:* los ingresos y la utilidad de la SMV son flujos trimestrales, no acumulados.
@@ -354,12 +354,30 @@ Lee solo la base procesada y genera en `salidas/` las 8 tablas y 4 figuras del a
 #nota[Las tablas del artículo se numeran por orden de aparición. Los archivos de `salidas/tablas/` conservan su nombre de origen (por ejemplo, la Tabla 1 del artículo es `t6_comparabilidad`).]
 
 // ============================================================================ 10
+== Las pruebas econométricas, explicadas
+Están en `codigo/econometria.py` y siguen la secuencia de tu trabajo de la Unidad I. Antes de estimar se verifica que *cada variable* tenga al menos 1 000 observaciones o 60 periodos.
+#table(columns: (1.3fr, 1.6fr, 2fr),
+  [Prueba], [Qué pregunta], [Qué salió],
+  [ADF, KPSS y Zivot-Andrews], [¿La serie tiene raíz unitaria (no es estacionaria)?], [Las 7 series son I(1) según la ADF. Tres tasas son estacionarias alrededor de un quiebre (Zivot-Andrews).],
+  [Engle-Granger y Johansen], [¿El monto del FPF y las tasas comparten una relación de largo plazo?], [Con 69 meses, no. Con solo los 52 meses de actividad, Engle-Granger sí rechaza con la tasa de los bancos a pymes.],
+  [Granger], [¿Los cambios de una serie ayudan a predecir los de la otra?], [No en ningún sentido (menor p = 0.099).],
+  [Corto plazo con errores HAC], [¿Los cambios de las tasas explican los del monto?], [No en conjunto (p = 0.595). Sin los impulsos, la tasa de cajas municipales sale significativa por un solo mes atípico.],
+  [Regresión segmentada], [¿Cambió el nivel o la pendiente con la reforma?], [No hay efecto positivo; 3 de 5 cortes ficticios también son significativos.],
+  [Logit], [¿Un proyecto empresarial se coloca más?], [Sí (razón 8.11), pero baja a 3.10 al controlar la plataforma y el año.],
+  [Panel de empresas], [¿Las plataformas rinden distinto que otros intermediarios?], [La diferencia no es significativa al controlar el tamaño (p = 0.874).],
+)
+- *asinh:* seno hiperbólico inverso. Se comporta como el logaritmo, pero admite los meses con cero.
+- *HAC (Newey-West):* errores estándar válidos aunque haya autocorrelación y varianza cambiante.
+- *Impulso:* variable que vale 1 en un solo mes; aísla un dato atípico para que no decida el resultado.
+- *Razón de momios:* cuántas veces mayores son las posibilidades de financiarse. Un valor de 1 significa que no hay diferencia.
+- Las pruebas son *asociativas*: no demuestran causa y efecto, y «no significativo» no quiere decir «no existe relación».
+
 = Verificación: pruebas, auditoría y reproducibilidad
 == Pruebas automáticas (pytest)
 Se ejecutan con `python -m pytest` y no necesitan internet: usan recortes de respuestas reales guardados en `pruebas/fixtures/`.
-- *37 pruebas del núcleo:* extracción por API, scraping, limpieza y base procesada, y análisis. Una de ellas vuelve a ejecutar `04_analisis.py` y comprueba que todas las salidas son idénticas.
-- *33 pruebas del dashboard:* que sus cálculos sin filtros reproduzcan las tablas del artículo, que los filtros funcionen, que cada página cargue sin errores y que el Centro de mando 3D muestre exactamente los datos de la base.
-- *Total: 70 pruebas, todas aprobadas.*
+- *47 pruebas del núcleo:* extracción por API, scraping, limpieza y base procesada, análisis y econometría. Una de ellas vuelve a ejecutar `04_analisis.py` y comprueba que todas las salidas son idénticas.
+- *34 pruebas del dashboard:* que sus cálculos sin filtros reproduzcan las tablas del artículo, que los filtros funcionen, que cada página cargue sin errores y que el Centro de mando 3D muestre exactamente los datos de la base.
+- *Total: 81 pruebas, todas aprobadas.*
 
 == Auditoría automatizada (`codigo/auditoria.py`)
 Revisa los requisitos de la consigna (numerales 2.4.1, 2.4.2, 2.4.5, 2.4.6 y 2.4.8) y escribe `salidas/reporte_auditoria.md`. Cada control sale como cumple, no cumple o no ejecutado; un control no ejecutado nunca cuenta como cumplido. Con `--en-vivo` además coteja 10 filas al azar con el BCRP y la SMV. Último resultado: *48 controles cumplidos, 0 incumplidos*.
@@ -402,7 +420,7 @@ El artículo cita 30 referencias: los 20 artículos, más normas (Decreto de Urg
   [14], [Lazos (2025)], [Technological Forecasting and Social Change], [Sí],
   [15], [Danisewicz y Elard (2023)], [Journal of Banking & Finance], [Sí],
   [16], [Fareed y Viotto (2025)], [Finance Research Letters], [Sí],
-  [17], [Larios-Hernández (2025)], [J. of Small Business & Entrepreneurship], [Falta],
+  [17], [Morello (2025)], [Common Market Law Review], [Sí],
   [18], [Alvarez-Franco et al. (2026)], [J. of Economics, Finance and Admin. Science], [Sí],
   [19], [Miglo (2025)], [Journal of Economic Studies], [Sí (preprint SSRN)],
   [20], [Ma et al. (2023)], [Global Finance Journal], [Sí],
@@ -412,7 +430,8 @@ El artículo cita 30 referencias: los 20 artículos, más normas (Decreto de Urg
 - 4 se descargaron con un script desde versiones de acceso abierto (OpenAlex): 01, 07, 08 y 13.
 - 12 se descargaron con tu Chrome (las editoriales bloquean los programas, pero no a un navegador). En ScienceDirect tú resolviste el CAPTCHA: los CAPTCHA no se resuelven de forma automática.
 - Cada PDF se verificó leyendo su primera página antes de renombrarlo como `NN_Apellido_Año.pdf`.
-- *Faltan 4* que no son de acceso abierto: 02 y 09 (Wiley pide acceso institucional), 05 y 17 (cerrados). Se piden en la biblioteca de la UNCP o se busca la versión de los autores.
+- El 17 era Larios-Hernández (2025), cerrado; el 25 de noviembre se reemplazó por Morello (2025), que estaba en la reserva y cuyo PDF conseguiste tú.
+- *Faltan 3:* 02, 05 y 09. Los tres tienen una versión libre de los autores (SSRN o repositorio de UCLouvain); los enlaces están en `LEEME_articulos.md`.
 
 #ojo[Los PDF de terceros tienen derechos de autor: están en `entregas/`, que no se sube a GitHub ni al dashboard.]
 
@@ -454,10 +473,10 @@ typst compile articulo_typst/articulo.typ --root .
 - Se compilan todos con `python herramientas/posteres/generar_posteres.py`.
 
 == El póster del artículo
-Tamaño A0, con los elementos que pide la consigna, los dos logos, el código QR del repositorio y las fuentes en APA (`productos/poster_articulo/poster_articulo.tex`).
+Tamaño A0, con los elementos que pide la consigna, los dos logos, el código QR del repositorio y las fuentes en APA (`productos/poster_articulo/poster_articulo.tex`). Incluye la verificación de la muestra, la regresión segmentada de la reforma y una tabla con las pruebas econométricas principales.
 
 == El Beamer
-- *10 diapositivas* (el máximo que permite la consigna), formato 16:9, colores rojo y negro de la Facultad de Economía con su logo, tomando como base tu Beamer anterior.
+- *10 diapositivas* (el máximo que permite la consigna), formato 16:9, colores rojo y negro de la Facultad de Economía con su logo, tomando como base tu Beamer anterior: portada, problema e hipótesis, datos y muestra, demostración en vivo, oferta, metodología econométrica, largo plazo, corto plazo, reforma con acceso y rentabilidad, y conclusiones.
 - *Versión para imprimir:* una diapositiva por hoja A4 horizontal (`beamer_impresion.tex`), porque la consigna exige llevar el Beamer impreso para cada compañero.
 - Se compilan con `python herramientas/productos/compilar_productos.py`.
 
@@ -466,7 +485,7 @@ Tamaño A0, con los elementos que pide la consigna, los dos logos, el código QR
 == Qué es
 Una página web interactiva hecha con Streamlit que reúne los datos, los resultados y todos los productos. El docente permitió entregarlo como enlace. Está publicado gratis en Streamlit Community Cloud: #link("https://fincrowd-peru-diego-aliaga.streamlit.app/")[fincrowd-peru-diego-aliaga.streamlit.app].
 
-== Las 11 páginas
+== Las 12 páginas
 #table(columns: (1.3fr, 2.4fr),
   [Página], [Qué muestra],
   [Inicio], [El estudio en una frase, guía de 4 pasos, filtros, 6 tarjetas KPI con variación y minigráfico, evolución del monto, participación e IHH, hallazgos, calidad de los datos y accesos.],
@@ -475,6 +494,7 @@ Una página web interactiva hecha con Streamlit que reúne los datos, los result
   [Plataformas y rentabilidad], [ROA por año, ingresos ÷ monto de la líder, activo por trimestre y la tabla de indicadores.],
   [¿A quién se financia?], [Colocación por tipo de receptor con intervalos, H1 y H2 y la serie de publicados y financiados.],
   [Frente a bancos y cajas], [Tasas del BCRP (seleccionables), qué es comparable, la asociación E1 y la tabla por periodos.],
+  [Pruebas econométricas], [Las tablas T9 a T15 del artículo: muestra, estacionariedad, largo y corto plazo, reforma, colocación y rentabilidad.],
   [¿Son sólidos los resultados?], [Las variantes de H1 con sus intervalos y la tabla de sensibilidad completa.],
   [Simulador de préstamo], [Cuota y costo de un préstamo con una tasa supuesta del FPF frente a la TEA observada de bancos o cajas.],
   [Datos y fuentes], [Las 3 fuentes, el mapa de respuestas del portal por mes y la base para explorar y descargar.],
@@ -511,7 +531,7 @@ El dashboard tiene modo *noche y día*: sigue el tema del sistema de quien lo ab
 == Cómo está construido
 #table(columns: (auto, 1fr),
   [Archivo], [Función],
-  [`dashboard/app.py`], [Configuración, menú de 11 páginas y filtros de la barra lateral.],
+  [`dashboard/app.py`], [Configuración, menú de 12 páginas y filtros de la barra lateral.],
   [`dashboard/datos.py`], [Cálculos sin Streamlit, con las mismas reglas que `04_analisis.py`: sin filtros reproduce exactamente las tablas del artículo.],
   [`dashboard/compartido.py`], [Carga de datos en memoria, estado de los filtros, glosario y formatos numéricos.],
   [`dashboard/tema.py`], [Diseño: paletas de noche y día, tipografía, tarjetas, etiquetas, recuadros y estilo de los gráficos.],
@@ -586,7 +606,7 @@ La consigna dice que durante la disertación debes explicar qué hace cada bloqu
 == Pendiente
 #table(columns: (auto, 1.4fr, 2fr),
   [], [Tarea], [Cómo],
-  [☐], [Conseguir 4 artículos (02, 05, 09, 17)], [Biblioteca de la UNCP o versión de los autores. Si alguno no aparece, reemplazarlo por otro de la reserva (cambia también el artículo, el póster y la bibliografía).],
+  [☐], [Conseguir 3 artículos (02, 05, 09)], [Biblioteca de la UNCP o versión de los autores. Si alguno no aparece, reemplazarlo por otro de la reserva (cambia también el artículo, el póster y la bibliografía).],
   [☐], [Traducir los 20 artículos al español (PDF)], [Google Translate, pestaña "Documentos". Guardarlos en `entregas/Carpeta_1_articulos/2_traducciones_espanol/` con el sufijo `_es`.],
   [☐], [Verificar el cuartil Q1/Q2 de cada revista], [En SJR (scimagojr.com) y su indexación en WoS (mjl.clarivate.com).],
   [☐], [*Reescribir el texto con tus palabras*], [Las secciones del artículo están marcadas como borrador asistido por IA. La consigna exige humanizar el contenido (similitud de 10 % como máximo) y castiga con nota cero el uso excesivo de IA no humanizada.],

@@ -45,6 +45,7 @@
 #set text(font: "Times New Roman", size: 12pt, lang: "es", region: "pe")
 #set par(leading: 1.5em, spacing: 1.5em, justify: true, first-line-indent: (amount: 1.27cm, all: true))
 #set list(indent: 0.6cm)
+#set math.equation(numbering: "(1)", supplement: [Ecuación])
 #set enum(indent: 0.6cm)
 #show link: set text(fill: azulmedio)
 #show cite: set text(fill: marino)
@@ -125,8 +126,8 @@
 #page(columns: 1)[
   = Anexo. Datos y código
   #{
-    set text(size: 11pt)
-    set par(leading: 0.6em, first-line-indent: 0pt, justify: false)
+    set text(size: 9.5pt)
+    set par(leading: 0.55em, first-line-indent: 0pt, justify: false)
     set table(fill: (_, y) => if y > 0 and calc.even(y) { celestefila })
     [== Repositorio, fechas y verificación]
     anexo_reproducibilidad
@@ -135,4 +136,5 @@
     [== Diccionario de variables]
     anexo_diccionario
   }
+  #include "secciones/10_tablas_complementarias.typ"
 ]
