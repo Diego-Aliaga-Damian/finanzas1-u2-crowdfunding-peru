@@ -73,35 +73,35 @@
 
 // ---------------------------------------------------------------- Bloque de título (a todo el ancho)
 #place(top, scope: "parent", float: true, clearance: 18pt, {
-  set par(first-line-indent: 0pt, justify: false, leading: 0.5em)
+  set par(first-line-indent: 0pt, justify: false, leading: 0.5em, spacing: 0.65em)
   // Cabecera con los logos de la universidad y de la facultad
   grid(columns: (auto, 1fr, auto), align: (left + horizon, center + horizon, right + horizon),
-    image("/productos/posteres_articulos/img/logo_uncp.png", height: 1.55cm),
+    image("/productos/posteres_articulos/img/logo_uncp.png", height: 1.4cm),
     [#text(size: 14.5pt, weight: "bold", fill: marino)[Universidad Nacional del Centro del Perú] \
      #text(size: 10.5pt, fill: gristexto)[Facultad de Economía · Finanzas I (055D) · Unidad II · Semestre 2026-II]],
-    image("/productos/posteres_articulos/img/logo_facultad.png", height: 1.55cm))
+    image("/productos/posteres_articulos/img/logo_facultad.png", height: 1.4cm))
   v(6pt)
   line(length: 100%, stroke: 2pt + marino)
   v(-8.2pt)
   line(length: 100%, stroke: 0.8pt + dorado)
-  v(14pt)
+  v(9pt)
   text(size: 10.5pt, weight: "bold", fill: azulmedio, tracking: 0.04em)[ARTÍCULO DE INVESTIGACIÓN]
   v(7pt)
   text(size: 20pt, weight: "bold", fill: marino)[Fintech y financiamiento participativo (crowdfunding) en el Perú: oferta y condiciones, 2022-2026]
   v(9pt)
   text(size: 14pt, style: "italic", fill: gristexto)[Fintech and Crowdfunding in Peru: Supply and Financing Terms, 2022-2026]
-  v(13pt)
+  v(9pt)
   text(size: 14pt)[Diego Sebastián Aliaga Damián#super(text(fill: azulmedio)[1])]
   v(3pt)
   text(size: 10pt)[#super[1] _Facultad de Economía, Universidad Nacional del Centro del Perú, Huancayo, Perú_]
-  v(9pt)
+  v(6pt)
   {
     set text(size: 10pt, fill: gristexto)
     let dato(etiqueta, valor) = [#text(fill: azulmedio, weight: "bold")[#etiqueta] #valor]
     [#dato[Código de matrícula][2024200481M] #h(1.5em) #dato[Tema][N.#super[o]~96] #h(1.5em) #dato[Fecha de entrega][6 de diciembre de 2026] \
      #dato[Docente][Dr. Ciro Iván Machacuay Meza]]
   }
-  v(12pt)
+  v(8pt)
   block(width: 100%, fill: celeste, radius: 3pt, inset: (x: 11pt, y: 10pt), stroke: (left: 3pt + marino),
         grid(columns: (1fr, 1fr), column-gutter: 1.3em, ..resumenes))
 })

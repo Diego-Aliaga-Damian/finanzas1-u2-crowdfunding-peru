@@ -8,7 +8,7 @@
   table.header("Elemento", "Detalle"),
   table.hline(stroke: 0.5pt + rgb("#1B3A6B")),
   "Repositorio", link("https://github.com/Diego-Aliaga-Damian/finanzas1-u2-crowdfunding-peru"),
-  "Commit de referencia", raw("a960d5c"),
+  "Commit de referencia", raw("5f527af"),
   "Periodo consultado", "2021-01 a 2026-09 (constantes FECHA_INICIO y FECHA_CORTE)",
   "Fechas de extracción", "2026-11-07, 2026-11-08 (según log_ejecucion.txt)",
   "Archivo procesado", "datos_procesados/datos_procesados_2024200481M.csv: 414 filas, 35 columnas",

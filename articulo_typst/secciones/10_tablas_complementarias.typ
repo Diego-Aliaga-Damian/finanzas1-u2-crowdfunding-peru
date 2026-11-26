@@ -27,6 +27,6 @@
 ) <tab-segmentos>
 
 #tabla_apa_fija(t8_sensibilidad,
-  titulo: [Contrastes no paramétricos y análisis de sensibilidad],
+  titulo: [Pruebas no paramétricas y análisis de sensibilidad],
   nota: [M = millones de soles. E1 usa primeras diferencias mensuales. Elaboración propia con datos de la SMV @smvsimv2026 @smvodata2026 y del BCRP @bcrpdata2026.],
 ) <tab-sensibilidad>

@@ -66,3 +66,6 @@ articulo_typst/articulo.pdf
 
 # Configuración local de la vista previa del dashboard
 .claude/
+
+# Textos de trabajo para reescribir (no se publican: contienen el borrador asistido por IA)
+docs/reescritura/

@@ -1,13 +1,13 @@
 % Materiales y métodos (consigna 2.2, ítem 7), con la subsección de fuentes de datos y procedimiento de extracción.
-% Base: versión revisada del estudiante (25-nov-2026). «Tamaño de la muestra» y «Estrategia econométrica» son BORRADOR
-% ASISTIDO POR IA (2026-11-25): reescribir con tus palabras. Las cifras usan \cifra{...} y no se tocan.
+% Base: versión revisada del estudiante (25-nov-2026). «Tamaño de la muestra» y «Estrategia econométrica»,
+% reescritos por el estudiante (26-nov-2026). Las cifras usan \cifra{...} y no se tocan.
 \section{Materiales y métodos}
 
-El estudio es cuantitativo, no experimental y de alcance descriptivo-correlacional. Describe la oferta de FPF con datos oficiales, la contrasta con el crédito tradicional en segmentos comparables y evalúa las relaciones entre variables con pruebas econométricas, sin estimar efectos causales.
+El estudio es cuantitativo, no experimental y de alcance descriptivo-correlacional. Usa datos oficiales para describir la oferta de FPF, la compara con el crédito tradicional en segmentos comparables y, mediante pruebas econométricas, evalúa cómo se relacionan las variables, sin estimar efectos causales.
 
 \subsection{Diseño, población y periodo}
 
-La unidad de análisis es la plataforma-mes. La población está formada por las \cifra{plataformasAutorizadas} sociedades administradoras que registran información ante la SMV en el periodo, de las cuales \cifra{plataformasVigentes} seguían vigentes al cierre. Como se trabaja con todas, el estudio es un censo de la oferta regulada. El periodo va de \cifra{fechaInicio} a \cifra{fechaCorte} (69 periodos mensuales) y ambos límites se fijaron como constantes en el código. El primer mes con proyectos financiados es \cifra{inicioFPF}, de modo que el FPF tiene \cifra{mesesActividadFPF} meses con actividad. En los meses anteriores el portal respondió que no había proyectos; se conservan para mantener el panel balanceado.
+Se toma como unidad de análisis la plataforma-mes. La población está formada por las \cifra{plataformasAutorizadas} sociedades administradoras que registran información ante la SMV en el periodo, de las cuales \cifra{plataformasVigentes} seguían vigentes al cierre. Como se incluye a todas, el estudio es un censo de la oferta regulada. El periodo va de \cifra{fechaInicio} a \cifra{fechaCorte} (69 periodos mensuales) y ambos límites se fijaron como constantes en el código. El primer mes con proyectos financiados es \cifra{inicioFPF}, de modo que el FPF tiene \cifra{mesesActividadFPF} meses con actividad. En los meses anteriores el portal respondió que no había proyectos; se conservan para mantener el panel balanceado.
 
 \subsection{Fuentes de datos y procedimiento de extracción}
 
@@ -21,7 +21,7 @@ De BCRPData, la API del Banco Central de Reserva del Perú \parencite{bcrpdata20
 
 La actividad de las plataformas se obtuvo de la página «Información de Proyectos» del Sistema de Información del Mercado de Valores \parencite{smvsimv2026}. Esta página no ofrece archivos descargables y solo muestra una tabla después de elegir la plataforma, el año y el mes en un formulario. El script sigue los mismos pasos: recupera los campos ocultos del formulario, envía la consulta para cada plataforma y mes, y lee los proyectos publicados, los financiados y el monto financiado por modalidad y tipo de receptor (empresarial o personal). Una respuesta se guarda solo si contiene la tabla de resultados, aunque diga que no hay proyectos, y si el formulario devuelto confirma la consulta pedida. En caso contrario se reintenta con un formulario nuevo. Entre solicitudes hay una pausa de tres segundos y todas se identifican con un agente de usuario del proyecto. Como el sitio no publica un \texttt{robots.txt} propio, se aplicó una política conservadora y se guardó la evidencia.
 
-Con las plataformas retiradas, el portal falló de forma intermitente. Confirmaba la consulta pero no mostraba la tabla, aunque en el caso revisado manualmente el dato sí aparecía en un navegador. Tras los reintentos se obtuvieron \cifra{mesesObtenidos} de los \cifra{filasPanel} plataforma-mes (\cifra{coberturaPct}~\%). Los \cifra{noObtenidos} restantes, todos de plataformas retiradas, quedan marcados como no obtenidos. La incidencia se documentó y el docente estuvo de acuerdo con tratarla sin sustituir la fuente.
+En las consultas de las plataformas retiradas, el portal falló de manera intermitente. Confirmaba la consulta pero no mostraba la tabla, aunque en el caso revisado manualmente el dato sí aparecía en un navegador. Tras los reintentos se obtuvieron \cifra{mesesObtenidos} de los \cifra{filasPanel} plataforma-mes (\cifra{coberturaPct}~\%). Los \cifra{noObtenidos} restantes, todos de plataformas retiradas, quedan marcados como no obtenidos. La incidencia se documentó y el docente estuvo de acuerdo con tratarla sin sustituir la fuente.
 
 \subsubsection{Integridad y verificación}
 
@@ -29,7 +29,7 @@ Las respuestas originales se guardaron sin editar, y en el log de ejecución que
 
 \subsection{Limpieza e integración}
 
-Un tercer script lee solo los archivos crudos, tipifica los datos y usa la fila de totales del portal como control. En todas las consultas con registros, el total coincide con la suma de sus componentes. Los estados financieros se asignan al mes de cierre de cada trimestre, sin interpolar. El portal y la API de la SMV se unen por el RUC de la sociedad administradora y el periodo, con un cruce exacto porque ambas fuentes usan la misma razón social. Las series del BCRP describen a todo el sistema, así que se unen solo por el periodo. El resultado es un panel balanceado de \cifra{filasPanel} filas y \cifra{columnasPanel} columnas. Una base complementaria conserva, con el mismo origen, los estados financieros de todas las empresas supervisadas (empresa-trimestre).
+Un tercer script lee solo los archivos crudos, tipifica los datos y usa la fila de totales del portal como control. En todas las consultas con registros, el total coincide con la suma de sus componentes. Los estados financieros se asignan al mes de cierre de cada trimestre, sin interpolar. El portal y la API de la SMV se unen por el RUC de la sociedad administradora y el periodo, con un cruce exacto porque ambas fuentes usan la misma razón social. Las series del BCRP describen a todo el sistema, así que se unen solo por el periodo. El resultado es un panel balanceado de \cifra{filasPanel} filas y \cifra{columnasPanel} columnas. Aparte, se armó una base complementaria con los estados financieros de todas las empresas supervisadas (empresa-trimestre), tomados de la misma fuente.
 
 No se imputaron los datos faltantes. Una variable de control distingue los meses con registros, los meses en que el portal respondió que no había proyectos (que cuentan como cero) y los meses no obtenidos (que quedan vacíos), por lo que los agregados del FPF son una cota inferior. Si a cada mes no obtenido se le asigna el mayor monto mensual que su plataforma registró en el periodo, el monto anual podría aumentar como máximo en S/~\cifra{cotaMaxAnual} millones, lo que equivale a \cifra{cotaPctMax}~\% en el año más afectado y a no más de \cifra{cotaPctMaxDesde2024}~\% desde 2024.
 
@@ -40,11 +40,11 @@ Los valores atípicos se identificaron con la regla de Tukey (tres veces el rang
 Las variables se definen en el diccionario del Anexo. A partir de ellas se calcularon cinco indicadores:
 
 \begin{itemize}
-\item \textit{Concentración}: $\mathit{IHH}_t=\sum_i (100\,s_{it})^2$, el índice de Herfindahl-Hirschman del monto financiado, donde $s_{it}$ es la participación de la plataforma $i$ en el año~$t$.
+\item \textit{Concentración}: $\mathit{IHH}_t=\sum_i (100\,s_{it})^2$, que es el índice de Herfindahl-Hirschman calculado sobre el monto financiado; $s_{it}$ es la participación de la plataforma $i$ en el año $t$.
 \item \textit{Tasa de colocación}: proyectos financiados entre publicados. Se calcula sobre sumas anuales, de doce meses o de subperiodos, porque un proyecto puede financiarse en un mes posterior al de su publicación.
 \item \textit{Monto medio por proyecto financiado}, por periodo y tipo de receptor.
 \item \textit{Ingresos de la plataforma sobre el monto financiado}, como aproximación al costo de intermediación. Son los ingresos del trimestre (en soles) entre el monto financiado en ese trimestre, solo con los tres meses del portal obtenidos y, en el cálculo anual, con al menos S/~1 millón financiado. Mide cuánto retiene la plataforma por cada sol que intermedia y no es un precio para el receptor.
-\item \textit{Rentabilidad sobre activos} (ROA), que la literatura sobre eficiencia de las fintech de crédito considera central \parencite{onorato2024,pampurini2024}: $\mathit{ROA}=100\cdot\frac{4}{n}\sum_q U_q \big/ \bar{A}$, donde $U_q$ es la utilidad de cada uno de los $n$ trimestres disponibles del año y $\bar{A}$, el activo medio. El factor $4/n$ anualiza los años incompletos.
+\item \textit{Rentabilidad sobre activos} (ROA), que la literatura sobre eficiencia de las fintech de crédito considera central \parencite{onorato2024,pampurini2024}: $\mathit{ROA}=100\cdot\frac{4}{n}\sum_q U_q \big/ \bar{A}$. En esta fórmula, $U_q$ es la utilidad de cada uno de los $n$ trimestres disponibles en el año y $\bar{A}$ es el activo medio. El factor $4/n$ sirve para anualizar los años que no están completos.
 \end{itemize}
 
 Los dos últimos indicadores suponen que la SMV publica los ingresos y la utilidad de cada trimestre y no los acumulados del año. La fuente no lo precisa. Aun así, en las dos plataformas con mayores ingresos estos bajan de un trimestre a otro dentro del mismo año, lo que sería imposible si fueran acumulados. La lectura acumulada se muestra solo como cota.
@@ -63,43 +63,43 @@ Como la SMV no publica la tasa ni el plazo de cada operación de FPF, su precio 
 
 \subsection{Tamaño de la muestra}
 
-Antes de estimar se verificó que cada variable de los modelos tuviera al menos 1\,000 observaciones o 60 periodos mensuales. El criterio se aplica por variable: un modelo con cinco variables necesita 5\,000 datos, o 300 si son series mensuales. Las pruebas de series de tiempo usan los 69 meses. El logit usa un registro por proyecto publicado; como el portal informa totales por plataforma, tipo de receptor y mes, se agrupan por año, lo que da la misma verosimilitud. La comparación de rentabilidad usa los estados financieros de todas las empresas que informan a la SMV.
+Antes de la estimación se comprobó que cada variable de los modelos contara con al menos 1\,000 observaciones o 60 periodos mensuales. El requisito se aplica a cada variable por separado, de modo que un modelo de cinco variables requiere 5\,000 datos, o 300 cuando se trata de series mensuales. En las pruebas de series de tiempo se usan los 69 meses. El logit trabaja con un registro por cada proyecto publicado; como el portal reporta totales por plataforma, tipo de receptor y mes, estos se agrupan por año, lo que no altera la verosimilitud. Para comparar la rentabilidad se usan los estados financieros de todas las empresas que reportan a la SMV.
 
 \subsection{Estrategia econométrica}
 
-El análisis sigue cuatro pasos: estacionariedad, largo plazo, corto plazo y robustez. Las decisiones se fijaron antes de estimar. El monto mensual del FPF, $f_t$, va en millones de soles de diciembre de 2021 y con la transformación seno hiperbólico inverso (asinh), que se comporta como el logaritmo y admite los meses sin proyectos. Los comparadores, $r_{k,t}$, son las cuatro TEA de hasta 360 días. La TAMN no entra en los modelos porque promedia todo el crédito bancario y contiene a las demás; solo se prueba su raíz unitaria.
+El análisis tiene cuatro etapas (estacionariedad, largo plazo, corto plazo y robustez), y las decisiones se tomaron antes de estimar. El monto mensual del FPF, $f_t$, se expresa en millones de soles de diciembre de 2021 y se transforma con el seno hiperbólico inverso (asinh), que funciona de forma parecida al logaritmo pero acepta los meses sin proyectos. Como comparadores, $r_{k,t}$, se usan las cuatro TEA de hasta 360 días. La TAMN se deja fuera de los modelos porque es un promedio de todo el crédito bancario y ya incluye a las demás tasas; de ella solo se evalúa la raíz unitaria.
 
-\textit{Estacionariedad.} Se aplican la prueba ADF (hipótesis nula: raíz unitaria; rezagos por AIC), la KPSS (hipótesis nula: estacionariedad) y la de Zivot-Andrews, que admite un quiebre de fecha desconocida.
+\textit{Estacionariedad.} Se usan tres pruebas: la ADF, cuya hipótesis nula es la raíz unitaria y cuyos rezagos se eligen por AIC; la KPSS, que tiene como hipótesis nula la estacionariedad, y la de Zivot-Andrews, que permite un quiebre en una fecha desconocida.
 
-\textit{Largo plazo.} La cointegración entre $f_t$ y las tasas se prueba con Engle-Granger y con la traza de Johansen (rezagos por BIC), por pares y en un sistema con las cuatro tasas. Se agrega la causalidad de Granger en diferencias.
+\textit{Largo plazo.} Para evaluar la cointegración entre $f_t$ y las tasas se aplican la prueba de Engle-Granger y la traza de Johansen (con rezagos elegidos por BIC), tanto por pares como en un sistema con las cuatro tasas. También se incluye la causalidad de Granger en diferencias.
 
-\textit{Corto plazo.} Se estima el modelo dinámico de la Ecuación~\ref{eq:corto}, con errores HAC de \cifra{cpRezagos} rezagos:
+\textit{Corto plazo.} El modelo dinámico de la Ecuación~\ref{eq:corto} se estima con errores HAC de \cifra{cpRezagos} rezagos:
 \begin{equation}\label{eq:corto}
 \begin{split}
 \Delta f_t ={}& \alpha+\varphi\,\Delta f_{t-1}+\textstyle\sum_k\beta_k\,\Delta r_{k,t}\\
 &+\lambda\,\pi_t+\delta D_t+\varepsilon_t,
 \end{split}
 \end{equation}
-donde $\pi_t$ es la inflación mensual y $D_t$ vale uno desde diciembre de 2025. Dos tasas tienen saltos de un mes sin explicación publicada: la de cajas municipales en enero de 2024 y la de bancos en marzo de 2025, que sube \cifra{saltoTEA} puntos porcentuales. Se muestran los resultados sin y con variables de impulso para esos meses.
+donde $\pi_t$ es la inflación mensual y $D_t$ toma el valor de uno desde diciembre de 2025. Hay dos tasas con saltos de un solo mes que no tienen una explicación publicada: la de las cajas municipales en enero de 2024 y la de los bancos en marzo de 2025, que aumenta \cifra{saltoTEA} puntos porcentuales. Por eso los resultados se presentan con y sin variables de impulso para esos meses.
 
-\textit{Modificación del reglamento (H1).} Se usa una regresión segmentada (Ecuación~\ref{eq:segmentada}), en la que $\tau_t$ es la tendencia desde el primer mes con actividad y $t_0$, diciembre de 2025:
+\textit{Modificación del reglamento (H1).} Se aplica una regresión segmentada (Ecuación~\ref{eq:segmentada}), donde $\tau_t$ es la tendencia contada desde el primer mes con actividad y $t_0$ corresponde a diciembre de 2025:
 \begin{equation}\label{eq:segmentada}
 f_t=\alpha+\beta_1\tau_t+\beta_2D_t+\beta_3(t-t_0)D_t+\varepsilon_t.
 \end{equation}
-Se estima con errores HAC, por MCG con errores AR(1) y en millones de soles sin transformar. Para ver si el cambio es propio de la reforma, se repite con \cifra{refPlacebosN} cortes ficticios anteriores. Como contraste no paramétrico se conserva la prueba U de Mann-Whitney.
+La estimación se hace con errores HAC, por MCG con errores AR(1) y con el monto en millones de soles sin transformar. Para saber si el cambio se debe a la reforma, el ejercicio se repite con \cifra{refPlacebosN} cortes ficticios anteriores. La prueba U de Mann-Whitney se mantiene como contraste no paramétrico.
 
-\textit{Colocación (H2).} Se estima un logit (Ecuación~\ref{eq:logit}) en el que $F_i$ indica si el proyecto se financió; $E_i$, si es empresarial; $L_i$, si es de la plataforma líder, y $a_i$, el año:
+\textit{Colocación (H2).} Se estima un logit (Ecuación~\ref{eq:logit}), donde $F_i$ indica si el proyecto fue financiado, $E_i$ si es empresarial, $L_i$ si pertenece a la plataforma líder y $a_i$ el año:
 \begin{equation}\label{eq:logit}
 \Pr(F_i=1)=\Lambda(\alpha+\beta E_i+\gamma L_i+\theta a_i).
 \end{equation}
 
-\textit{Rentabilidad.} El ROA trimestral de cada empresa se regresa sobre un indicador de plataforma de FPF ($P_i$), el logaritmo del activo y efectos de trimestre (Ecuación~\ref{eq:panel}), con errores agrupados por empresa y las razones acotadas a los percentiles 1 y 99:
+\textit{Rentabilidad.} En la Ecuación~\ref{eq:panel}, el ROA trimestral de cada empresa se regresa sobre un indicador de plataforma de FPF ($P_i$), el logaritmo del activo y efectos de trimestre. Los errores se agrupan por empresa y las razones se acotan a los percentiles 1 y 99:
 \begin{equation}\label{eq:panel}
 R_{it}=\alpha+\beta P_i+\gamma\ln A_{it}+\mu_t+\varepsilon_{it}.
 \end{equation}
-El grupo de comparación son los demás intermediarios que supervisa la SMV: agentes de bolsa, administradoras de fondos, titulizadoras y administradoras de fondos colectivos.
+Como grupo de comparación se toman los demás intermediarios que supervisa la SMV, es decir, los agentes de bolsa, las administradoras de fondos, las titulizadoras y las administradoras de fondos colectivos.
 
-El criterio de decisión es una significancia de 5~\%. La robustez se evalúa con los \cifra{mesesActividadFPF} meses de actividad, aunque esa submuestra queda por debajo de 60 periodos. Los procedimientos aleatorios usan la semilla \cifra{semilla}, de los cuatro últimos dígitos de la matrícula del autor, y todas las tablas y figuras se generan con el script de análisis.
+Las decisiones se toman con una significancia de 5~\%. Para evaluar la robustez se usan los \cifra{mesesActividadFPF} meses con actividad, aunque esta submuestra no llega a los 60 periodos. Los procedimientos aleatorios usan la semilla \cifra{semilla}, de los cuatro últimos dígitos de la matrícula del autor, y todas las tablas y figuras se generan con el script de análisis.
 
 \subsection{Consideraciones éticas}
 
