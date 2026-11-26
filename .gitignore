@@ -69,3 +69,6 @@ articulo_typst/articulo.pdf
 
 # Textos de trabajo para reescribir (no se publican: contienen el borrador asistido por IA)
 docs/reescritura/
+
+# Portal de entrega: los descargables se copian al publicar (GitHub Actions) o con generar_portal.py
+portal/archivos/

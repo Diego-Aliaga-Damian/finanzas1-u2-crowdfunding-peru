@@ -1,0 +1,357 @@
+<!doctype html>
+<!-- Diego Sebastián Aliaga Damián · 2024200481M · Tema 96: Fintech y financiamiento participativo (crowdfunding) en el Perú
+     Portal de entrega (GitHub Pages). Los datos salen de datos.js, que genera herramientas/portal/generar_portal.py. -->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entrega · FinCrowd Perú</title>
+  <meta name="description" content="Carpeta digital de entrega de la Unidad II de Finanzas I (UNCP): artículo, Beamer, pósteres, base de datos y código sobre el financiamiento participativo en el Perú, 2022-2026.">
+  <meta name="color-scheme" content="dark light">
+  <link rel="icon" href="img/fincrowd_icono.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
+  <script>try{var t=localStorage.getItem('portal-tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></symbol>
+    <symbol id="i-slides" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+    <symbol id="i-img" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+    <symbol id="i-git" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+    <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
+    <symbol id="i-term" viewBox="0 0 24 24"><path d="m4 17 6-6-6-6M12 19h8"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-api" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.9 4.9l2.9 2.9M16.2 16.2l2.9 2.9M2 12h4M18 12h4M4.9 19.1l2.9-2.9M16.2 7.8l2.9-2.9"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+    <symbol id="i-zip" viewBox="0 0 24 24"><path d="M10 2v2M10 6v2M10 10v2M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><rect x="8" y="14" width="4" height="4" rx="1"/></symbol>
+  </defs>
+</svg>
+
+<a class="saltar" href="#contenido">Ir al contenido</a>
+
+<header class="barra" id="barra">
+  <a class="marca" href="#inicio" aria-label="Inicio">
+    <img src="img/fincrowd_icono.svg" alt="" width="30" height="30">
+    <span><b>FinCrowd</b> Perú <em>· Entrega</em></span>
+  </a>
+  <nav class="menu" aria-label="Secciones">
+    <a href="#carpeta">Carpeta</a>
+    <a href="#productos">Productos</a>
+    <a href="#estado-del-arte">Estado del arte</a>
+    <a href="#datos">Datos</a>
+    <a href="#codigo">Código</a>
+  </nav>
+  <div class="barra-acciones">
+    <button class="boton-icono" id="tema" type="button" aria-label="Cambiar entre modo claro y oscuro">
+      <svg class="ic ic-sol"><use href="#i-sun"/></svg><svg class="ic ic-luna"><use href="#i-moon"/></svg>
+    </button>
+    <a class="boton boton-fantasma boton-chico" data-enlace="repositorio" target="_blank" rel="noopener"><svg class="ic"><use href="#i-git"/></svg><span>GitHub</span></a>
+  </div>
+</header>
+
+<main id="contenido">
+  <!-- ======================================================================= Portada -->
+  <section class="hero" id="inicio">
+    <div class="hero-fondo" aria-hidden="true"><div class="brillo b1"></div><div class="brillo b2"></div><div class="rejilla"></div></div>
+    <div class="hero-texto revelar">
+      <p class="cejilla"><span class="punto"></span>Finanzas I (055D) · Unidad II · Tema N.º 96 · UNCP</p>
+      <h1>Fintech y financiamiento participativo en el Perú
+        <span class="degradado">oferta y condiciones, <span class="junto">2022-2026</span></span></h1>
+      <p class="entrada">Carpeta digital de entrega: el artículo y sus productos, la base de datos construida con fuentes oficiales y el código que la reproduce, en un solo lugar.</p>
+      <ul class="fichas">
+        <li><span>Autor</span>Diego Sebastián Aliaga Damián</li>
+        <li><span>Código</span>2024200481M</li>
+        <li><span>Docente</span>Dr. Ciro Iván Machacuay Meza</li>
+        <li><span>Entrega</span>6 de diciembre de 2026</li>
+      </ul>
+      <div class="hero-botones">
+        <a class="boton boton-principal" data-descarga="Aliaga_Damian_articulo_FPF_Peru"><svg class="ic"><use href="#i-down"/></svg>Descargar el artículo</a>
+        <a class="boton boton-secundario" data-enlace="dashboard" target="_blank" rel="noopener"><svg class="ic"><use href="#i-chart"/></svg>Abrir el dashboard</a>
+        <button class="boton boton-fantasma" type="button" data-hojear="articulo"><svg class="ic"><use href="#i-book"/></svg>Hojear en línea</button>
+      </div>
+    </div>
+    <div class="hero-pila revelar" aria-hidden="true">
+      <div class="hoja hoja-poster"><img src="img/poster_articulo_m.webp" alt=""></div>
+      <div class="hoja hoja-beamer"><img src="img/beamer/d01.webp" alt=""></div>
+      <div class="hoja hoja-articulo"><img src="img/articulo/p01.webp" alt=""></div>
+      <div class="sello"><svg class="ic"><use href="#i-shield"/></svg><b data-cifra="pruebas"></b> pruebas<br>aprobadas</div>
+    </div>
+    <dl class="hero-cifras revelar">
+      <div><dt><span class="contador" data-cifra="filasPanel"></span></dt><dd>observaciones plataforma-mes</dd></div>
+      <div><dt>S/ <span class="contador" data-cifra="monto2025"></span> M</dt><dd>financiados en 2025</dd></div>
+      <div><dt><span class="contador" data-cifra="solicitudesHTTP"></span></dt><dd>solicitudes a fuentes oficiales</dd></div>
+      <div><dt>20</dt><dd>artículos Q1 y Q2 revisados</dd></div>
+      <div><dt><span class="contador" data-cifra="controles"></span></dt><dd>controles de auditoría</dd></div>
+    </dl>
+  </section>
+
+  <!-- ======================================================================= Carpeta de entrega -->
+  <section class="seccion" id="carpeta">
+    <header class="seccion-cabeza revelar">
+      <p class="numero">01</p>
+      <div><h2>La entrega, carpeta por carpeta</h2>
+        <p>La consigna pide una carpeta general con tres subcarpetas. Este es su contenido real, archivo por archivo; el comprimido es el que se sube a ADESA.</p></div>
+    </header>
+    <div class="carpetas">
+      <article class="carpeta revelar" data-abrir="N1">
+        <div class="carpeta-ic c-azul"><svg class="ic"><use href="#i-doc"/></svg></div>
+        <p class="carpeta-num">N.º 1</p><h3>Productos</h3>
+        <p>Artículo en LaTeX y Typst, Beamer, póster A0, 20 pósteres y los 20 artículos con su traducción.</p>
+        <p class="carpeta-dato" data-resumen="N1"></p>
+      </article>
+      <article class="carpeta revelar" data-abrir="N2">
+        <div class="carpeta-ic c-violeta"><svg class="ic"><use href="#i-code"/></svg></div>
+        <p class="carpeta-num">N.º 2</p><h3>Desarrollo</h3>
+        <p>Las plantillas que producen cada documento: journal, póster, Beamer, pósteres, versión Typst y dashboard.</p>
+        <p class="carpeta-dato" data-resumen="N2"></p>
+      </article>
+      <article class="carpeta revelar" data-abrir="N3">
+        <div class="carpeta-ic c-turquesa"><svg class="ic"><use href="#i-db"/></svg></div>
+        <p class="carpeta-num">N.º 3</p><h3>Base de datos y código</h3>
+        <p>Los cuatro scripts, los datos crudos sin editar, la base procesada, las salidas, el registro y las pruebas.</p>
+        <p class="carpeta-dato" data-resumen="N3"></p>
+      </article>
+    </div>
+    <div class="explorador revelar" id="explorador">
+      <div class="explorador-barra">
+        <span class="semaforo" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="explorador-ruta"><svg class="ic"><use href="#i-zip"/></svg><b data-zip="nombre"></b><em data-zip="mb"></em></span>
+        <label class="buscador"><svg class="ic"><use href="#i-search"/></svg><input id="buscar-archivo" type="search" placeholder="Buscar archivo…" aria-label="Buscar un archivo en la entrega"></label>
+      </div>
+      <div class="arbol" id="arbol" role="tree" aria-label="Archivos de la entrega"></div>
+      <p class="explorador-pie">Los 20 artículos de terceros y sus traducciones van solo dentro del comprimido, por derechos de autor; aquí figura su referencia.</p>
+    </div>
+  </section>
+
+  <!-- ======================================================================= Productos -->
+  <section class="seccion" id="productos">
+    <header class="seccion-cabeza revelar">
+      <p class="numero">02</p>
+      <div><h2>Productos</h2>
+        <p>Cada documento se compila desde el mismo código y los mismos datos: las cifras no se escriben a mano.</p></div>
+    </header>
+
+    <div class="productos">
+      <article class="producto destacado revelar">
+        <div class="producto-visual portada-articulo">
+          <button class="portada" type="button" data-hojear="articulo" aria-label="Hojear el artículo">
+            <img src="img/articulo/p01.webp" alt="Primera página del artículo" loading="lazy">
+            <span class="portada-velo"><svg class="ic"><use href="#i-book"/></svg>Hojear las <b data-paginas="articulo"></b> páginas</span>
+          </button>
+          <button class="portada portada-2" type="button" data-hojear="typst" aria-label="Ver la portada de la versión Typst">
+            <img src="img/typst/p01.webp" alt="Portada de la versión en Typst" loading="lazy">
+          </button>
+        </div>
+        <div class="producto-texto">
+          <p class="etiqueta e-azul">Artículo de investigación</p>
+          <h3>Fintech y financiamiento participativo (crowdfunding) en el Perú: oferta y condiciones, 2022-2026</h3>
+          <p>Diseño de revista a dos columnas, normas APA 7, resumen bilingüe, pruebas econométricas y anexo de datos y código. La versión en Typst replica el mismo diseño con las mismas cifras.</p>
+          <ul class="rasgos">
+            <li><b data-paginas="articulo"></b> páginas</li><li>15 tablas</li><li>5 figuras</li><li>APA 7</li>
+          </ul>
+          <div class="botones">
+            <a class="boton boton-principal" data-descarga="Aliaga_Damian_articulo_FPF_Peru"><svg class="ic"><use href="#i-down"/></svg>PDF (LaTeX)</a>
+            <a class="boton boton-secundario" data-descarga="Aliaga_Damian_articulo_FPF_Peru_typst"><svg class="ic"><use href="#i-down"/></svg>PDF (Typst)</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="producto revelar">
+        <div class="producto-texto">
+          <p class="etiqueta e-coral">Exposición</p>
+          <h3>Beamer de 10 diapositivas</h3>
+          <p>Para proyectar en 16:9 y para imprimir una copia por compañero, como pide la consigna.</p>
+        </div>
+        <div class="carrusel" id="carrusel-beamer" aria-label="Diapositivas del Beamer"></div>
+        <div class="carrusel-control">
+          <button class="boton-icono" type="button" data-carrusel="-1" aria-label="Diapositiva anterior"><svg class="ic"><use href="#i-left"/></svg></button>
+          <span class="carrusel-cuenta" id="cuenta-beamer">1 / 10</span>
+          <button class="boton-icono" type="button" data-carrusel="1" aria-label="Diapositiva siguiente"><svg class="ic"><use href="#i-chev"/></svg></button>
+          <span class="separador"></span>
+          <a class="boton boton-chico boton-secundario" data-descarga="Aliaga_Damian_beamer"><svg class="ic"><use href="#i-down"/></svg>Proyectar</a>
+          <a class="boton boton-chico boton-fantasma" data-descarga="Aliaga_Damian_beamer_para_imprimir"><svg class="ic"><use href="#i-down"/></svg>Imprimir</a>
+        </div>
+      </article>
+
+      <article class="producto producto-poster revelar">
+        <button class="poster-mini" type="button" data-ampliar="poster" aria-label="Ampliar el póster">
+          <img src="img/poster_articulo_m.webp" alt="Póster del artículo en tamaño A0" loading="lazy">
+        </button>
+        <div class="producto-texto">
+          <p class="etiqueta e-verde">Póster académico · A0</p>
+          <h3>Póster del artículo</h3>
+          <p>Contexto, problema, objetivo, metodología, resultados con las pruebas econométricas, conclusiones y el código QR del repositorio.</p>
+          <div class="botones">
+            <button class="boton boton-secundario" type="button" data-ampliar="poster"><svg class="ic"><use href="#i-img"/></svg>Ampliar</button>
+            <a class="boton boton-fantasma" data-descarga="Aliaga_Damian_poster_articulo"><svg class="ic"><use href="#i-down"/></svg>PDF</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="producto producto-dashboard revelar">
+        <div class="producto-texto">
+          <p class="etiqueta e-violeta">Interactivo</p>
+          <h3>Dashboard FinCrowd Perú</h3>
+          <p>Doce páginas para explorar la oferta, las plataformas, el acceso, el crédito tradicional y las pruebas econométricas, con filtros y descargas.</p>
+        </div>
+        <figure class="minigrafico" id="minigrafico" aria-label="Monto financiado mensual"></figure>
+        <a class="boton boton-principal" data-enlace="dashboard" target="_blank" rel="noopener"><svg class="ic"><use href="#i-out"/></svg>Abrir el dashboard</a>
+      </article>
+
+      <article class="producto producto-guia revelar">
+        <div class="carpeta-ic c-ambar"><svg class="ic"><use href="#i-book"/></svg></div>
+        <div class="producto-texto">
+          <p class="etiqueta e-ambar">Documentación</p>
+          <h3>Guía completa del proyecto</h3>
+          <p>Explica, paso a paso, de dónde salen los datos, qué hace cada script y cómo se verificó cada resultado.</p>
+        </div>
+        <a class="boton boton-secundario" data-descarga="Guia_completa_del_proyecto"><svg class="ic"><use href="#i-down"/></svg>PDF</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ======================================================================= Estado del arte -->
+  <section class="seccion" id="estado-del-arte">
+    <header class="seccion-cabeza revelar">
+      <p class="numero">03</p>
+      <div><h2>Estado del arte: 20 artículos Q1 y Q2</h2>
+        <p>Un póster en español por cada artículo, de revistas indexadas en Scopus y Web of Science, publicados entre 2023 y 2026. Toca uno para verlo completo.</p></div>
+    </header>
+    <div class="arte-control revelar">
+      <div class="arte-resumen" id="arte-resumen"></div>
+      <label class="buscador"><svg class="ic"><use href="#i-search"/></svg><input id="buscar-articulo" type="search" placeholder="Autor, tema o revista…" aria-label="Buscar un artículo"></label>
+      <div class="vistas" role="group" aria-label="Vista">
+        <button type="button" class="activo" data-vista="galeria" aria-label="Galería"><svg class="ic"><use href="#i-grid"/></svg></button>
+        <button type="button" data-vista="tabla" aria-label="Tabla"><svg class="ic"><use href="#i-list"/></svg></button>
+      </div>
+    </div>
+    <div class="galeria" id="galeria"></div>
+    <div class="tabla-envoltura oculto" id="tabla-articulos"></div>
+    <p class="sin-resultados oculto" id="sin-resultados">Ningún artículo coincide con la búsqueda.</p>
+  </section>
+
+  <!-- ======================================================================= Datos -->
+  <section class="seccion" id="datos">
+    <header class="seccion-cabeza revelar">
+      <p class="numero">04</p>
+      <div><h2>Base de datos</h2>
+        <p>Dos vías automatizadas sobre fuentes oficiales, sin editar a mano ningún dato: interfaces de programación y el rastreo de un portal institucional.</p></div>
+    </header>
+    <ol class="flujo revelar" aria-label="Flujo de los datos">
+      <li><span class="flujo-ic c-azul"><svg class="ic"><use href="#i-api"/></svg></span><b>Fuentes oficiales</b><small>BCRPData · SMV OData · SMV SIMV</small></li>
+      <li><span class="flujo-ic c-violeta"><svg class="ic"><use href="#i-code"/></svg></span><b>01 y 02 · Extracción</b><small>API y <em>scraping</em> con pausas</small></li>
+      <li><span class="flujo-ic c-coral"><svg class="ic"><use href="#i-folder"/></svg></span><b>Datos crudos</b><small><span data-cifra="crudos"></span> archivos sin editar</small></li>
+      <li><span class="flujo-ic c-turquesa"><svg class="ic"><use href="#i-db"/></svg></span><b>03 · Limpieza</b><small>panel <span data-cifra="filasPanel"></span> × <span data-cifra="columnasPanel"></span></small></li>
+      <li><span class="flujo-ic c-ambar"><svg class="ic"><use href="#i-chart"/></svg></span><b>04 · Análisis</b><small><span data-cifra="tablas"></span> tablas y <span data-cifra="figuras"></span> figuras</small></li>
+      <li><span class="flujo-ic c-verde"><svg class="ic"><use href="#i-shield"/></svg></span><b>Auditoría</b><small><span data-cifra="controles"></span> controles, cotejo en vivo</small></li>
+    </ol>
+    <div class="datos-tarjetas">
+      <article class="dato revelar">
+        <p class="etiqueta e-turquesa">Base procesada</p>
+        <h3><span data-cifra="filasPanel"></span> plataforma-mes × <span data-cifra="columnasPanel"></span> variables</h3>
+        <p>Censo de las <span data-cifra="plataformasAutorizadas"></span> sociedades administradoras con información en la SMV, de <span data-cifra="fechaInicio"></span> a <span data-cifra="fechaCorte"></span>, unido con las tasas del BCRP.</p>
+        <div class="hash"><span>SHA-256</span><code data-hash="sha_base"></code><button class="boton-icono copiar" type="button" data-copiar="sha_base" aria-label="Copiar el SHA-256"><svg class="ic"><use href="#i-copy"/></svg></button></div>
+        <a class="boton boton-secundario" data-descarga="datos_procesados_2024200481M"><svg class="ic"><use href="#i-down"/></svg>CSV</a>
+      </article>
+      <article class="dato revelar">
+        <p class="etiqueta e-violeta">Base complementaria</p>
+        <h3>Empresas supervisadas por la SMV</h3>
+        <p>Estados financieros empresa-trimestre del mismo crudo de la API, para comparar la rentabilidad de las plataformas con otros intermediarios.</p>
+        <div class="hash"><span>SHA-256</span><code data-hash="sha_empresas"></code><button class="boton-icono copiar" type="button" data-copiar="sha_empresas" aria-label="Copiar el SHA-256"><svg class="ic"><use href="#i-copy"/></svg></button></div>
+        <a class="boton boton-secundario" data-descarga="datos_procesados_2024200481M_empresas"><svg class="ic"><use href="#i-down"/></svg>CSV</a>
+      </article>
+      <article class="dato dato-lista revelar">
+        <p class="etiqueta e-azul">En el repositorio</p>
+        <a data-git="tree/main/datos_crudos"><svg class="ic"><use href="#i-folder"/></svg><span><b>datos_crudos/</b><small>Respuestas originales de cada fuente</small></span><svg class="ic flecha"><use href="#i-out"/></svg></a>
+        <a data-git="blob/main/diccionario_variables.md"><svg class="ic"><use href="#i-doc"/></svg><span><b>diccionario_variables.md</b><small>Definición, unidad y fuente de cada variable</small></span><svg class="ic flecha"><use href="#i-out"/></svg></a>
+        <a data-git="tree/main/salidas"><svg class="ic"><use href="#i-chart"/></svg><span><b>salidas/</b><small>Tablas, figuras, resultados y auditoría</small></span><svg class="ic flecha"><use href="#i-out"/></svg></a>
+        <a data-git="blob/main/incidencias_fuente.md"><svg class="ic"><use href="#i-shield"/></svg><span><b>incidencias_fuente.md</b><small>Fallas del portal y cómo se trataron</small></span><svg class="ic flecha"><use href="#i-out"/></svg></a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ======================================================================= Código -->
+  <section class="seccion" id="codigo">
+    <header class="seccion-cabeza revelar">
+      <p class="numero">05</p>
+      <div><h2>Código y verificación</h2>
+        <p>Python de principio a fin. Cada script registra lo que hace, y las pruebas y la auditoría comprueban que los datos entregados son los de las fuentes.</p></div>
+    </header>
+    <div class="verificacion revelar">
+      <div><svg class="ic"><use href="#i-check"/></svg><b data-cifra="pruebas"></b><span>pruebas automatizadas</span></div>
+      <div><svg class="ic"><use href="#i-shield"/></svg><b data-cifra="controles"></b><span>controles de auditoría</span></div>
+      <div><svg class="ic"><use href="#i-api"/></svg><b data-cifra="coberturaPct" data-sufijo=" %"></b><span>cobertura del portal</span></div>
+      <div><svg class="ic"><use href="#i-db"/></svg><b>SHA-256</b><span>huella de cada base</span></div>
+    </div>
+    <div class="scripts" id="scripts"></div>
+    <div class="terminal revelar">
+      <div class="terminal-barra"><span class="semaforo" aria-hidden="true"><i></i><i></i><i></i></span><span>Reproducir todo · PowerShell</span>
+        <button class="boton-icono copiar" type="button" data-copiar="comandos" aria-label="Copiar los comandos"><svg class="ic"><use href="#i-copy"/></svg></button></div>
+<pre id="comandos"><code><span class="c"># 1. Descargar el proyecto y preparar el entorno</span>
+git clone <span data-enlace-texto="repositorio"></span>
+cd finanzas1-u2-crowdfunding-peru
+python -m venv .venv ; .venv\Scripts\activate
+pip install -r requirements.txt
+<span class="c"># 2. Extraer, limpiar y analizar (de las fuentes oficiales a las tablas)</span>
+python codigo/01_extraccion_api.py
+python codigo/02_scraping_web.py
+python codigo/03_limpieza_datos.py
+python codigo/04_analisis.py
+<span class="c"># 3. Verificar</span>
+python -m pytest
+python codigo/auditoria.py --en-vivo</code></pre>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="pie-logos"><img src="img/logo_uncp.webp" alt="Universidad Nacional del Centro del Perú" width="56" height="56"><img src="img/logo_facultad.webp" alt="Facultad de Economía" width="56" height="56"></div>
+  <div class="pie-texto">
+    <p><b>Diego Sebastián Aliaga Damián</b> · Facultad de Economía · Universidad Nacional del Centro del Perú · 2026-II</p>
+    <p>Elaborado con apoyo de herramientas de inteligencia artificial, como se declara en el artículo. Las cifras se generan con el código del repositorio a partir de los datos oficiales de la SMV y del BCRP.</p>
+  </div>
+  <div class="pie-enlaces">
+    <a data-enlace="repositorio" target="_blank" rel="noopener"><svg class="ic"><use href="#i-git"/></svg>Repositorio</a>
+    <a data-enlace="dashboard" target="_blank" rel="noopener"><svg class="ic"><use href="#i-chart"/></svg>Dashboard</a>
+  </div>
+</footer>
+
+<div class="visor" id="visor" role="dialog" aria-modal="true" aria-label="Visor" hidden>
+  <div class="visor-cabeza">
+    <p class="visor-titulo" id="visor-titulo"></p>
+    <span class="visor-cuenta" id="visor-cuenta"></span>
+    <div class="visor-acciones" id="visor-acciones"></div>
+    <button class="boton-icono" type="button" id="visor-cerrar" aria-label="Cerrar"><svg class="ic"><use href="#i-x"/></svg></button>
+  </div>
+  <div class="visor-cuerpo">
+    <button class="visor-flecha izq" type="button" id="visor-ant" aria-label="Anterior"><svg class="ic"><use href="#i-left"/></svg></button>
+    <figure class="visor-figura"><img id="visor-img" alt=""><figcaption id="visor-pie"></figcaption></figure>
+    <button class="visor-flecha der" type="button" id="visor-sig" aria-label="Siguiente"><svg class="ic"><use href="#i-chev"/></svg></button>
+  </div>
+  <div class="visor-tiras" id="visor-tiras"></div>
+</div>
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+<script src="datos.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

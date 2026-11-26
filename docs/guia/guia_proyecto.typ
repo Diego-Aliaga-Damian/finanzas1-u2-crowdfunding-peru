@@ -372,12 +372,19 @@ Están en `codigo/econometria.py` y siguen la secuencia de tu trabajo de la Unid
 - *Razón de momios:* cuántas veces mayores son las posibilidades de financiarse. Un valor de 1 significa que no hay diferencia.
 - Las pruebas son *asociativas*: no demuestran causa y efecto, y «no significativo» no quiere decir «no existe relación».
 
+= Portal de entrega
+Además del dashboard hay una página estática para revisar y descargar todo lo que se entrega: el artículo (se puede hojear en línea), el Beamer, el póster, la galería de los 20 pósteres, la tabla de los 20 artículos con su cuartil, un explorador de la carpeta de entrega, la base de datos con su SHA-256 y el código.
+- Está en `portal/`. Las cifras y las vistas previas salen de los archivos del proyecto con `python herramientas/portal/generar_portal.py`; nada se escribe a mano.
+- Se publica en GitHub Pages con `.github/workflows/portal.yml` cada vez que se suben cambios. Hay que activarlo una vez en GitHub: *Settings → Pages → Source: GitHub Actions*.
+- Los 20 artículos de terceros y sus traducciones no se publican: solo su referencia, su DOI y su cuartil.
+
 = Verificación: pruebas, auditoría y reproducibilidad
 == Pruebas automáticas (pytest)
 Se ejecutan con `python -m pytest` y no necesitan internet: usan recortes de respuestas reales guardados en `pruebas/fixtures/`.
 - *47 pruebas del núcleo:* extracción por API, scraping, limpieza y base procesada, análisis y econometría. Una de ellas vuelve a ejecutar `04_analisis.py` y comprueba que todas las salidas son idénticas.
 - *35 pruebas del dashboard:* que sus cálculos sin filtros reproduzcan las tablas del artículo, que los filtros funcionen, que cada página cargue sin errores y que el Centro de mando 3D muestre exactamente los datos de la base.
-- *Total: 82 pruebas, todas aprobadas.*
+- *2 pruebas del portal de entrega:* que sus cifras y huellas SHA-256 sean las del análisis y que no tenga enlaces rotos ni publique los artículos de terceros.
+- *Total: 84 pruebas, todas aprobadas.*
 
 == Auditoría automatizada (`codigo/auditoria.py`)
 Revisa los requisitos de la consigna (numerales 2.4.1, 2.4.2, 2.4.5, 2.4.6 y 2.4.8) y escribe `salidas/reporte_auditoria.md`. Cada control sale como cumple, no cumple o no ejecutado; un control no ejecutado nunca cuenta como cumplido. Con `--en-vivo` además coteja 10 filas al azar con el BCRP y la SMV. Último resultado: *48 controles cumplidos, 0 incumplidos*.

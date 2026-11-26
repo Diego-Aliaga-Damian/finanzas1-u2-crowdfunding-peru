@@ -103,6 +103,8 @@ articulo_typst/          el mismo artículo en Typst
 productos/               Beamer, póster del artículo y los 20 pósteres del estado del arte (fuentes LaTeX)
 dashboard/               dashboard interactivo en Streamlit (streamlit run dashboard/app.py); incluye
                          el Centro de mando 3D (dashboard/terminal/, motor propio en WebGL)
+portal/                  portal de entrega estático para GitHub Pages (productos, datos y código en una página);
+                         se regenera con herramientas/portal/generar_portal.py y se publica con .github/workflows/portal.yml
 docs/                    matriz de cumplimiento, diagnóstico, diseño, antecedentes, evidencias y guía del proyecto
 herramientas/            bibliografía, generación del artículo, pósteres, productos y carpeta de entrega
                          (no forman parte de la base)
