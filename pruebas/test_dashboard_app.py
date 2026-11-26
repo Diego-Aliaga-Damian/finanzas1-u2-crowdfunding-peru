@@ -65,3 +65,26 @@ def test_filtros_globales_actualizan_los_kpi_con_cifras_del_articulo():
     next(b for b in at.get("button") if "Restablecer" in str(b.label)).click().run()
     assert at.session_state["g_periodo"] == ("2022-01", "2026-09") and len(at.session_state["g_plataformas"]) == 6
     assert not at.exception
+
+
+def test_la_publicacion_sin_reinicio_renueva_modulos_y_datos(monkeypatch):
+    """Streamlit Cloud cambia los archivos sin reiniciar: no deben quedar en memoria los módulos ni los datos anteriores."""
+    import sys
+    import types
+    monkeypatch.syspath_prepend(str(DASHBOARD))
+    import compartido as C
+    import renovacion as R
+    C.st.cache_data.clear()
+    monkeypatch.setattr(C.D, "leer_resultados", lambda: {"version": "anterior"})
+    monkeypatch.setattr(R, "firma", lambda: ("anterior",))
+    assert R.renovar()
+    assert C.resultados() == {"version": "anterior"}
+    monkeypatch.setattr(C.D, "leer_resultados", lambda: {"version": "nueva"})
+    viejo = types.ModuleType("compartido")
+    monkeypatch.setitem(sys.modules, "compartido", viejo)
+    assert not R.renovar()                                            # mismos archivos: todo se conserva
+    assert C.resultados() == {"version": "anterior"} and sys.modules["compartido"] is viejo
+    monkeypatch.setattr(R, "firma", lambda: ("nueva",))
+    assert R.renovar()
+    assert C.resultados() == {"version": "nueva"} and "compartido" not in sys.modules
+    C.st.cache_data.clear()

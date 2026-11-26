@@ -22,6 +22,10 @@ import streamlit as st  # noqa: E402
 st.set_page_config(page_title="FinCrowd Perú · Financiamiento participativo 2022-2026", page_icon=":material/insights:",
                    layout="wide", initial_sidebar_state="auto")
 
+import renovacion  # noqa: E402
+
+renovacion.renovar()  # antes de importar lo demás
+
 import compartido as C  # noqa: E402
 import datos as D  # noqa: E402
 import tema as T  # noqa: E402

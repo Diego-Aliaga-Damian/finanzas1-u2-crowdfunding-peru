@@ -376,8 +376,8 @@ Están en `codigo/econometria.py` y siguen la secuencia de tu trabajo de la Unid
 == Pruebas automáticas (pytest)
 Se ejecutan con `python -m pytest` y no necesitan internet: usan recortes de respuestas reales guardados en `pruebas/fixtures/`.
 - *47 pruebas del núcleo:* extracción por API, scraping, limpieza y base procesada, análisis y econometría. Una de ellas vuelve a ejecutar `04_analisis.py` y comprueba que todas las salidas son idénticas.
-- *34 pruebas del dashboard:* que sus cálculos sin filtros reproduzcan las tablas del artículo, que los filtros funcionen, que cada página cargue sin errores y que el Centro de mando 3D muestre exactamente los datos de la base.
-- *Total: 81 pruebas, todas aprobadas.*
+- *35 pruebas del dashboard:* que sus cálculos sin filtros reproduzcan las tablas del artículo, que los filtros funcionen, que cada página cargue sin errores y que el Centro de mando 3D muestre exactamente los datos de la base.
+- *Total: 82 pruebas, todas aprobadas.*
 
 == Auditoría automatizada (`codigo/auditoria.py`)
 Revisa los requisitos de la consigna (numerales 2.4.1, 2.4.2, 2.4.5, 2.4.6 y 2.4.8) y escribe `salidas/reporte_auditoria.md`. Cada control sale como cumple, no cumple o no ejecutado; un control no ejecutado nunca cuenta como cumplido. Con `--en-vivo` además coteja 10 filas al azar con el BCRP y la SMV. Último resultado: *48 controles cumplidos, 0 incumplidos*.
