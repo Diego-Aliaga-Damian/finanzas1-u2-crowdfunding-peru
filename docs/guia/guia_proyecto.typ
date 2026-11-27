@@ -374,6 +374,7 @@ Están en `codigo/econometria.py` y siguen la secuencia de tu trabajo de la Unid
 
 = Portal de entrega
 Además del dashboard hay una página estática para revisar y descargar todo lo que se entrega: el artículo (se puede hojear en línea), el Beamer, el póster, la galería de los 20 pósteres, la tabla de los 20 artículos con su cuartil, un explorador de la carpeta de entrega, la base de datos con su SHA-256 y el código.
+- Tiene dos vistas: el *portal completo* (`index.html`) y una *versión amigable* (`escritorio.html`). La amigable muestra los productos como hojas sobre un escritorio, que se abren al tocarlas, y un *recorrido guiado en cinco pasos* (la pregunta, los datos, lo que encontré, lo que preparé y por qué es confiable) que también sirve de guion para la exposición.
 - Está en `portal/`. Las cifras y las vistas previas salen de los archivos del proyecto con `python herramientas/portal/generar_portal.py`; nada se escribe a mano.
 - Se publica en GitHub Pages con `.github/workflows/portal.yml` cada vez que se suben cambios. Hay que activarlo una vez en GitHub: *Settings → Pages → Source: GitHub Actions*.
 - Los 20 artículos de terceros y sus traducciones no se publican: solo su referencia, su DOI y su cuartil.

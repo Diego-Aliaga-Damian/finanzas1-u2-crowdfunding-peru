@@ -38,7 +38,10 @@ def test_el_portal_no_tiene_enlaces_rotos(datos):
     assert all((RAIZ / origen).exists() for _, origen in gp.COPIAS)
     assert {d["url"] for d in datos["descargas"].values()} == {destino for destino, _ in gp.COPIAS}
     # cada imagen que usan la página y los datos existe
-    html = (PORTAL / "index.html").read_text(encoding="utf-8") + (PORTAL / "app.js").read_text(encoding="utf-8")
+    html = "".join((PORTAL / f).read_text(encoding="utf-8") for f in ("index.html", "app.js", "escritorio.html", "escritorio.js"))
+    # las descargas que piden las páginas existen en los datos del portal
+    pedidas = set(re.findall(r'data-descarga="([^"]+)"', html)) | set(re.findall(r'pdf\("([^"]+)"', html))
+    assert pedidas <= set(datos["descargas"]), pedidas - set(datos["descargas"])
     rutas = set(re.findall(r'(?:src|href)="((?:img/)[^"$]+)"', html))
     rutas |= {a[k] for a in datos["articulos"] for k in ("img", "mini")}
     rutas |= {f"img/articulo/p{i:02d}.webp" for i in range(1, datos["paginas"]["articulo"] + 1)}

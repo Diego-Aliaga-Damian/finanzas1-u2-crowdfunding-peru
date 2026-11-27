@@ -1,0 +1,123 @@
+<!doctype html>
+<!-- Diego Sebastián Aliaga Damián · 2024200481M · Tema 96: Fintech y financiamiento participativo (crowdfunding) en el Perú
+     Portal de entrega, versión amigable: escritorio de estudiante + recorrido guiado. Datos: datos.js (generar_portal.py). -->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi escritorio · FinCrowd Perú</title>
+  <meta name="description" content="Recorrido guiado por el trabajo de la Unidad II de Finanzas I (UNCP) sobre el financiamiento participativo en el Perú: artículo, Beamer, pósteres, datos y código.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="img/fincrowd_icono.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="escritorio.css">
+  <script>try{var t=localStorage.getItem('escritorio-tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<a class="saltar" href="#recorrido">Ir al recorrido</a>
+
+<header class="cabecera">
+  <div class="saludo">
+    <span class="avatar" aria-hidden="true">DA</span>
+    <div>
+      <p class="hola">¡Hola! Soy Diego</p>
+      <p class="sub">Este es mi trabajo de Finanzas I · Unidad II · UNCP</p>
+    </div>
+  </div>
+  <div class="cabecera-acciones">
+    <button class="redondo" id="tema" type="button" aria-label="Cambiar entre modo claro y oscuro"><span class="ic-sol">☀</span><span class="ic-luna">☾</span></button>
+    <a class="boton boton-suave" href="index.html"><span class="largo">Ver el portal completo</span><span class="corto">Portal</span></a>
+  </div>
+</header>
+
+<main>
+  <!-- ======================================================================= Escritorio -->
+  <section class="portada" aria-labelledby="titulo">
+    <div class="portada-texto">
+      <h1 id="titulo">¿Cuánto crece el <span class="resaltado">crowdfunding</span> en el Perú y cuánto cuesta frente a un préstamo del banco?</h1>
+      <p>Revisé los datos oficiales de 2022 a 2026. Sobre mi escritorio está todo lo que preparé: toca cualquier hoja para verla, o sigue el recorrido paso a paso.</p>
+      <div class="botones">
+        <a class="boton boton-principal" href="#recorrido">Empezar el recorrido <span aria-hidden="true">→</span></a>
+        <a class="boton boton-suave" data-descarga="Aliaga_Damian_articulo_FPF_Peru">Descargar el artículo</a>
+      </div>
+    </div>
+
+    <div class="escritorio" id="escritorio">
+      <button class="objeto hoja articulo" type="button" data-abrir="articulo" style="--r:-6deg">
+        <img src="img/articulo/p01.webp" alt="" loading="eager">
+        <span class="rotulo">Mi artículo</span>
+      </button>
+      <button class="objeto hoja beamer" type="button" data-abrir="beamer" style="--r:3deg">
+        <img src="img/beamer/d01.webp" alt="" loading="eager">
+        <span class="rotulo">Beamer · 10 diapositivas</span>
+      </button>
+      <button class="objeto hoja poster" type="button" data-abrir="poster" style="--r:5deg">
+        <img src="img/poster_articulo_m.webp" alt="" loading="eager">
+        <span class="rotulo">Póster A0</span>
+      </button>
+      <button class="objeto pila" type="button" data-abrir="posteres" style="--r:-4deg">
+        <span class="pila-hoja" style="--i:2"><img src="img/posteres/morello2025_m.webp" alt="" loading="lazy"></span>
+        <span class="pila-hoja" style="--i:1"><img src="img/posteres/hau2024_m.webp" alt="" loading="lazy"></span>
+        <span class="pila-hoja" style="--i:0"><img src="img/posteres/braggion2025_m.webp" alt="" loading="lazy"></span>
+        <span class="rotulo">20 pósteres</span>
+      </button>
+      <button class="objeto carpeta" type="button" data-abrir="datos" style="--r:-3deg">
+        <span class="carpeta-pestana"></span>
+        <span class="carpeta-cuerpo"><b>Datos y código</b><small><span data-cifra="filasPanel"></span> observaciones · <span data-cifra="crudos"></span> archivos</small></span>
+      </button>
+      <button class="objeto laptop" type="button" data-abrir="dashboard" style="--r:2deg">
+        <span class="laptop-pantalla" id="laptop-grafico"></span>
+        <span class="laptop-base"></span>
+        <span class="rotulo">Dashboard</span>
+      </button>
+      <button class="objeto cuaderno" type="button" data-abrir="guia" style="--r:4deg">
+        <span class="espiral" aria-hidden="true"></span>
+        <b>Guía del proyecto</b><small>paso a paso</small>
+      </button>
+      <span class="nota nota-amarilla" style="--r:-3deg">Entrega:<br>6 de diciembre</span>
+      <span class="nota nota-verde" style="--r:4deg">✓ <b data-cifra="pruebas"></b> pruebas<br>aprobadas</span>
+      <span class="nota nota-rosa" style="--r:-5deg">20 artículos<br>Q1 y Q2</span>
+    </div>
+  </section>
+
+  <!-- ======================================================================= Recorrido guiado -->
+  <section class="recorrido" id="recorrido" aria-labelledby="titulo-recorrido">
+    <p class="cejilla">Recorrido guiado</p>
+    <h2 id="titulo-recorrido">Mi trabajo en cinco pasos</h2>
+    <ol class="pasos" id="pasos" role="tablist" aria-label="Pasos del recorrido"></ol>
+    <div class="paso-caja" id="paso" aria-live="polite"></div>
+    <div class="paso-navegacion">
+      <button class="boton boton-suave" type="button" id="anterior">← Anterior</button>
+      <span class="paso-cuenta" id="cuenta"></span>
+      <button class="boton boton-principal" type="button" id="siguiente">Siguiente →</button>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <img src="img/logo_uncp.webp" alt="Universidad Nacional del Centro del Perú" width="44" height="44">
+  <img src="img/logo_facultad.webp" alt="Facultad de Economía" width="44" height="44">
+  <p><b>Diego Sebastián Aliaga Damián</b> · 2024200481M · Facultad de Economía, UNCP · Docente: Dr. Ciro Iván Machacuay Meza<br>
+    <span>Elaborado con apoyo de herramientas de inteligencia artificial, como se declara en el artículo. Las cifras salen del código del repositorio.</span></p>
+</footer>
+
+<div class="ficha-fondo" id="ficha" role="dialog" aria-modal="true" aria-labelledby="ficha-titulo" hidden>
+  <div class="ficha">
+    <button class="redondo ficha-cerrar" type="button" id="ficha-cerrar" aria-label="Cerrar">✕</button>
+    <div class="ficha-visual" id="ficha-visual"></div>
+    <div class="ficha-texto">
+      <p class="cejilla" id="ficha-cejilla"></p>
+      <h3 id="ficha-titulo"></h3>
+      <div id="ficha-cuerpo"></div>
+      <div class="botones" id="ficha-botones"></div>
+    </div>
+  </div>
+</div>
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+<script src="datos.js"></script>
+<script src="escritorio.js"></script>
+</body>
+</html>
